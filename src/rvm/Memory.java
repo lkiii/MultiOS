@@ -23,7 +23,7 @@ public class Memory {
         // todo :
         memory = new char[size/wordSize][wordSize];
     }
-    
+
     // sukurt hex klase?
     // start / end ?
     // [page][]
