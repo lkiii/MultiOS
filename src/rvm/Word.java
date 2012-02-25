@@ -8,11 +8,12 @@ public class Word {
     private static int wordSize = 4;
     private byte[] word;
     
-    public Word(byte[] word) {
-        if (word.length > 3 || word == null) {
-            throw new IllegalArgumentException("OutOfBounds or null (word(byte[]) constructor)");
-        } 
+    public Word() {
         this.word = new byte[wordSize];
+    }
+    public Word(byte[] word) {
+        this();
+        this.word = word;
     }
     
     public byte[] get() {

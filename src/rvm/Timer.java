@@ -12,11 +12,4 @@ public class Timer {
     public Timer(){
         
     }
-    public void idiNx(){
-        System.out.print("nx");
-    }
-    public void siustNx(){
-        //siunciu;
-        System.out.print("bom-ž");
-    }
 }
