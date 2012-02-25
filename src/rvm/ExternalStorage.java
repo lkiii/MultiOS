@@ -6,10 +6,6 @@ package rvm;
  */
 public class ExternalStorage {
     //File ,...
-    
-    
-    // loadStorage
-    
-    // save and off
-    
+    //bybyių fšra
+        
 }
