@@ -4,9 +4,9 @@ package rvm;
  *
  * @author ernestas
  */
-public static class ExternalStorage {
+public class ExternalStorage {
     private static String diskPath = "/storage/disk.data";
 
-    
+    // extendint streama?
     
 }

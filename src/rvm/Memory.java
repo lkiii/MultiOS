@@ -14,14 +14,14 @@ public class Memory {
     private int size;
     
     // string[]?
-    private char[][] memory;
+    private byte[][] memory;
     
     public Memory(int memorySize, int wordSize, int pageSize) {
         this.size = memorySize;
         this.wordSize = wordSize;
         this.pageSize = pageSize;
         // todo :
-        memory = new char[size/wordSize][wordSize];
+        memory = new byte[size/wordSize][wordSize];
     }
 
     // sukurt hex klase?

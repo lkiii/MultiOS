@@ -12,7 +12,12 @@ public class Block {
     private static int nWords = 0xF;
     Word[] block;
     
+    public Block() {
+        block = new Word[nWords];
+    }
+    
     public Block(Word[] words) {
+        // ifai
         block = new Word[nWords];
         block = words; // bbs
     }
@@ -21,7 +26,9 @@ public class Block {
         return block[n];
     }
     
-    public Word[] getRawBlock() {
+    public Word[] getBlock() {
         return block;
     }
+    
+    
 }
