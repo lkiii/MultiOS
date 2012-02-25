@@ -22,7 +22,7 @@ public class Word {
     public byte get(int i) {
         return word[i];
     }
-    
+
     public void set(byte[] word) {
         this.word = word;
     }

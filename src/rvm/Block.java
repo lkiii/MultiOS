@@ -9,10 +9,11 @@ package rvm;
  * @author lukas
  */
 public class Block {
-    private static int nWords = 10;
+    private static int nWords = 0xF;
     Word[] block;
     
     public Block(Word[] words) {
+        block = new Word[nWords];
         block = words; // bbs
     }
     
