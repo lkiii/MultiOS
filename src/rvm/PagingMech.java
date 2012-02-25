@@ -8,6 +8,6 @@ package rvm;
  *
  * @author ernestas
  */
-public class Pageing {
+public class PagingMech {
     
 }

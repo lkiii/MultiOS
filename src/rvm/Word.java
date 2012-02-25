@@ -8,7 +8,7 @@ public class Word {
     private static int wordSize = 4;
     private byte[] word;
     
-    private Word(byte[] word) {
+    public Word(byte[] word) {
         if (word.length > 3 || word == null) {
             throw new IllegalArgumentException("OutOfBounds or null (word(byte[]) constructor)");
         } 

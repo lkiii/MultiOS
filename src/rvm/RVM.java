@@ -24,5 +24,6 @@ public class RVM {
         a[5]=1;
         a[6]=1;
         Word w = new Word(a);
+        System.out.println(w.get(4));
     }
 }
