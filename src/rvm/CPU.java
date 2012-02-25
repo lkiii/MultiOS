@@ -9,6 +9,5 @@ package rvm;
  * @author ernestas
  */
 public class CPU {
-                             
-    
+    private Word PTR;
 }
