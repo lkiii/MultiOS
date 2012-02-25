@@ -9,6 +9,7 @@ package rvm;
  * @author ernestas
  */
 public class Global {
-    public final wordSize = 7;
+    public static final int wordSize = 0x4;
+    public static final int blockSize = 0xf;
     
 }

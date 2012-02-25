@@ -9,19 +9,13 @@ package rvm;
  * @author ernestas
  */
 public class Memory {
-    private int wordSize;
-    private int pageSize; // pages vs size
-    private int size;
+
     
     // string[]?
     private byte[][] memory;
     
-    public Memory(int memorySize, int wordSize, int pageSize) {
-        this.size = memorySize;
-        this.wordSize = wordSize;
-        this.pageSize = pageSize;
-        // todo :
-        memory = new byte[size/wordSize][wordSize];
+    public Memory() {
+
     }
 
     // sukurt hex klase?

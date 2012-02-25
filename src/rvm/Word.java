@@ -5,13 +5,13 @@ package rvm;
  * @author lukas
  */
 public class Word {
-    private static int wordSize = 4;
     private byte[] word;
     
     public Word() {
-        this.word = new byte[wordSize];
+        this.word = new byte[Global.wordSize];
     }
     public Word(byte[] word) {
+        //FIXME ifai
         this();
         this.word = word;
     }

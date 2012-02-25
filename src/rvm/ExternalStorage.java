@@ -7,6 +7,6 @@ package rvm;
 public class ExternalStorage {
     private static String diskPath = "/storage/disk.data";
 
-    // extendint streama?
+    //TODO extendint streama?
     
 }

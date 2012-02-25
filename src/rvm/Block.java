@@ -9,16 +9,15 @@ package rvm;
  * @author lukas
  */
 public class Block {
-    private static int nWords = 0xF;
     Word[] block;
     
     public Block() {
-        block = new Word[nWords];
+        block = new Word[Global.blockSize];
     }
     
     public Block(Word[] words) {
-        // ifai
-        block = new Word[nWords];
+        //FIXME ifai
+        block = new Word[Global.blockSize];
         block = words; // bbs
     }
     
