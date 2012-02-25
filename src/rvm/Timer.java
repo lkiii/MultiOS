@@ -12,4 +12,8 @@ public class Timer {
     public Timer(){
         
     }
+    
+    public void siustNx() {
+        System.out.println("pashol nx");
+    } 
 }

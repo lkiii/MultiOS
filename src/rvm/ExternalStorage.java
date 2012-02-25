@@ -4,10 +4,9 @@ package rvm;
  *
  * @author ernestas
  */
-public class ExternalStorage {
+public static class ExternalStorage {
+    private static String diskPath = "/storage/disk.data";
 
-    public ExternalStorage() {
-        System.out.println("ostik");
-    }
+    
     
 }
