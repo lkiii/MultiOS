@@ -1,12 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package rvm;
 
+import static rvm.Constants.*;
+
 /**
- *
- * @author lukas
+ * 
+ * VU MIF PS 1gr. 2012
+ * @author Ernestas Prisakaru 
+ * @author Lukas Ignatavicius
+ * 
  */
 public class Timer {
     public Timer(){

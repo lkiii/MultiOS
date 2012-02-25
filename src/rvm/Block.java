@@ -1,23 +1,24 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package rvm;
 
+import static rvm.Constants.*;
+
 /**
- *
- * @author lukas
+ * 
+ * VU MIF PS 1gr. 2012
+ * @author Ernestas Prisakaru 
+ * @author Lukas Ignatavicius
+ * 
  */
 public class Block {
     Word[] block;
     
     public Block() {
-        block = new Word[Global.blockSize];
+        block = new Word[BLOCK_SIZE];
     }
     
     public Block(Word[] words) {
         //FIXME ifai
-        block = new Word[Global.blockSize];
+        block = new Word[BLOCK_SIZE];
         block = words; // bbs
     }
     

@@ -1,14 +1,19 @@
 package rvm;
 
+import static rvm.Constants.*;
+
 /**
- *
- * @author lukas
+ * 
+ * VU MIF PS 1gr. 2012
+ * @author Ernestas Prisakaru 
+ * @author Lukas Ignatavicius
+ * 
  */
 public class Word {
     private byte[] word;
     
     public Word() {
-        this.word = new byte[Global.wordSize];
+        this.word = new byte[WORD_SIZE];
     }
     public Word(byte[] word) {
         //FIXME ifai
