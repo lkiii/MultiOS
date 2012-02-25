@@ -27,7 +27,7 @@ public class Memory {
     // sukurt hex klase?
     // start / end ?
     // [page][]
-    public String getBytes(int start, int length) {
-        
+    public String getBytes(int start, int length) throws Exception {
+        throw new Exception("Not implemented");
     }
 }

@@ -14,8 +14,8 @@ public class Converter {
         return Integer.parseInt(s, 16);
     }
 
-    public static String decimal2hex(int d) {
-       
+    public static String decimal2hex(int d) throws Exception {
+       throw new Exception("Not implemented");
     }
     
 }
