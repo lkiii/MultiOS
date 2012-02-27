@@ -18,7 +18,7 @@ public class CPU {
     // user/supervisor mode
     private byte MODE;
     // timer
-    private Timer TIMER;
+    private Timer TIMER; // -1 jei netrapint
     // interrupts
     private byte TI; //
     private byte IOI; // I/O 
@@ -30,7 +30,7 @@ public class CPU {
     private boolean CH3; // external storage
     //TODO hi-level processor
     //FIXME byte->short word->int
-    public CPU() {
+    public CPU(Timer) {
         IP = new byte[2];
         TIMER = new Timer();
         TI = 0;
