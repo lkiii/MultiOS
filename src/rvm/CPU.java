@@ -30,9 +30,9 @@ public class CPU {
     private boolean CH3; // external storage
     //TODO hi-level processor
     //FIXME byte->short word->int
-    public CPU(Timer) {
+    public CPU() {
         IP = new byte[2];
-        TIMER = new Timer();
+        TIMER = new Timer(1);
         TI = 0;
         IOI = 0;
         SI = 0;

@@ -8,8 +8,6 @@ package Interpretator;
  *
  * @author ernestas
  */
-public class Interpretator {
-    
-    
-    public static Operation[] ?
+public interface Interpretator {
+    //public static Operation[];
 }

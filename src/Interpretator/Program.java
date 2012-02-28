@@ -8,6 +8,6 @@ package Interpretator;
  *
  * @author ernestas
  */
-public class Program implements {
+public interface Program{
     
 }

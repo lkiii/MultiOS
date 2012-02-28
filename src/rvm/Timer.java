@@ -9,7 +9,7 @@ import static rvm.Constants.*;
  * @author Lukas Ignatavicius
  * 
  */
-
+// pirmai nereikia
 // observer pattern?
 public class Timer {
     int time;
@@ -18,7 +18,4 @@ public class Timer {
         this.time = time;
     }
     
-    public subscribe
-            
-            notify???
 }

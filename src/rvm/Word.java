@@ -16,7 +16,7 @@ public class Word {
         this.word = new byte[WORD_SIZE];
     }
     public Word(byte[] word) {
-        //FIXME ifai
+        //FIXME flagai jeigu didesnis
         this();
         this.word = word;
     }
