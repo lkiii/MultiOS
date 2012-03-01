@@ -59,6 +59,6 @@ public class Test {
                 System.out.print(mem.readWord(i*0x10 + j).getString() + " ");
             }
             System.out.println();
-        }
+        } 
     }
 }
