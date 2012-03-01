@@ -7,6 +7,7 @@ package rvm;
  * 
  */
 public class CPU {
+    // pt reg
     private Word PTR;
     // general purpose registers 
     private Word R1;
@@ -38,4 +39,6 @@ public class CPU {
         SI = 0;
         PI = 0;
     }
+    
+    
 }

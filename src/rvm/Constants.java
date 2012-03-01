@@ -14,7 +14,7 @@ public final class Constants {
     public static final int BLOCKS_PER_PAGE = 0xf;
     
     private Constants() {
-        throw new AssertionError("Constants is uninstansiable");
+        throw new AssertionError("<Constants> is uninstansiable");
     }
     
 }
