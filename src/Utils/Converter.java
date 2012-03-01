@@ -10,7 +10,7 @@ package Utils;
  */
 public class Converter {
 
-    public static int hex2decimal(String s) {
+    public static int hexString2decimal(String s) {
         return Integer.parseInt(s, 16);
     }
 

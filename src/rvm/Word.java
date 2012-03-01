@@ -18,13 +18,14 @@ public class Word {
     }
     
     public Word(String data) {
-        if (data.length() == WORD_SIZE) {
+        word = data.getBytes();
+        /*if (data.length() == WORD_SIZE) {
             this.word = data.substring(0, WORD_SIZE).getBytes();
         } else if (data.length() < WORD_SIZE) {
             this.word = data.substring(0).getBytes();
         } else {
             throw new RuntimeException("ERROR STRING LENGTH IS MORE THAN WORD_SIZE: " + data.length() + " wordsize " + WORD_SIZE);
-        }
+        }*/
     }
     
     public byte[] get() {
@@ -39,6 +40,20 @@ public class Word {
         int wordAsInteger = 0;
         for (int i=0; i < WORD_SIZE; i++) {
             wordAsInteger += word[i]*Math.pow(10, i);
+        }
+        return wordAsInteger;
+    }
+    
+    public int getHex() {
+        //System.out.println(this.getString());
+        //System.out.println(Utils.Converter.hexString2decimal("2A"));
+        return Utils.Converter.hexString2decimal(this.getString());
+    }
+    
+    public int getInt2() {
+        int wordAsInteger = 0;
+        for (int i=0; i < WORD_SIZE; i++) {
+            wordAsInteger += word[i]*Math.pow(16, i);
         }
         return wordAsInteger;
     }

@@ -26,14 +26,21 @@ public class VirtualMemory {
         // is jo i int aritmetikai atlikt parsint negaliu normaliai, pisau ir skambinau.
         // galim nebent worde ne byte[] o integer ir laikyt, jei norisi word 
         
-        return new Word(realMemory.readWord(getAbsoluteAddress(track, word)).getInt()); // kopija ar refas ?
+        return new Word(realMemory.readWord(getAbsoluteAddress(track, word)).getString()); // kopija ar refas ?
     }
     
     public void writeWord(int track, int word, Word data) {
         realMemory.writeWord(getAbsoluteAddress(track, word), data);
     }
     
-    public int getAbsoluteAddress(int track, int word) {
-        return (pagingTableAddress.getInt()*10 + track)*10 + word;
+    public int getAbsoluteAddress(int track, int word) { // hex params
+        Word w = realMemory.readWord(pagingTableAddress.getHex());
+        //System.out.println("[[" + w.get(0) + " " + w.get(1) + " " + w.get(2) + " " );
+       
+        //System.out.println("abs addr " + realMemory.readWord(pagingTableAddress.getHex()).getHex());
+        //System.out.println("[" + pagingTableAddress.getHex() + "]: " + (realMemory.readWord(pagingTableAddress.getHex())).getString());
+        Word absoluteTrack = realMemory.readWord(pagingTableAddress.getHex() + track);
+        int absoluteAddress = absoluteTrack.getHex() + word;
+        return absoluteAddress;
     }
 }

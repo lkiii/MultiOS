@@ -16,7 +16,6 @@ public class Test {
         String[] s1 = {"LABA", "VYTA", "PARA", "SULA", "MOLI", "OLIA", "PAPA", "UTUT", "AHAH", "OHOH"};      
         for (int i = 0x010; i <= 0x019; i++) {
             int absAddress = (i*0x10);
-            System.out.println("addr: " + absAddress);
             memory.writeWord(i, new Word(Integer.toHexString(absAddress)));
             for (int j = 0x0; j <= 0x00F; j++) {
                 memory.writeWord(absAddress+j, s1[i % 0x10]);
@@ -26,7 +25,7 @@ public class Test {
         String[] s2 = {"1111", "2222", "3333", "4444", "5555", "6666"};      
         for (int i = 0x02A; i <= 0x02F; i++) {
             int absAddress = (i*0x10);
-            memory.writeWord(i, new Word(Integer.toHexString(absAddress)));
+            memory.writeWord(i - 0x10, new Word(Integer.toHexString(absAddress)));
             for (int j = 0x0; j <= 0x00F; j++) {
                 memory.writeWord(absAddress+j, s2[i % 0x10 - 0xA]);
             }   
@@ -34,9 +33,22 @@ public class Test {
         
         print(memory);
 
+        // VIRTUAL MEMORY
         
+        VirtualMemory vm = new VirtualMemory(new Word("0010"), memory);
+        System.out.println((new Word("0010").getHex()));
+        System.out.println("=======VIRTUAL MEMORY");
+        for (int i=0x0; i <= 0xF; i++) {
+            System.out.print(i + "_:");
+            for (int j=0x0; j <= 0xF; j++) {
+                System.out.print(vm.readWord(i, j).getString() + " ");
+            }
+            System.out.println();
+        }
         
-        //VirtualMemory vm = new VirtualMemory(new Word(0x010), memory);*/
+        //Word a = new Word("0010");
+        //System.out.println(a.getString() + " " + a.getInt() + " " + a.getInt2() + " " + a.getHex());
+         
         
     }
     
