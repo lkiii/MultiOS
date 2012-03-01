@@ -39,7 +39,7 @@ public class Test {
         System.out.println((new Word("0010").getHex()));
         System.out.println("=======VIRTUAL MEMORY");
         for (int i=0x0; i <= 0xF; i++) {
-            System.out.print(i + "_:");
+            System.out.print(Integer.toHexString(i).toUpperCase() + "_:");
             for (int j=0x0; j <= 0xF; j++) {
                 System.out.print(vm.readWord(i, j).getString() + " ");
             }
