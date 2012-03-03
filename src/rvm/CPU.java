@@ -1,13 +1,16 @@
 package rvm;
+
 /**
- * 
+ *
  * VU MIF PS 1gr. 2012
- * @author Ernestas Prisakaru 
+ *
+ * @author Ernestas Prisakaru
  * @author Lukas Ignatavicius
- * 
+ *
  */
 public class CPU {
     // pt reg
+
     private Word PTR;
     // general purpose registers 
     private Word R1;
@@ -31,6 +34,7 @@ public class CPU {
     private boolean CH3; // external storage
     //TODO hi-level processor
     //FIXME byte->short word->int
+
     public CPU() {
         IP = new byte[2];
         TIMER = new Timer(1);
@@ -39,6 +43,12 @@ public class CPU {
         SI = 0;
         PI = 0;
     }
-    
-    
+
+    public boolean interruptCheck() {
+        if ((PI + SI + IOI + TI) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -22,7 +22,7 @@ public class VirtualMemory {
         pagingTableAddress = PTR;
         realMemory = rMemory;
     }
-    
+    // track nėra block?
     public Word readWord(int track, int word) {
         // gal bl vietoj word integer, nu aisku grazu, bet jau dapiso nx kad byteais saugom, biesina nx
         // is jo i int aritmetikai atlikt parsint negaliu normaliai, pisau ir skambinau.
