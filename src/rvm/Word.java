@@ -13,8 +13,8 @@ import static rvm.Constants.*;
 public class Word {
     private byte[] word;
     
-    public Word(int size) {
-        this.word = new byte[size];
+    public Word() {
+        this.word = new byte[WORD_SIZE];
     }
     
     public Word(String data) {

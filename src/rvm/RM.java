@@ -23,7 +23,9 @@ public class RM {
     public void startNewVM(/* programos vardas ar kelias iki jo ir parametrai*/) {
         int numVM = VMList.size(); // page table.entr. addr. => size+1
         // max VM = 16 - pageTableSize - sharedMemorySize
-        VMList.add(new VirtualMachine());
+        int requiredBlocks = 0xf;
+        VirtualMemory VMmemory = new VirtualMemory(new Word(),mem); // Virtuali atmintis VM'ui TODO reik kažkaip sugeneruot paging table per getAvailableTrack(requiredBlocks) ar kaip?
+        VMList.add(new VirtualMachine(VMmemory));
         // inicijuoti atminti
         int pageTableAddress = getNewPageTableEntryAddress();
         // surusiuotas uzimtu tracku masyvas

@@ -15,6 +15,8 @@ package rvm;
 public class VirtualMemory {
     Word pagingTableAddress;
     Memory realMemory; // nuoroda i realia atminti, nu nebent statini Memory padaryt, tada nereiks
+    int Size;
+    
     
     public VirtualMemory(Word PTR, Memory rMemory) {
         pagingTableAddress = PTR;

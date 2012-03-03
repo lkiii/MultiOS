@@ -17,7 +17,7 @@ public class Memory {
         this.size = size;
         memory = new Word[size + 1];
     }
-    
+   
     public int getSize() {
         return size;
     }
@@ -41,5 +41,9 @@ public class Memory {
         for (int i=0x0; i <= getSize(); i++) {
             writeWord(i, empty);
         }
+    }
+    //irgi apgalvot
+    public Word[] getWords(){
+        return memory;
     }
 }

@@ -10,10 +10,12 @@ package rvm;
  */
 public class VirtualMachine {
     
-    Memory mem;
+    VirtualMemory mem;
     RM realMachine;
+    CPU cpu;
     
-    public VirtualMachine() {
-        
+    public VirtualMachine(VirtualMemory mem) {
+        cpu = new CPU();
+        this.mem = mem;
     }
 }
