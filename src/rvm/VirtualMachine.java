@@ -10,6 +10,10 @@ package rvm;
  */
 public class VirtualMachine {
     
+    Memory mem;
+    RM realMachine;
+    
     public VirtualMachine() {
+        
     }
 }
