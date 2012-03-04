@@ -109,6 +109,14 @@ public class VirtualMachine {
         
     }
     
+    private void jumpIfLess() {
+        
+    }
+    
+    private void jumpIfGreater() {
+        
+    }
+    
     public void setCodeSeg(short addr) {
         cs = addr;
         ip = cs;
