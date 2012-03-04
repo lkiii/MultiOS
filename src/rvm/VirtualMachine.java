@@ -32,10 +32,6 @@ public class VirtualMachine {
         mem.readWord((int)CS+(int)IP, SF);
         CS++;
     }
-    public void step(){
-     //   mem.readWord((int)CS+(int)IP, SF);
-     //   CS++;
-    }
     
     public void setCodeSeg(short addr) {
         cs = addr;
