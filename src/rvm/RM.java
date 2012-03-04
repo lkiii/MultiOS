@@ -61,5 +61,8 @@ public class RM {
         // error jei virsitas limitas vmu
         return 0x000 + VMList.size()*0x10;
     }
-        
+    public boolean interruptCheck(){
+        return cpu.interruptCheck();
+    }    
+    
 }
