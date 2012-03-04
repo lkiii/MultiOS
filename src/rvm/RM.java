@@ -21,7 +21,7 @@ public class RM {
     }
     
     public void startNewVM(/* programos vardas ar kelias iki jo ir parametrai*/) {
-        //TODO Luikui 
+        //TODO Luikui
         int numVM = VMList.size(); // page table.entr. addr. => size+1
         // max VM = 16 - pageTableSize - 
         int requiredBlocks = 0xf;
