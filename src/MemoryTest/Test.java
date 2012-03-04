@@ -36,18 +36,18 @@ public class Test {
         // VIRTUAL MEMORY
         
         VirtualMemory vm = new VirtualMemory(new Word("0010"), memory);
-        System.out.println((new Word("0010").getHex()));
+        System.out.println((new Word("0010").toHex()));
         System.out.println("=======VIRTUAL MEMORY");
         for (int i=0x0; i <= 0xF; i++) {
             System.out.print(Integer.toHexString(i).toUpperCase() + "_:");
             for (int j=0x0; j <= 0xF; j++) {
-                System.out.print(vm.readWord(i, j).getString() + " ");
+                System.out.print(vm.readWord(i, j).toCharString() + " ");
             }
             System.out.println();
         }
         
         //Word a = new Word("0010");
-        //System.out.println(a.getString() + " " + a.getInt() + " " + a.getInt2() + " " + a.getHex());
+        //System.out.println(a.toCharString() + " " + a.toInt() + " " + a.getInt2() + " " + a.toHex());
          
         
     }
@@ -56,7 +56,7 @@ public class Test {
         for (int i=0x00; i <= 0xFF; i++) {
             System.out.print(Integer.toHexString(i).toUpperCase() + "_: ");
             for (int j=0x0; j <= 0xF; j++) {
-                System.out.print(mem.readWord(i*0x10 + j).getString() + " ");
+                System.out.print(mem.readWord(i*0x10 + j).toCharString() + " ");
             }
             System.out.println();
         } 

@@ -42,11 +42,11 @@ public class VirtualMachine {
             case "POP ":
                 break;
             default:
-                Word addr = new Word(opcode.substring(2, 4));
+                Word arg = new Word(opcode.substring(2, 4));
                 
                 switch (opcode.substring(0, 2)) {
                     case "AD": // ADD, AD D ar ADD?
-                        add();
+                        add(memory.readWord(arg));
                         break;
                     case "SB":
                         break;
@@ -65,8 +65,10 @@ public class VirtualMachine {
                     case "JG":
                         break;
                     case "PD":
+                        putData(memory.readWord(arg));
                         break;
                     case "GD":
+                        getDat(arg);
                         break;
                     default:
                         // interrupt. unknown opcode
@@ -81,20 +83,20 @@ public class VirtualMachine {
 
     // operations
     private void add(Word value) {
-        R = new Word(R.getInt() + value.getInt());
+        R = new Word(R.toInt() + value.toInt());
     }
     
     private void sub(Word value) {
-        R = new Word(R.getInt() - value.getInt());
+        R = new Word(R.toInt() - value.toInt());
     }
     
     private void loadRegister(Word addr) {
-        memory.writeWord(DS, addr, new Word(R.getInt()));
+        memory.writeWord(DS, addr.toInt(), new Word(R.toInt()));
     }
         
     
     private void saveRegister(Word addr) {
-        R = memory.readWord(DS, addr);
+        R = memory.readWord(DS, addr.toInt());
     }
     
     private void compare(Word value) {
@@ -116,17 +118,29 @@ public class VirtualMachine {
     private void jumpIfGreater() {
         
     }
-    
-    public void setCodeSeg(short addr) {
-        cs = addr;
-        ip = cs;
+    /*
+    public void setCodeSeg(byte addr) {
+        CS = addr;
+        IP = CS;
     }
 
-    public void setDataSeg(short addr) {
-        ds = addr;
+    public void setDataSeg(byte addr) {
+        DS = addr;
     }
 
-    public void setStackSeg(short addr) {
-        ss = addr;
+    public void setStackSeg(byte addr) {
+        SS = addr;
+    */
+
+    private void halt() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    private void putData(Word value) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    private void getDat(Word adress) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

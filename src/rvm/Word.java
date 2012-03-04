@@ -43,7 +43,7 @@ public class Word {
         return word[i];
     }
 
-    public int getInt() {
+    public int toInt() {
         int wordAsInteger = 0;
         for (int i = 0; i < WORD_SIZE; i++) {
             wordAsInteger += word[i] * Math.pow(10, i);
@@ -51,14 +51,14 @@ public class Word {
         return wordAsInteger;
     }
 
-    public int getHex() {
-        return Utils.Converter.hexString2decimal(this.getString());
+    public int toHex() {
+        return Utils.Converter.hexString2decimal(this.toCharString());
     }
     /**
      * 
      * @return String as chars 
      */
-    public String getString() {
+    public String toCharString() {
         char ret[] = new char[4];
         for (int i=0; i<4; i++ ){
             ret[i] = (char)word[i];
