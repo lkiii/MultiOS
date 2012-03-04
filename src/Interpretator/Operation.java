@@ -15,7 +15,7 @@ public class Operation {
         String opcode = op.get().toString();
         switch (opcode) {
             case "AD": // ADD, AD D ar ADD?
-                operation = Opcode.ADD;
+                add(/**/);
                 break;
             case "SB":
                 break;
@@ -25,9 +25,10 @@ public class Operation {
                 break;
             case "CM":
                 break;
-            case "PUSH": // 4b ne 2
+            case "PU": // 4b ne 2
+                if (opcode)
                 break;
-            case "POP":
+            case "PO":
                 break;
             case "JP":
                 break;
@@ -40,6 +41,8 @@ public class Operation {
             case "PD":
                 break;
             case "GD":
+                break;
+            case "HALT":
                 break;
             default:
                 // interrupt. unknown opcode
