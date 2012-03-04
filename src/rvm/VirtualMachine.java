@@ -29,6 +29,10 @@ public class VirtualMachine {
         this.mem = mem;
     }
     public void step(){
+        mem.readWord((int)CS+(int)IP, SF);
+        CS++;
+    }
+    public void step(){
      //   mem.readWord((int)CS+(int)IP, SF);
      //   CS++;
     }
