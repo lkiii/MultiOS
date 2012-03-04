@@ -71,5 +71,8 @@ public class RM {
 
  //       return 0x000 + VMList.size()*0x10;
     }
-        
+    public boolean interruptCheck(){
+        return cpu.interruptCheck();
+    }    
+    
 }
