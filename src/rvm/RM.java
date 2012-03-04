@@ -20,42 +20,42 @@ public class RM {
     
     }
     
-    public void startNewVM(/* programos vardas ar kelias iki jo ir parametrai*/) {
+    public void startNewVM(String path, String args/* programos vardas ar kelias iki jo ir parametrai*/) {
         int numVM = VMList.size(); // page table.entr. addr. => size+1
         // max VM = 16 - pageTableSize - sharedMemorySize
-        VMList.add(new VirtualMachine());
         // inicijuoti atminti
-        int pageTableAddress = getNewPageTableEntryAddress();
+        //int pageTableAddress = getNewPageTableEntryAddress();
         // surusiuotas uzimtu tracku masyvas
-        int[] usedTracks = new int[VMList.size()*0x10]; // iskiriam atminties tiek kiek masinu paleista (*16 zodziu is kiekvieno)
-        for (int i=0x0; i<= VMList.size()*0xf; i++) {
-            usedTracks[0x010 + i] = mem.readWord(0x010);
+        //int[] usedTracks = new int[numVM*0x10]; // iskiriam atminties tiek kiek masinu paleista (*16 zodziu is kiekvieno)
+        //for (int i=0x0; i<= numVM*0xf; i++) {
+       //     usedTracks[0x010 + i] = mem.readWord(0x010);
             
         }
         
-        for (int i=0x0; i<=0xF; i++) {
+       // for (int i=0x0; i<=0xF; i++) {
             
         }
-    }
+   //     VMList.add(new VirtualMachine());
+  //  }
     
     // surinkti masyva uzimtu takeliu
     // is eiles begti per atminti ir tikrinti ar takas uzimtas jei ne tai duoti masinai
     // tai surinkti 16 takeliu
-    public getAvailableTrack() {
+    //public getAvailableTrack() {
         
     }
     
     
-    public isAvailable(int Track) {
-        for (int i=0x010; i<=0x0F0) {
-            for ()
-        }
-    }
+  //  public isAvailable(int Track) {
+   //     for (int i=0x010; i<=0x0F0) {
+   //         for ()
+  //      }
+   // }
     
-    public int getNewPageTableEntryAddress() {
+  //  public int getNewPageTableEntryAddress() {
         // error jei virsitas limitas vmu
-        return 0x000 + VMList.size()*0x10;
-    }
+     //   return 0x000 + VMList.size()*0x10;
+ //   }
     
     
-}
+//}
