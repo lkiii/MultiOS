@@ -53,8 +53,4 @@ public class VirtualMachine {
     public void setStackSeg(short addr) {
         ss = addr;
     }
-    
-    
-    
-    
 }
