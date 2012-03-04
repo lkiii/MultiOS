@@ -15,12 +15,14 @@ package rvm;
 public class VirtualMemory {
     Word pagingTableAddress;
     Memory realMemory; // nuoroda i realia atminti, nu nebent statini Memory padaryt, tada nereiks
+    int Size;
+    
     
     public VirtualMemory(Word PTR, Memory rMemory) {
         pagingTableAddress = PTR;
         realMemory = rMemory;
     }
-    
+    // track nėra block?
     public Word readWord(int track, int word) {
         // gal bl vietoj word integer, nu aisku grazu, bet jau dapiso nx kad byteais saugom, biesina nx
         // is jo i int aritmetikai atlikt parsint negaliu normaliai, pisau ir skambinau.
