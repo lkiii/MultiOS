@@ -60,4 +60,10 @@ public class RM {
         VirtualMemory VMmemory = new VirtualMemory(new Word("0000"), mem);
         return VMmemory;
     }
+    
+        //TODO reik krc gi programoj atsizvelgt .DATA .CODE sintaksinius dalykus
+    private boolean artvarkabendraisuprograma() {
+        //int segment = 
+        return true;
+    }
 }

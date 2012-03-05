@@ -31,10 +31,6 @@ public class VirtualMachine {
         IP++;
         realMachine.interruptCheck();
     }
-    //TODO reik krc gi programoj atsizvelgt .DATA .CODE sintaksinius dalykus
-    private boolean artvarkabendraisuprograma() {
-        int segment = 
-    }
     
     private void executeCommand(Word op) {
         String opcode = op.get().toString().toUpperCase();
