@@ -34,15 +34,19 @@ public class Memory {
         return memory[absAddress];
     }
     
+    public Word readWord(Word absAddress) {
+        return readWord(absAddress.toInt());
+    }
+    
     public void writeWord(int absAddress, Word data) {
         memory[absAddress] = data;
     }
     
-    public void writeWord(int absAddress, String data) {
-        memory[absAddress] = new Word(data.substring(0, WORD_SIZE));
+    public void writeWord(Word absAddress, Word data) {
+        memory[absAddress.toInt()] = data;
     }
     
-    // apgalvot 
+    // tempas 
     public void fillZeroes() {
         Word empty = new Word("0000");
         for (int i=0x0; i <= getSize(); i++) {
