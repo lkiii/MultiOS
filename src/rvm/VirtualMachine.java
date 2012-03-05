@@ -16,16 +16,18 @@ public class VirtualMachine {
     private short SP = 0;
     private Byte SF = 0;
 
-    public VirtualMachine(VirtualMemory mem, Byte[] registers) {
-        this.memory = mem;
-        this.DS = registers[0];
-        this.CS = registers[1];
-        this.SS = registers[2];
+    public VirtualMachine(RM realMachine, Byte[] registers) {
+        DS = registers[0];
+        CS = registers[1];
+        SS = registers[2];
+        this.realMachine = realMachine;
+        this.memory = this.realMachine.getVirtualMemory();
 
     }
 
     public void step() {
-        executeCommand(memory.readWord((int) CS + (int) IP, SF));
+        memory.writeWord((int) CS + (int) IP, new Word("AD12"));
+        executeCommand(memory.readWord((int) CS + (int) IP));
         IP++;
         realMachine.interruptCheck();
     }
@@ -71,8 +73,8 @@ public class VirtualMachine {
                         getDat(arg);
                         break;
                     default:
-                        // interrupt. unknown opcode
-                        break;
+                        throw new RuntimeException("Pisk ožiuką");
+                        //break;
                         
                 }
         }

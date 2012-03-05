@@ -12,6 +12,8 @@ public class RVM {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        CPU cpu = new CPU();
+        RM rm = new RM();
+        VirtualMachine vm = rm.startNewVM();
+        vm.step();
     }
 }

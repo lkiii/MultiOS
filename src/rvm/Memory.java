@@ -10,24 +10,24 @@ import static rvm.Constants.*;
  */
 public class Memory {
     private Word[] memory;
-    private boolean[] PageEntryAvailable;
+    //private boolean[] PageEntryAvailable;
     private int size;
     
     public Memory(int size) {
         this.size = size;
         memory = new Word[size + 1];
-        for (int i=0; i < PT_SIZE; i++) {
+       /* for (int i=0; i < PT_SIZE; i++) {
             PageEntryAvailable[i] = true;      
-        }
+        }*/
     }
    
     public int getSize() {
         return size;
     }
     
-    public boolean isPageEntryAvailable(int index) {
+    /*public boolean isPageEntryAvailable(int index) {
         return PageEntryAvailable[index]; // outofbounds    
-    } 
+    } */
     
     public Word readWord(int absAddress) {
         // FIXME uz ribu iseina cia patikrinimas ar proce?

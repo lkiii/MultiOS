@@ -52,7 +52,7 @@ public class Word {
     }
 
     public int toHex() {
-        return Utils.Converter.hexString2decimal(this.toCharString());
+        return Utils.Converter.hexString2decimal(this.toString());
     }
     /**
      * 
