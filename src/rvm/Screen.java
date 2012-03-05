@@ -10,7 +10,7 @@ import rvm.Constants.*;
  * @author ernestas
  */
 public class Screen {
-    private int[][] screen;
+    private Word[][] screen;
     
     public Screen() {
         screen = new int[rvm.Constants.SCREEN_SIZE_X][rvm.Constants.SCREEN_SIZE_Y];
