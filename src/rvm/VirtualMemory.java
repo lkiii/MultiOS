@@ -54,7 +54,11 @@ public class VirtualMemory {
     }
 
     public void writeWord(int adress, Word data) {
-        realMemory.writeWord(getAbsoluteAddress(adress / 0xF, adress % 0xF), data);
+        writeWord(adress / 0xF, adress % 0xF, data);
+    }
+    
+    public void writeWord(Word adress, Word data) {
+        writeWord(adress.toInt(), data);
     }
 
     public int getAbsoluteAddress(int track, int word) { // hex params
