@@ -31,7 +31,11 @@ public class VirtualMachine {
         IP++;
         realMachine.interruptCheck();
     }
-
+    //TODO reik krc gi programoj atsizvelgt .DATA .CODE sintaksinius dalykus
+    private boolean artvarkabendraisuprograma() {
+        int segment = 
+    }
+    
     private void executeCommand(Word op) {
         String opcode = op.get().toString().toUpperCase();
         switch (opcode) {
@@ -70,7 +74,7 @@ public class VirtualMachine {
                         putData(memory.readWord(arg));
                         break;
                     case "GD":
-                        getDat(arg);
+                        getData(arg);
                         break;
                     default:
                         throw new RuntimeException("Pisk ožiuką");
@@ -102,22 +106,53 @@ public class VirtualMachine {
     }
     
     private void compare(Word value) {
-        
+        if (R.toInt() < value.toInt()) {
+            SF = 0;
+        } else if (R.toInt() == value.toInt()) {
+            SF = 1;
+        } else {
+            SF = 2;
+        }
     }
     
-    private void jump() {
-        
+    private void jump(Word addr) {
+        IP = (short) addr.toInt();
     }
     
-    private void jumpIfEqual() {
-        
+    private void jumpIfEqual(Word addr) {
+        if (SF == 1) {
+            IP = (short) addr.toInt();
+        }
     }
     
-    private void jumpIfLess() {
-        
+    private void jumpIfLess(Word addr) {
+        if (SF == 0) {
+            IP = (short) addr.toInt();
+        }  
     }
     
-    private void jumpIfGreater() {
+    private void jumpIfGreater(Word addr) {
+        if (SF == 2) {
+            IP = (short) addr.toInt();
+        } 
+    }
+    
+    private void push() {
+        if (SP == SS) {
+            SP = (short) (SS + 0x1F);
+        } else {
+            SP--;
+        }
+        memory.writeWord(SS, SP, R);
+    }
+    
+    private void pop() {
+        R = memory.readWord(SS, SP);
+        if (SP == SS + 1F) {
+            SP = SS;
+        } else {
+            SP++;
+        }
         
     }
     /*
@@ -134,7 +169,7 @@ public class VirtualMachine {
         SS = addr;
     */
 
-    private void halt() {
+    private void halt() { // tas pats kas destruktorius cj isvis gali nieko nedaryt tik informuot realia mashina
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -142,7 +177,7 @@ public class VirtualMachine {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    private void getDat(Word adress) {
+    private void getData(Word adress) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }

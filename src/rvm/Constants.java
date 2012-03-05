@@ -12,6 +12,8 @@ public final class Constants {
     public static final int WORD_SIZE = 0x4;
     public static final int BLOCK_SIZE = 0xf;
     public static final int PT_SIZE = 0xf;
+    public static final int SCREEN_SIZE_X = 80; 
+    public static final int SCREEN_SIZE_Y = 25;
     
     private Constants() {
         throw new AssertionError("<Constants> is uninstansiable");
