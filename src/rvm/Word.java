@@ -102,15 +102,6 @@ public class Word {
     }
 
     /**
-     * 48 veda kaip 0
-     *
-     * @return String as chars
-     */
-    public String toASCIIString() {
-        return new String(toByteArray());
-    }
-
-    /**
      * Gražina wordą kaip stringą taip kaip guli atmintį
      *
      * @return numeric string

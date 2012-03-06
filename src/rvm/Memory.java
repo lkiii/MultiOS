@@ -51,7 +51,7 @@ public class Memory {
     // tempas 
     public void fillZeroes() {
         Word empty = new Word("0000");
-        for (int i=0x0; i <= getSize(); i++) {
+        for (int i=0x0; i < getSize(); i++) {
             writeWord(i, empty);
         }
     }
