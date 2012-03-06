@@ -20,7 +20,7 @@ public class Word {
      * Konstruktorius sukuria 0 užpildytą word
      */
     private Word() {
-        this.word = ByteBuffer.allocate(WORD_SIZE);
+        this.word = ByteBuffer.allocateDirect(WORD_SIZE);
     }
 
     /**
@@ -40,6 +40,9 @@ public class Word {
      */
     public Word(String data) {
         this();
+        if (data.length() > WORD_SIZE) {
+            data = data.substring(data.length() - WORD_SIZE, data.length());
+        }
         this.word.put(data.getBytes());
     }
 
@@ -52,22 +55,27 @@ public class Word {
         this();
         this.word.putInt(data);
     }
+
     /**
      * Grąžina wordą kaip byte array taip kaip guli atmintį
+     *
      * @return byte array
      */
-    public byte[] getByteArray(){
-        byte[] byteArray = new byte[word.capacity()];
-        word.get(byteArray);
+    public byte[] toByteArray() {
+        byte[] byteArray = new byte[WORD_SIZE];
+        for (int i = 0; i < WORD_SIZE; i++) {
+            byteArray[i] = word.get(i);
+        }
         return byteArray;
     }
+
     /**
      * Gražina wordo baitą pagal indeksą
      *
      * @param i kurį baitą grąžint
      * @return baitą
      */
-    public byte getByte(int i) {
+    public byte toByte(int i) {
         return word.get(i);
     }
 
@@ -77,7 +85,7 @@ public class Word {
      * @param i kurį baitą grąžint
      * @return charą
      */
-    public char getChar(int i) {
+    public char toChar(int i) {
         return word.getChar(i);
     }
 
@@ -87,22 +95,28 @@ public class Word {
      * @return wordą kaip skaičius
      */
     public int toInt() {
-        return word.getInt();
+        word.flip();
+        int i = word.getInt();
+        word.flip();
+        return i;
     }
+
     /**
      * 48 veda kaip 0
+     *
      * @return String as chars
      */
     public String toASCIIString() {
-        return new String(getByteArray());
+        return new String(toByteArray());
     }
 
     /**
      * Gražina wordą kaip stringą taip kaip guli atmintį
+     *
      * @return numeric string
      */
     @Override
     public String toString() {
-        return new String(getByteArray());
+        return new String(this.toByteArray());
     }
 }
