@@ -23,10 +23,7 @@ public class VirtualMemory {
     // track nėra block?
 
     /**
-     *         // gal bl vietoj word integer, nu aisku grazu, bet jau dapiso nx kad
-     * byteais saugom, biesina nx // is jo i int aritmetikai atlikt parsint
-     * negaliu normaliai, pisau ir skambinau. // galim nebent worde ne byte[] o
-     * integer ir laikyt, jei norisi word
+     *       
      *
      * @param track
      * @param word
