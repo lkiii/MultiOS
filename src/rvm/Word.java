@@ -15,26 +15,31 @@ public class Word {
 
     private byte[] word;
 
-    public Word() {
+    private Word() {
         this.word = new byte[WORD_SIZE];
+        for (int i = 0; i< WORD_SIZE; i++){
+            word[i] = 0;
+        }
     }
 
     public Word(String data) {
-        word = data.getBytes();
-        /*
-         * if (data.length() == WORD_SIZE) { this.word = data.substring(0,
-         * WORD_SIZE).getBytes(); } else if (data.length() < WORD_SIZE) {
-         * this.word = data.substring(0).getBytes(); } else { throw new
-         * RuntimeException("ERROR STRING LENGTH IS MORE THAN WORD_SIZE: " +
-         * data.length() + " wordsize " + WORD_SIZE);
+        this();
+        for (int i = WORD_SIZE-1; i >= data.length(); i--) {
+            this.word[i] = (byte)data.charAt(data.length()-i);
         }
-         */
     }
     
     public Word(int data) {
-        word = BigInteger.valueOf(data).toByteArray();
+        this();
+        for (int i = 0; i < data.length(); i++) {
+            this.word[i] = (byte)data.charAt(i);
+        }
     }
-
+    
+    public Word(byte[] word){
+        this.word = word;
+        fillZeros();
+    }
     public byte[] get() {
         return word;
     }
@@ -44,9 +49,10 @@ public class Word {
     }
 
     public int toInt() {
+        System.out.println(word[0] + " " + word[1] + " " +word[2] + " "+word[3]);
         int wordAsInteger = 0;
         for (int i = 0; i < WORD_SIZE; i++) {
-            wordAsInteger += word[i] * Math.pow(10, i);
+            wordAsInteger += word[i] * Math.pow(10, WORD_SIZE-i);
         }
         return wordAsInteger;
     }
@@ -59,8 +65,8 @@ public class Word {
      * @return String as chars 
      */
     public String toCharString() {
-        char ret[] = new char[4];
-        for (int i=0; i<4; i++ ){
+        char ret[] = new char[WORD_SIZE];
+        for (int i=0; i<WORD_SIZE; i++ ){
             ret[i] = (char)word[i];
         }
         return new String(ret);

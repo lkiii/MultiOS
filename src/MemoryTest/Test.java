@@ -18,7 +18,7 @@ public class Test {
             int absAddress = (i*0x10);
             memory.writeWord(i, new Word(Integer.toHexString(absAddress)));
             for (int j = 0x0; j <= 0x00F; j++) {
-                memory.writeWord(absAddress+j, s1[i % 0x10]);
+                memory.writeWord(absAddress+j, new Word(s1[i % 0x10]));
             }   
         }
         
@@ -27,7 +27,7 @@ public class Test {
             int absAddress = (i*0x10);
             memory.writeWord(i - 0x10, new Word(Integer.toHexString(absAddress)));
             for (int j = 0x0; j <= 0x00F; j++) {
-                memory.writeWord(absAddress+j, s2[i % 0x10 - 0xA]);
+                memory.writeWord(absAddress+j, new Word(s2[i % 0x10 - 0xA]));
             }   
         }     
         

@@ -26,24 +26,24 @@ public class VirtualMachine {
     }
 
     public void step() {
-        memory.writeWord((int) CS + (int) IP, new Word("AD12"));
+        memory.writeWord(CS + IP, new Word("AD12"));
         executeCommand(memory.readWord((int) CS + (int) IP));
         IP++;
         realMachine.interruptCheck();
     }
     
     private void executeCommand(Word op) {
-        String opcode = op.get().toString().toUpperCase();
+        String opcode = op.toString().toUpperCase();
         switch (opcode) {
             case "HALT":
                 halt();
-
                 break;
             case "PUSH":
                 break;
             case "POP ":
                 break;
             default:
+                System.out.println(opcode.substring(0, 2));
                 Word arg = new Word(opcode.substring(2, 4));
                 
                 switch (opcode.substring(0, 2)) {

@@ -42,10 +42,11 @@ public class VirtualMemory {
      * @return
      */
     public Word readWord(int adress) {
-        return readWord(adress / 0xF, adress % 0xF);
+        return readWord(adress / 0x10, adress % 0x10);
     }
 
     public Word readWord(Word arg) {
+        System.out.print(arg);
         return readWord(arg.toInt());
     }
 
@@ -54,7 +55,8 @@ public class VirtualMemory {
     }
 
     public void writeWord(int adress, Word data) {
-        writeWord(adress / 0xF, adress % 0xF, data);
+        System.out.print(adress / 0x10+" "+ adress % 0x10);
+        writeWord(adress / 0x10, adress % 0x10, data);
     }
     
     public void writeWord(Word adress, Word data) {
@@ -62,13 +64,11 @@ public class VirtualMemory {
     }
 
     public int getAbsoluteAddress(int track, int word) { // hex params
-        Word w = realMemory.readWord(pagingTableAddress.toHex());
-        //System.out.println("[[" + w.get(0) + " " + w.get(1) + " " + w.get(2) + " " );
-
-        //System.out.println("abs addr " + realMemory.readWord(pagingTableAddress.toHex()).toHex());
-        //System.out.println("[" + pagingTableAddress.toHex() + "]: " + (realMemory.readWord(pagingTableAddress.toHex())).toString());
-        Word absoluteTrack = realMemory.readWord(pagingTableAddress.toHex() + track);
-        int absoluteAddress = absoluteTrack.toHex() + word;
+        System.out.println(pagingTableAddress.toInt());
+        System.out.println(pagingTableAddress.toInt());
+        Word absoluteTrack = realMemory.readWord(pagingTableAddress.toInt() + track);
+        
+        int absoluteAddress = absoluteTrack.toInt() + word;
         return absoluteAddress;
     }
 }

@@ -29,7 +29,7 @@ public class RM {
              */) {
         //int numVM = VMList.size(); // page table.entr. addr. => size+1
         //int requiredBlocks = 0xf;
-        VMList.add(new VirtualMachine(this, new Byte[]{0, 3, 5})); // {DS,CS,SS}
+        VMList.add(new VirtualMachine(this, new Byte[]{0x00, 0x30, 0x50})); // {DS,CS,SS}
         return VMList.get(0);
     }
 

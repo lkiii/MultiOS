@@ -13,7 +13,7 @@ public class Screen {
     private Word[][] screen;
     
     public Screen() {
-        screen = new int[rvm.Constants.SCREEN_SIZE_X][rvm.Constants.SCREEN_SIZE_Y];
+        screen = new Word[rvm.Constants.SCREEN_SIZE_X][rvm.Constants.SCREEN_SIZE_Y];
     }
     
     
