@@ -43,12 +43,11 @@ public class VirtualMachine {
             case "POP ":
                 break;
             default:
-                Word arg = new Word(opcode.substring(2, 4));
-                
+                Word arg = new Word(Integer.parseInt(opcode.substring(2, 4)));
                 switch (opcode.substring(0, 2)) {
                     case "AD": // ADD, AD D ar ADD?
-                        memory.writeWord(0x12, new Word(0x30));
-                        add(memory.readWord(0x12));
+                        memory.writeWord(arg, new Word(0x30));
+                        add(memory.readWord(arg));
                         break;
                     case "SB":
                         break;
