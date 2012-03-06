@@ -1,6 +1,7 @@
 package rvm;
 
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import static rvm.Constants.*;
 
 /**
@@ -12,71 +13,110 @@ import static rvm.Constants.*;
  *
  */
 public class Word {
-   
-    private byte[] word;
 
+    private ByteBuffer word;
+
+    /**
+     * Konstruktorius sukuria 0 užpildytą word
+     */
     private Word() {
-        this.word = new byte[WORD_SIZE];
-        for (int i = 0; i< WORD_SIZE; i++){
-            word[i] = 0;
-        }
+        this.word = ByteBuffer.allocateDirect(WORD_SIZE);
     }
 
+    /**
+     * Kosntruktorius kuria word iš byte[]
+     *
+     * @param word byte[] iš kurio bus generuojamas word
+     */
+    public Word(byte[] word) {
+        this();
+        this.word.put(word);
+    }
+
+    /**
+     * Kosntruktorius kuria word iš Stringo. Reikšmės saugomos kaip ASCII
+     *
+     * @param data String iš kurio kuriamas word
+     */
     public Word(String data) {
         this();
-        for (int i = WORD_SIZE-1; i >= data.length(); i--) {
-            this.word[i] = (byte)data.charAt(data.length()-i);
+        if (data.length() > WORD_SIZE) {
+            data = data.substring(data.length() - WORD_SIZE, data.length());
         }
+        this.word.put(data.getBytes());
     }
-    
+
+    /**
+     * Kosntruktorius kuria word iš into. Reikšmės saugomos kaip skaičiai
+     *
+     * @param data int iš kurio kuriamas word
+     */
     public Word(int data) {
         this();
-        for (int i = 0; i < data.length(); i++) {
-            this.word[i] = (byte)data.charAt(i);
-        }
-    }
-    
-    public Word(byte[] word){
-        this.word = word;
-        fillZeros();
-    }
-    public byte[] get() {
-        return word;
+        this.word.putInt(data);
     }
 
-    public byte get(int i) {
-        return word[i];
-    }
-
-    public int toInt() {
-        System.out.println(word[0] + " " + word[1] + " " +word[2] + " "+word[3]);
-        int wordAsInteger = 0;
-        for (int i = 0; i < WORD_SIZE; i++) {
-            wordAsInteger += word[i] * Math.pow(10, WORD_SIZE-i);
-        }
-        return wordAsInteger;
-    }
-
-    public int toHex() {
-        return Utils.Converter.hexString2decimal(this.toString());
-    }
     /**
-     * 
-     * @return String as chars 
+     * Grąžina wordą kaip byte array taip kaip guli atmintį
+     *
+     * @return byte array
      */
-    public String toCharString() {
-        char ret[] = new char[WORD_SIZE];
-        for (int i=0; i<WORD_SIZE; i++ ){
-            ret[i] = (char)word[i];
+    public byte[] toByteArray() {
+        byte[] byteArray = new byte[WORD_SIZE];
+        for (int i = 0; i < WORD_SIZE; i++) {
+            byteArray[i] = word.get(i);
         }
-        return new String(ret);
+        return byteArray;
     }
+
     /**
-     * 
+     * Gražina wordo baitą pagal indeksą
+     *
+     * @param i kurį baitą grąžint
+     * @return baitą
+     */
+    public byte toByte(int i) {
+        return word.get(i);
+    }
+
+    /**
+     * Gražina wordo baitą pagal indeksą
+     *
+     * @param i kurį baitą grąžint
+     * @return charą
+     */
+    public char toChar(int i) {
+        return word.getChar(i);
+    }
+
+    /**
+     * Gražina wordą taip kaip saugo kaip skaičių
+     *
+     * @return wordą kaip skaičius
+     */
+    public int toInt() {
+        word.flip();
+        int i = word.getInt();
+        word.flip();
+        return i;
+    }
+
+    /**
+     * 48 veda kaip 0
+     *
+     * @return String as chars
+     */
+    public String toASCIIString() {
+        return new String(toByteArray());
+    }
+
+    /**
+     * Gražina wordą kaip stringą taip kaip guli atmintį
+     *
      * @return numeric string
      */
     @Override
-    public String toString(){
-        return new String(word);
+    public String toString() {
+        return new String(this.toByteArray());
     }
 }
