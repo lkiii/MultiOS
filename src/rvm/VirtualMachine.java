@@ -21,7 +21,7 @@ public class VirtualMachine {
         CS = registers[1];
         SS = registers[2];
         this.realMachine = realMachine;
-        this.memory = this.realMachine.getVirtualMemory();
+        this.memory = this.realMachine.getNewVirtualMemory();
 
     }
 
@@ -43,11 +43,11 @@ public class VirtualMachine {
             case "POP ":
                 break;
             default:
-                Word arg = new Word(Integer.parseInt(opcode.substring(2, 4)));
+                Word adressArg = new Word(Integer.parseInt(opcode.substring(2, 4))+DS);
                 switch (opcode.substring(0, 2)) {
                     case "AD": // ADD, AD D ar ADD?
-                        memory.writeWord(arg, new Word(0x30));
-                        add(memory.readWord(arg));
+                        memory.writeWord(adressArg, new Word(0x30));
+                        add(memory.readWord(adressArg));
                         break;
                     case "SB":
                         break;
@@ -66,13 +66,13 @@ public class VirtualMachine {
                     case "JG":
                         break;
                     case "PD":
-                        putData(memory.readWord(arg));
+                        putData(memory.readWord(adressArg));
                         break;
                     case "GD":
-                        getData(arg);
+                        getData(adressArg);
                         break;
                     default:
-                        throw new RuntimeException("Pisk ožiuką");
+                        throw new RuntimeException("Nėra komandos");
                         //break;
                         
                 }

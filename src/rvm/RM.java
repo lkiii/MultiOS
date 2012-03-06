@@ -49,7 +49,7 @@ public class RM {
         return cpu.interruptCheck();
     }
 
-    public VirtualMemory getVirtualMemory() {
+    public VirtualMemory getNewVirtualMemory() {
         mem.writeWord(0x000, new Word(0x150));
         mem.writeWord(0x001, new Word(0x120));
         mem.writeWord(0x002, new Word(0xe20));

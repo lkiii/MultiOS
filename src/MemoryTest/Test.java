@@ -38,7 +38,7 @@ public class Test {
         for (int i=0x0; i <= 0xF; i++) {
             System.out.print(Integer.toHexString(i).toUpperCase() + "_:");
             for (int j=0x0; j <= 0xF; j++) {
-                System.out.print(vm.readWord(i, j).toString() + " ");
+                System.out.print(vm.readWord(i, j) + " ");
             }
             System.out.println();
         }
@@ -53,7 +53,7 @@ public class Test {
         for (int i=0x00; i < 0xFF; i++) {
             System.out.print(Integer.toHexString(i).toUpperCase() + "_: ");
             for (int j=0x0; j <= 0xF; j++) {
-                System.out.print(mem.readWord(i*0x10 + j).toString() + " ");
+                System.out.print(mem.readWord(i*0x10 + j) + " ");
             }
             System.out.println();
         } 
