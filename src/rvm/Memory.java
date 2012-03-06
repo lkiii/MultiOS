@@ -15,7 +15,7 @@ public class Memory {
     
     public Memory(int size) {
         this.size = size;
-        memory = new Word[size + 1];
+        memory = new Word[size];
        /* for (int i=0; i < PT_SIZE; i++) {
             PageEntryAvailable[i] = true;      
         }*/
@@ -23,12 +23,14 @@ public class Memory {
    
     public int getSize() {
         return size;
-    }
+        
+        
+    }"naxui"
     
     /*public boolean isPageEntryAvailable(int index) {
         return PageEntryAvailable[index]; // outofbounds    
     } */
-    
+  
     public Word readWord(int absAddress) {
         // FIXME uz ribu iseina cia patikrinimas ar proce?
         return memory[absAddress];
@@ -58,3 +60,4 @@ public class Memory {
         return memory;
     }
 }
+

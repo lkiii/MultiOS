@@ -12,7 +12,7 @@ import static rvm.Constants.*;
  *
  */
 public class Word {
-
+   
     private byte[] word;
 
     private Word() {
