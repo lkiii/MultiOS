@@ -25,7 +25,7 @@ public class Memory {
         return size;
         
         
-    }"naxui"
+    }
     
     /*public boolean isPageEntryAvailable(int index) {
         return PageEntryAvailable[index]; // outofbounds    
