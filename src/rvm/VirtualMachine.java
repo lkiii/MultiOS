@@ -8,7 +8,7 @@ public class VirtualMachine {
 
     private VirtualMemory memory;
     private RM realMachine;
-    private Word R = new Word();
+    private Word R = new Word(0x0);
     private final Byte CS; //TODO jo manau reik replace Byte[] į int ar pan. Arba kurt savo TwoByteRegister kur yra ++ ir dar ko reik
     private final Byte DS;
     private final Byte SS;
