@@ -97,7 +97,7 @@ public class Word {
     public int toInt() {
         word.flip();
         int i = word.getInt();
-        word.flip();
+        //word.flip();
         return i;
     }
 

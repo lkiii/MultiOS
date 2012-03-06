@@ -52,7 +52,6 @@ public class VirtualMemory {
     }
 
     public void writeWord(int adress, Word data) {
-        System.out.print(adress / 0x10+" "+ adress % 0x10);
         writeWord(adress / 0x10, adress % 0x10, data);
     }
     
@@ -61,10 +60,7 @@ public class VirtualMemory {
     }
 
     public int getAbsoluteAddress(int track, int word) { // hex params
-        System.out.println(pagingTableAddress.toInt());
-        System.out.println(pagingTableAddress.toInt());
         Word absoluteTrack = realMemory.readWord(pagingTableAddress.toInt() + track);
-        
         int absoluteAddress = absoluteTrack.toInt() + word;
         return absoluteAddress;
     }

@@ -12,10 +12,14 @@ public class RVM {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Word w = new Word(0);
         
-        new Word(0).toInt();
-        /*RM rm = new RM();
+        System.out.println(w.toInt());
+        System.out.println(w.toInt());
+        System.out.println(w.toInt());
+        System.out.println(w.toInt());
+        RM rm = new RM();
         VirtualMachine vm = rm.startNewVM();
-        vm.step();*/
+        vm.step();
     }
 }
