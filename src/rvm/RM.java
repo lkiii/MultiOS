@@ -50,14 +50,14 @@ public class RM {
     }
 
     public VirtualMemory getVirtualMemory() {
-        mem.writeWord(0x000, new Word("150"));
-        mem.writeWord(0x001, new Word("120"));
-        mem.writeWord(0x002, new Word("e20"));
-        mem.writeWord(0x003, new Word("130"));
-        mem.writeWord(0x004, new Word("140"));
-        mem.writeWord(0x005, new Word("f50"));
-        mem.writeWord(0x006, new Word("1f0"));
-        VirtualMemory VMmemory = new VirtualMemory(new Word("0000"), mem);
+        mem.writeWord(0x000, new Word(0x150));
+        mem.writeWord(0x001, new Word(0x120));
+        mem.writeWord(0x002, new Word(0xe20));
+        mem.writeWord(0x003, new Word(0x130));
+        mem.writeWord(0x004, new Word(0x140));
+        mem.writeWord(0x005, new Word(0xf50));
+        mem.writeWord(0x006, new Word(0x1f0));
+        VirtualMemory VMmemory = new VirtualMemory(new Word(0x0), mem);
         return VMmemory;
     }
     

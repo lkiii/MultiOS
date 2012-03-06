@@ -43,12 +43,12 @@ public class VirtualMachine {
             case "POP ":
                 break;
             default:
-                System.out.println(opcode.substring(0, 2));
                 Word arg = new Word(opcode.substring(2, 4));
                 
                 switch (opcode.substring(0, 2)) {
                     case "AD": // ADD, AD D ar ADD?
-                        add(memory.readWord(arg));
+                        memory.writeWord(0x12, new Word(0x30));
+                        add(memory.readWord(0x12));
                         break;
                     case "SB":
                         break;
@@ -86,6 +86,7 @@ public class VirtualMachine {
     // operations
     private void add(Word value) {
         R = new Word(R.toInt() + value.toInt());
+        System.out.println("opa '"+R+"'");
     }
     
     private void sub(Word value) {
