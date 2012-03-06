@@ -12,7 +12,7 @@ import static rvm.Constants.*;
  *
  */
 public class Word {
-
+   
     private byte[] word;
 
     public Word() {
@@ -20,6 +20,7 @@ public class Word {
     }
 
     public Word(String data) {
+        word = data.
         word = data.getBytes();
         /*
          * if (data.length() == WORD_SIZE) { this.word = data.substring(0,
