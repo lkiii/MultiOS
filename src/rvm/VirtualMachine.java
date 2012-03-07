@@ -22,8 +22,12 @@ public class VirtualMachine {
         SS = registers[2];
         this.realMachine = realMachine;
         this.memory = this.realMachine.getNewVirtualMemory();
+        
+        
 
     }
+    
+
 
     public void step() {
         memory.writeWord(CS + IP, new Word("AD12"));

@@ -24,15 +24,31 @@ public class RM {
     }
 
     //public void startNewVM(/*
-    public VirtualMachine startNewVM(/*
-             * programos vardas ar kelias iki jo ir parametrai
-             */) {
-        //int numVM = VMList.size(); // page table.entr. addr. => size+1
-        //int requiredBlocks = 0xf;
+    public void startNewVM(File file, String args) {
+        Byte[] segs = new Byte[3];
+        if (!args.isEmpty() && !args.trim().isEmpty()) {
+            segs[0] = (Byte) args.length(); // DS
+        }
+        VirtualMemory vm = new VirtualMemory(mem);
+        
+        
+        
         VMList.add(new VirtualMachine(this, new Byte[]{0x00, 0x30, 0x50})); // {DS,CS,SS}
         return VMList.get(0);
     }
 
+        public static Byte[] load(Word[] source, VirtualMemory vm) {
+        int ptr = 0;
+        if  (source[0].toString().toUpperCase() == ".DATA") {
+            ptr++;
+            while (source[ptr].toString().toUpperCase() != ".CODE") {
+                if (source[ptr].toString().toUpperCase())
+            }
+        } 
+        if (source[) 
+    
+    }
+        
     public Word[] getAvailableBlocks(int blocks) {
         Word[] track = new Word[blocks * 0xf];
         return track;
@@ -48,7 +64,7 @@ public class RM {
     public boolean interruptCheck() {
         return cpu.interruptCheck();
     }
-
+    // alloc
     public VirtualMemory getNewVirtualMemory() {
         mem.writeWord(0x000, new Word(0x150));
         mem.writeWord(0x001, new Word(0x120));

@@ -7,13 +7,13 @@ package rvm;
  * 
  */
 public class ExternalStorage {
-    private static String diskPath = "/storage/disk.data";
+    private static String diskPath = "/root/disk.data";
 
     public ExternalStorage(/*path*/) {
         
     }
     
-   // public readFileSystem() {
+   public readFileSystem() {
         
     //}
     

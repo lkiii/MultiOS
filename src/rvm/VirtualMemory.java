@@ -8,8 +8,6 @@ package rvm;
  *
  * @author ernestas
  */
-// KAS PASKIRSTO PAGING TABLE? AR KERNEL AR GRYNAI MEMORYJE MASYVAS VIRTALIU MEMU IR JIEM ADRESUS PER METODA DUOT, CJ PIRMAS
-// cia realizuojam paginga, o gal atskira klase? 
 public class VirtualMemory {
 
     Word pagingTableAddress;
@@ -20,7 +18,6 @@ public class VirtualMemory {
         pagingTableAddress = PTR;
         realMemory = rMemory;
     }
-    // track nėra block?
 
     /**
      *       
