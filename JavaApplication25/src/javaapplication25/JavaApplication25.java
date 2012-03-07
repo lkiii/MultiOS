@@ -16,7 +16,7 @@ public class JavaApplication25 {
     public static void main(String[] args) {
         Random gen = new Random();
         long suc = 0;
-        for (long i=1; i<10000; i++) {
+        for (long i=1; i<10000000; i++) {
             double stf = gen.nextDouble()*8;
             double stf2 = gen.nextDouble()*8;
             //System.out.println("(" + stf2 + ", " + stf2 + ")");
@@ -25,6 +25,6 @@ public class JavaApplication25 {
             }
         }
         System.out.println(suc);
-        System.out.println(suc/10000.0);
+        System.out.println(suc/10000000.0);
     }
 }
