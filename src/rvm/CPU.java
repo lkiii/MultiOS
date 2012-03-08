@@ -29,7 +29,9 @@ public class CPU {
     private byte SI; // 
     private byte PI; // 
     // channels
-    Chan chn;
+    private boolean CH1;
+    private boolean CH2;
+    private boolean CH3;
     //TODO hi-level processor
 
     public CPU() {
@@ -39,7 +41,6 @@ public class CPU {
         IOI = 0;
         SI = 0;
         PI = 0;
-        chn =  = new Chan();
     }
 
     public boolean interruptCheck() {
