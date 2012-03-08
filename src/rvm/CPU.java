@@ -29,11 +29,8 @@ public class CPU {
     private byte SI; // 
     private byte PI; // 
     // channels
-    private boolean CH1; // input
-    private boolean CH2; // output
-    private boolean CH3; // external storage
+    Chan chn;
     //TODO hi-level processor
-    //FIXME byte->short word->int
 
     public CPU() {
         IP = new byte[2];
@@ -42,6 +39,7 @@ public class CPU {
         IOI = 0;
         SI = 0;
         PI = 0;
+        chn =  = new Chan();
     }
 
     public boolean interruptCheck() {

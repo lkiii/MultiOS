@@ -12,6 +12,17 @@ import static rvm.Constants.*;
  */
 public class Memory {
 
+    /*
+     *   [  PAGE TABLE    ] RESERVED
+     *   [  SHARED MEMORY ] RESERVED
+     *   [  USER MEMORY   ]
+     *   [  USER MEMORY   ]
+     * 
+     * 
+     */
+    
+    
+    
     private Word[] memory;
     //private boolean[] PageEntryAvailable;
     private int size;
@@ -36,7 +47,7 @@ public class Memory {
      * PageEntryAvailable[index]; // outofbounds }
      */
     public Word readWord(int absAddress) {
-        // FIXME uz ribu iseina cia patikrinimas ar proce?
+        // FIXME uzejimas uz ribu
         return memory[absAddress];
     }
 
@@ -52,14 +63,12 @@ public class Memory {
         memory[absAddress.toInt()] = data;
     }
 
-    // tempas 
     public void fillZeroes() {
         Word empty = new Word("0000");
         for (int i = 0x0; i < getSize(); i++) {
             writeWord(i, empty);
         }
     }
-    //irgi apgalvot
 
     public Word[] getWords() {
         return memory;
