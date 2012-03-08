@@ -1,4 +1,4 @@
-package MemoryTest;
+package Tests;
 
 import rvm.*;
 
@@ -6,7 +6,7 @@ import rvm.*;
  *
  * @author ernestas
  */
-public class Test {
+public class MemoryTest {
     // rankom 3ia (random) tracka uzpildau random adresais, ir paduodu i ptr adresa table entrio su tais duomenim
     public static void main(String[] args) {
         Memory memory = new Memory(0xFFF);
