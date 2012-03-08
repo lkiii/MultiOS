@@ -13,7 +13,7 @@ public class RVM {
      */
     public static void main(String[] args) {
         RM rm = new RM();
-        VirtualMachine vm = rm.startNewVM();
+        VirtualMachine vm = rm.startNewVM(new File());
         vm.step();   
         vm.step();
         vm.step();

@@ -23,32 +23,48 @@ public class RM {
         mem = new Memory(0xFFF);
     }
 
-    //public void startNewVM(/*
-    public void startNewVM(File file, String args) {
-        Byte[] segs = new Byte[3];
-        if (!args.isEmpty() && !args.trim().isEmpty()) {
-            segs[0] = (Byte) args.length(); // DS
-        }
-        VirtualMemory vm = new VirtualMemory(mem);
-        
-        
-        
-        VMList.add(new VirtualMachine(this, new Byte[]{0x00, 0x30, 0x50})); // {DS,CS,SS}
-        return VMList.get(0);
+    /**
+     * Virtuali mašina be parametrų
+     *
+     * @param file programos failas
+     * @return virtualią mašiną
+     */
+    public VirtualMachine startNewVM(File file) {
+        return startNewVM(file, "");
     }
 
-        public static Byte[] load(Word[] source, VirtualMemory vm) {
+    public VirtualMachine startNewVM(File file, String args) {
+        Byte[] segs = new Byte[3];
+        if (!args.isEmpty() && !args.trim().isEmpty()) {
+            segs[0] = (Byte) (byte) (args.length() / BLOCK_SIZE); // DS
+        }else{
+            segs[0] = 0x0;
+        }
+        segs[1] = 2;
+        segs[2] = 5;
+        if (segs[0] + segs[1] + segs[2] + STACK_SIZE <= MAX_BLOKS_IN_VM) {
+            VirtualMemory vm = getNewVirtualMemory();
+            VMList.add(new VirtualMachine(this, segs, vm));
+            return VMList.get(0);
+        } else {
+            //testavimui reikia kad returnintų vmą. Po to nereiks.
+            return null;
+        }
+    }
+
+    /*public static Byte[] load(Word[] source, VirtualMemory vm) {
         int ptr = 0;
-        if  (source[0].toString().toUpperCase() == ".DATA") {
+        if (source[0].toString().toUpperCase() == ".DATA") {
             ptr++;
             while (source[ptr].toString().toUpperCase() != ".CODE") {
-                if (source[ptr].toString().toUpperCase())
+                if (source[ptr].toString().toUpperCase()) {
+                }
             }
-        } 
-        if (source[) 
-    
-    }
-        
+        }
+        if (source[) {
+        }
+    }*/
+
     public Word[] getAvailableBlocks(int blocks) {
         Word[] track = new Word[blocks * 0xf];
         return track;
@@ -65,6 +81,7 @@ public class RM {
         return cpu.interruptCheck();
     }
     // alloc
+
     public VirtualMemory getNewVirtualMemory() {
         mem.writeWord(0x000, new Word(0x150));
         mem.writeWord(0x001, new Word(0x120));
@@ -76,8 +93,8 @@ public class RM {
         VirtualMemory VMmemory = new VirtualMemory(new Word(0x0), mem);
         return VMmemory;
     }
-    
-        //TODO reik krc gi programoj atsizvelgt .DATA .CODE sintaksinius dalykus
+
+    //TODO reik krc gi programoj atsizvelgt .DATA .CODE sintaksinius dalykus
     private boolean artvarkabendraisuprograma() {
         //int segment = 
         return true;
