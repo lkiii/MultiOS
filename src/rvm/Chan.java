@@ -64,4 +64,9 @@ public class Chan {
         System.out.print(output);
         cpu.freeCH2();
     }
+    
+    public void setAvailability(int index, boolean status) {
+        chan[index] = status;
+    }
+
 }

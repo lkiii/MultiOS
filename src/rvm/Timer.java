@@ -1,6 +1,5 @@
 package rvm;
 
-import static rvm.Constants.*;
 
 /**
  * 
@@ -9,8 +8,6 @@ import static rvm.Constants.*;
  * @author Lukas Ignatavicius
  * 
  */
-// pirmai nereikia
-// observer pattern?
 public class Timer {
     int time;
     
