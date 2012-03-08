@@ -16,12 +16,12 @@ public class VirtualMachine {
     private short SP = 0;
     private Byte SF = 0;
 
-    public VirtualMachine(RM realMachine, Byte[] registers) {
+    public VirtualMachine(RM realMachine, Byte[] registers, VirtualMemory memory) {
         DS = registers[0];
         CS = registers[1];
         SS = registers[2];
         this.realMachine = realMachine;
-        this.memory = this.realMachine.getNewVirtualMemory();
+        this.memory = memory;
         
         
 
