@@ -11,7 +11,9 @@ import java.util.Scanner;
  * @author ernestas
  */
 public class Chan {
-
+   // chan array + isAvailable = {return chan[index] , kai chan[i], 0<=i<=2 booleanai}
+    
+    
     private CPU cpu;
 
     /**
@@ -20,9 +22,9 @@ public class Chan {
      */
     public Chan(CPU cpu) {
         this.cpu = cpu;
-        cpu.freeCH1();
-        cpu.freeCH2();
-        cpu.freeCH3();
+        cpu.setChanAvailable(1);
+        cpu.setChanAvailable(2);
+        cpu.setChanAvailable(3);
     }
 
     /**
@@ -31,14 +33,11 @@ public class Chan {
      * @return ar laisvas kanalas indeksu index
      */
     public boolean isAvailable(int index) {
-        if (index == 1){
-            return !cpu.isCH1Occupied();
-        }else if (index == 2){
-            return !cpu.isCH2Occupied();
-        }else if (index == 3){
-            return !cpu.isCH3Occupied();
+        if (index <= 3 && index >= 0) {
+            return cpu.isChanAvailable(index);
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -47,12 +46,12 @@ public class Chan {
      * @return 
      */
     public String useChan1() {
-        cpu.occupyCH1();
+        cpu.setChanOccupied(1);
         String ret;
         try (Scanner scanIn = new Scanner(System.in)) {
             ret = scanIn.nextLine();
         }
-        cpu.freeCH1();
+        cpu.setChanAvailable(1);
         return ret;
     }
     /**
@@ -60,8 +59,8 @@ public class Chan {
      * @param output 
      */
     public void useChan2(String output){
-        cpu.occupyCH2();
+        cpu.setChanOccupied(2);
         System.out.print(output);
-        cpu.freeCH2();
+        cpu.setChanAvailable(2);
     }
 }

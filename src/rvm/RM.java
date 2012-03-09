@@ -40,11 +40,16 @@ public class RM {
         }else{
             segs[0] = 0x0;
         }
-        segs[1] = 2;
-        segs[2] = 5;
-        if (segs[0] + segs[1] + segs[2] + STACK_SIZE <= MAX_BLOKS_IN_VM) {
+        segs[1] = 0x02;
+        segs[2] = 0x05;
+        if (segs[0] + segs[1] + segs[2] + STACK_SIZE <= MAX_BLOCKS_IN_VM) {
             VirtualMemory vm = getNewVirtualMemory();
             VMList.add(new VirtualMachine(this, segs, vm));
+            // programa testine
+            vm.writeWord(new Word(0x20), new Word("AD0A"));
+            vm.writeWord(new Word(0x21), new Word("JP00"));
+            vm.writeWord(new Word(0x22), new Word("JP00"));
+            vm.writeWord(new Word(0x23), new Word("AD10"));
             return VMList.get(0);
         } else {
             //testavimui reikia kad returnintų vmą. Po to nereiks.

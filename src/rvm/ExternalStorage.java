@@ -12,8 +12,6 @@ public class ExternalStorage {
     public ExternalStorage(/*path*/) {
         
     }
-    
-   public readFileSystem() {
         
     //}
     

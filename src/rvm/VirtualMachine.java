@@ -1,5 +1,7 @@
 package rvm;
 
+import java.util.Scanner;
+
 /**
  *
  * @author ernestas
@@ -27,11 +29,12 @@ public class VirtualMachine {
 
     }
     
-
-
+   
     public void step() {
-        memory.writeWord(CS + IP, new Word("AD12"));
-        executeCommand(memory.readWord((int) CS + (int) IP));
+        System.out.println("==STEP==");
+        printRegisters();
+        System.out.println("addr " + (CS*0x10+IP));
+        executeCommand(memory.readWord( (int) (CS*0x10 + IP) ));
         IP++;
         realMachine.interruptCheck();
     }
@@ -44,36 +47,45 @@ public class VirtualMachine {
                 break;
             case "PUSH":
                 break;
-            case "POP ":
+            case "POP_":
                 break;
             default:
-                Word adressArg = new Word(Integer.parseInt(opcode.substring(2, 4))+DS);
+                System.out.println("isparsintas arg: " + Integer.parseInt(opcode.substring(2, 4), 16));
+                Word arg = new Word(Integer.parseInt(opcode.substring(2, 4), 16));
                 switch (opcode.substring(0, 2)) {
-                    case "AD": // ADD, AD D ar ADD?
-                        memory.writeWord(adressArg, new Word(0x30));
-                        add(memory.readWord(adressArg));
+                    case "AD": 
+                        //memory.writeWord(new Word(0x30), arg);
+                        add(arg);
                         break;
                     case "SB":
+                        sub(arg);
                         break;
                     case "LR":
+                        loadRegister(arg);
                         break;
                     case "SR":
+                        saveRegister(arg);
                         break;
                     case "CM":
+                        compare(arg);
                         break;
                     case "JP":
+                        jump(arg);
                         break;
                     case "JE":
+                        jumpIfEqual(arg);
                         break;
                     case "JL":
+                        jumpIfLess(arg);
                         break;
                     case "JG":
+                        jumpIfGreater(arg);
                         break;
                     case "PD":
-                        putData(memory.readWord(adressArg));
+                        putData(memory.readWord(arg));
                         break;
                     case "GD":
-                        getData(adressArg);
+                        getData(arg);
                         break;
                     default:
                         throw new RuntimeException("Nėra komandos");
@@ -87,9 +99,8 @@ public class VirtualMachine {
     }
 
     // operations
-    private void add(Word value) {
+    private void add(Word value) { 
         R = new Word(R.toInt() + value.toInt());
-        System.out.println("opa '"+R+"'");
     }
     
     private void sub(Word value) {
@@ -106,7 +117,7 @@ public class VirtualMachine {
     }
     
     private void compare(Word value) {
-        if (R.toInt() < value.toInt()) {
+        if (R.toInt() < value.toInt()) { // pagal doca value atmintyje
             SF = 0;
         } else if (R.toInt() == value.toInt()) {
             SF = 1;
@@ -115,8 +126,8 @@ public class VirtualMachine {
         }
     }
     
-    private void jump(Word addr) {
-        IP = (short) addr.toInt();
+    private void jump(Word nextInstr) {
+        IP = (short) nextInstr.toInt();
     }
     
     private void jumpIfEqual(Word addr) {
@@ -180,4 +191,15 @@ public class VirtualMachine {
     private void getData(Word adress) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
+    
+    // komandu testui
+    public void printRegisters() {
+        System.out.println("R: " + R.toInt());
+        System.out.println("CS: " + CS.toString());
+        System.out.println("DS: " + DS.toString());
+        System.out.println("SS: " + SS.toString());
+        System.out.println("IP: " + IP);
+        }
 }
+
+

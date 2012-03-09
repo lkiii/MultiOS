@@ -29,9 +29,7 @@ public class CPU {
     private byte SI; // 
     private byte PI; // 
     // channels
-    private boolean CH1;
-    private boolean CH2;
-    private boolean CH3;
+    private boolean[] CHN;
     //TODO hi-level processor
 
     public CPU() {
@@ -41,6 +39,10 @@ public class CPU {
         IOI = 0;
         SI = 0;
         PI = 0;
+        CHN = new boolean[3];
+        for (boolean i: CHN) {
+            i = true;
+        }
     }
 
     public boolean interruptCheck() {
@@ -51,37 +53,23 @@ public class CPU {
         }
     }
 
-    public boolean isCH1Occupied() {
-        return CH1;
+    public boolean isChanAvailable(int index) {
+        if (index <= 3 && index >= 0) {
+            return CHN[index];
+        }
+        return false;
+    }
+    
+    // apatinius metodus galima sutrukt i viena, antras argas b8t7 boolean status
+    public void setChanAvailable(int index) {
+        if (index <= 3 && index >= 0) {
+            CHN[index] = true;
+        }
     }
 
-    public boolean isCH2Occupied() {
-        return CH2;
-    }
-
-    public boolean isCH3Occupied() {
-        return CH3;
-    }
-    public void freeCH1() {
-        CH1 = false;
-    }
-
-    public void freeCH2() {
-        CH2 = false;
-    }
-
-    public void freeCH3() {
-        CH3 = false;
-    }
-    public void occupyCH1() {
-        CH1 = true;
-    }
-
-    public void occupyCH2() {
-        CH2 = true;
-    }
-
-    public void occupyCH3() {
-        CH3 = true;
+    public void setChanOccupied(int index) {
+        if (index <= 3 && index >= 0) {
+            CHN[index] = false;
+        }
     }
 }
