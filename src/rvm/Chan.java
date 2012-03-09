@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package rvm;
 
 import java.util.Scanner;
@@ -11,14 +7,11 @@ import java.util.Scanner;
  * @author ernestas
  */
 public class Chan {
-   // chan array + isAvailable = {return chan[index] , kai chan[i], 0<=i<=2 booleanai}
-    
     
     private CPU cpu;
 
     /**
-     * Kanalų įrenginio kūrimas. Visi free nes kūrimo metu nieks
-     * nenaudoja nieko.
+     * Kanalų įrenginio kūrimas. Visu kanalu pradines busenos "available"
      */
     public Chan(CPU cpu) {
         this.cpu = cpu;
@@ -30,7 +23,7 @@ public class Chan {
     /**
      *
      * @param index kanalų įrenginio numeris
-     * @return ar laisvas kanalas indeksu index
+     * @return true, jei kanalas nurodytu numeriu laisvas
      */
     public boolean isAvailable(int index) {
         if (index <= 3 && index >= 0) {
@@ -43,7 +36,7 @@ public class Chan {
     /**
      * Kol nėra Interfeiso ir OS gal užteks tokio.
      * Kai bus interfeisas imsim iš imputo, kai os gal dar kažką
-     * @return 
+     * @return nuskaitytas ivedimas
      */
     public String useChan1() {
         cpu.setChanOccupied(1);
@@ -51,12 +44,13 @@ public class Chan {
         try (Scanner scanIn = new Scanner(System.in)) {
             ret = scanIn.nextLine();
         }
+        
         cpu.setChanAvailable(1);
         return ret;
     }
     /**
-     * Kaip ir CH1
-     * @param output 
+     * Isvedimas i antraji kanala
+     * @param output duomenys isvedami i kanala
      */
     public void useChan2(String output){
         cpu.setChanOccupied(2);

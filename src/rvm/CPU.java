@@ -9,29 +9,22 @@ package rvm;
  *
  */
 public class CPU {
-    // pt reg
+    private Word PTR;    // Puslapiavimo lenteles registras
+    private Word R1;     // Bendros paskirties registras
+    private Word R2;     // Bendros paskirties registras
+    private short IP;    // Sekancios komandos adreso registras (Instruction Pointer)
+    private boolean C;   // Loginis registras
+    private byte MODE;   // Rezimas 0 - supervisor | 1 - user
+    private Timer TIMER; // Taimeris
+    private byte TI;     // Taimerio pertraukimo registras
+    private byte IOI;    // Ivedimo/Isvedimo pertraukimo registras
+    private byte SI;     // Supervizoriaus pertraukimo registras
+    private byte PI;     // Programinio pertraukimo registras
+    private boolean[] CHN; // Ivedimo/Isvedimo/Isorines talpykos uzimtumo registrai
 
-    private Word PTR;
-    // general purpose registers 
-    private Word R1;
-    private Word R2;
-    // instruction pointer
-    private short IP;
-    // log. reg
-    private boolean C;
-    // user/supervisor mode
-    private byte MODE;
-    // timer
-    private Timer TIMER; // -1 jei netrapint
-    // interrupts
-    private byte TI; //
-    private byte IOI; // I/O 
-    private byte SI; // 
-    private byte PI; // 
-    // channels
-    private boolean[] CHN;
-    //TODO hi-level processor
-
+    /**
+     * Inicijuojamas procesorius ir jo registrai
+     */
     public CPU() {
         IP = 0;
         TIMER = new Timer(1);
@@ -45,14 +38,40 @@ public class CPU {
         }
     }
 
-    public boolean interruptCheck() {
+    /**
+     * Pertraukimu ivykio patikra
+     */
+    public boolean interruptTest() {
         if ((PI + SI + IOI + TI) > 0) {
             return true;
         } else {
             return false;
         }
     }
+    
+    /**
+     * 
+     */
+    public void setTI(byte val) {
+        TI = val;
+    }
+    
+    public void setPI(byte val) {
+        PI = val;
+    }
+    
+    public void setSI(byte val) {
+        SI = val;
+    }
 
+    public void setIOI(byte val) {
+        IOI = val;
+    }
+    
+    /**
+     * @param index kanalo numeris
+     * @return kanalo laisvumas. True - laisvas | False - uzimtas
+     */
     public boolean isChanAvailable(int index) {
         if (index <= 3 && index >= 0) {
             return CHN[index];
@@ -60,13 +79,20 @@ public class CPU {
         return false;
     }
     
-    // apatinius metodus galima sutrukt i viena, antras argas b8t7 boolean status
+    /**
+     * Kanalo busenos nustatymas, kaip laisvas
+     * @param index kanalas numeris
+     */
     public void setChanAvailable(int index) {
         if (index <= 3 && index >= 0) {
             CHN[index] = true;
         }
     }
 
+    /**
+     * Kanalo busenos nustatymas, kaip uzimtas
+     * @param index kanalo numeris
+     */
     public void setChanOccupied(int index) {
         if (index <= 3 && index >= 0) {
             CHN[index] = false;

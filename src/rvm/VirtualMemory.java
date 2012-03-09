@@ -1,26 +1,34 @@
 package rvm;
 
 /**
- *
+ * Virtuali atmintis nuslepia kreipimosi i atminti sudetinguma,
+ * suteikia sistemai realizuoti puslapiavimo mechanizma, siekiant
+ * netolygia atminti VM pateikti kaip tolygia
+ * 
  * @author ernestas
  */
+
 public class VirtualMemory {
 
-    Word pagingTableAddress;
-    Memory realMemory; // nuoroda i realia atminti, nu nebent statini Memory padaryt, tada nereiks
-    int Size;
+    private Word pageTableAddress;
+    private Memory realMemory; // nuoroda i realia atminti, nu nebent statini Memory padaryt, tada nereiks
+    private int Size;
 
+    /**
+     * @param PTR puslapiavimo lenteles iraso adresas
+     * @param rMemory reali atmintis, i kurios kreipimosi sudetinguma nusleps si (virtuali)
+     */
     public VirtualMemory(Word PTR, Memory rMemory) {
-        pagingTableAddress = PTR;
+        pageTableAddress = PTR;
         realMemory = rMemory;
     }
 
     /**
      *       
      *
-     * @param track
-     * @param word
-     * @return
+     * @param track logines atminties takelio numeris
+     * @param word  logines atminties zodzio tame takelyje numeris
+     * @return nuskaitytas is realios atminties zodis
      */
     public Word readWord(int track, int word) {
         return new Word(realMemory.readWord(getAbsoluteAddress(track, word)).toString()); // kopija ar refas ?
@@ -28,33 +36,66 @@ public class VirtualMemory {
 
     /**
      *
-     * @param adress
-     * @return
+     * @param address "absoliutus" adresas Virtualios atzvilgiu (Track*10+Word)
+     * @return nuskaitytas is realios atminties zodis
      */
-    public Word readWord(int adress) {
-        return readWord(adress / 0x10, adress % 0x10);
+    public Word readWord(int address) {
+        return readWord(address / 0x10, address % 0x10);
     }
 
+    /**
+     *
+     * @param address "absoliutus" adresas Virtualios atzvilgiu pateiktas Word tipu (Track*10+Word)
+     * @return nuskaitytas is realios atminties zodis
+     */
     public Word readWord(Word arg) {
         System.out.print(arg);
         return readWord(arg.toInt());
     }
 
+    /**
+     *
+     * @param track logines atminties takelis i kuria bus rasoma
+     * @param word logines atminties nurodyto takelio zodzio eile
+     * @param data zodis irasomas nurodytu adresu
+     */
     public void writeWord(int track, int word, Word data) {
         realMemory.writeWord(getAbsoluteAddress(track, word), data);
     }
 
-    public void writeWord(int adress, Word data) {
-        writeWord(adress / 0x10, adress % 0x10, data);
+    /**
+     *
+     * @param address adresas i kuri bus irasoma
+     * @param data zodis irasomas nurodytu adresu
+     */
+    public void writeWord(int address, Word data) {
+        writeWord(address / 0x10, address % 0x10, data);
     }
     
+    /**
+     * 
+     * @param track loginis adresas
+     * @param data zodis irasomas nurodytu adresu
+     */
     public void writeWord(Word adress, Word data) {
         writeWord(adress.toInt(), data);
     }
 
+    /**
+     * Pasinaudodamas PTR ir parametrais pateiktu loginiu adresu
+     * formuoja fizini adresa
+     * 
+     * @param track takelis
+     * @param word zodis
+     * @return tikslus fizinis adresas atmintyje
+     */
     public int getAbsoluteAddress(int track, int word) { // hex params
-        Word absoluteTrack = realMemory.readWord(pagingTableAddress.toInt() + track);
+        Word absoluteTrack = realMemory.readWord(pageTableAddress.toInt() + track);
         int absoluteAddress = absoluteTrack.toInt() + word;
         return absoluteAddress;
+    }
+    
+    public Word getPTR() {
+        return pageTableAddress;
     }
 }

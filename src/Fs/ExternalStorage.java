@@ -1,4 +1,4 @@
-package rvm;
+package Fs;
 /**
  * 
  * VU MIF PS 1gr. 2012

@@ -13,7 +13,8 @@ public class RVM {
      */
     public static void main(String[] args) {
         RM rm = new RM();
-        VirtualMachine vm = rm.startNewVM(new File());
+        // keisti parametru padeti, musu AD pl adresa, tai DS kinta nuo parmetru skaiciaus, reiskis niekad tikslaus adreso nenurodysi
+        VirtualMachine vm = rm.startNewVM({ "AD10", "", ""});
         
         vm.step();   
         vm.step();

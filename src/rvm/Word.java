@@ -11,6 +11,10 @@ import static rvm.Constants.*;
  * @author Ernestas Prisakaru
  * @author Lukas Ignatavicius
  *
+ * 
+ * Word.java 
+ * Word objektas saugo 4 baitu ilgio  ByteBuffer'i (tarkim masyva)
+ * Klase suteikia konversijos i ivairius tipus galimybes.
  */
 public class Word {
 
@@ -26,7 +30,7 @@ public class Word {
     /**
      * Kosntruktorius kuria word iš byte[]
      *
-     * @param word byte[] iš kurio bus generuojamas word
+     * @param word sukuria word is byte masyvo elementu
      */
     public Word(byte[] word) {
         this();

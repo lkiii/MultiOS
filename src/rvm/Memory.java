@@ -27,6 +27,11 @@ public class Memory {
     //private boolean[] PageEntryAvailable;
     private int size;
 
+    /**
+     * Sukuriama reali atmintis
+     * @param size kuriamos atminties dydis
+     * @see Constants
+     */
     public Memory(int size) {
         this.size = size;
         memory = new Word[size];
@@ -36,33 +41,61 @@ public class Memory {
          */
     }
 
+    /**
+     * Gaunamas atminties dydis
+     * @return atminties dydi
+     */
     public int getSize() {
         return size;
-
-
     }
 
     /*
      * public boolean isPageEntryAvailable(int index) { return
      * PageEntryAvailable[index]; // outofbounds }
      */
+    
+    /**
+     * Nuskaitomas zodis nurodytu fiziniu adresu
+     * @param absAddress fizinis adresas
+     * @return nuskaitytas zodis
+     */
     public Word readWord(int absAddress) {
         // FIXME uzejimas uz ribu
         return memory[absAddress];
     }
 
+    /**
+     * Nuskaitomas zodis nurodytu fiziniu adresu (pateiktu Word tipu)
+     * @param absAddress fizinis adresas
+     * @return nuskaitytas zodis
+     */
     public Word readWord(Word absAddress) {
         return readWord(absAddress.toInt());
     }
 
+    /**
+     * Irasomas zodis nurodytu fiziniu adresu
+     * @param absAddress fizinis adresas
+     * @param data irasomas zodis
+     */
     public void writeWord(int absAddress, Word data) {
         memory[absAddress] = data;
     }
 
+    /**
+     * Irasomas zodis nurodytu fiziniu adresu (pateiktu Word tipu)
+     * @param absAddress fizinis adresas
+     * @param data irasomas zodis
+     */
     public void writeWord(Word absAddress, Word data) {
         memory[absAddress.toInt()] = data;
     }
 
+    /**
+     * Temporary
+     * 
+     * atmintis uzpildoma zodziais 0000
+     */
     public void fillZeroes() {
         Word empty = new Word("0000");
         for (int i = 0x0; i < getSize(); i++) {
@@ -70,6 +103,10 @@ public class Memory {
         }
     }
 
+    /**
+     * Atmintis grazinama kaip zodziu masyvas
+     * @return zodziu masyvas
+     */
     public Word[] getWords() {
         return memory;
     }

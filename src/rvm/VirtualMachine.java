@@ -1,44 +1,50 @@
 package rvm;
 
 import java.util.Scanner;
+import rvm.Constants.PROCESS_STATUS;
 
 /**
  *
  * @author ernestas
  */
 public class VirtualMachine {
-
-    private VirtualMemory memory;
-    private RM realMachine;
-    private Word R = new Word(0x0);
-    private final Byte CS; //TODO jo manau reik replace Byte[] į int ar pan. Arba kurt savo TwoByteRegister kur yra ++ ir dar ko reik
-    private final Byte DS;
-    private final Byte SS;
-    private short IP = 0;
-    private short SP = 0;
-    private Byte SF = 0;
+ // VM status
+    
+    
+    private VirtualMemory memory; // virtuali atmintis
+    private RM realMachine; // tevine masina
+    private Word R = new Word(0x0); // Bendros paskirties registras
+    private final Byte CS; // Code segment register
+    private final Byte DS; // Data segment register
+    private final Byte ES; // Extra segment register (params)
+    private final Byte SS; // Stack segment register
+    private short IP = 0; // Instruction pointer
+    private short SP = 0; // Stack pointer
+    private Byte SF = 0; // Status flag
+    private boolean MF = false; //memory flag . jei true tai komandai paduodamas atminties adresas, jei false - gryna reiksme
+    private PROCESS_STATUS status;
 
     public VirtualMachine(RM realMachine, Byte[] registers, VirtualMemory memory) {
         DS = registers[0];
         CS = registers[1];
         SS = registers[2];
+        ES = registers[3];
         this.realMachine = realMachine;
         this.memory = memory;
-        
-        
-
+        status = PROCESS_STATUS.READY;
     }
     
-   
     public void step() {
         System.out.println("==STEP==");
         printRegisters();
         System.out.println("addr " + (CS*0x10+IP));
-        executeCommand(memory.readWord( (int) (CS*0x10 + IP) ));
+        executeCommand(memory.readWord((int) (CS*0x10 + IP)));
         IP++;
-        realMachine.interruptCheck();
+        boolean interrupt = realMachine.interruptTest();
     }
     
+    // MF flago realizacija, galejau parsinant ifint, cia pat
+    // arba kiekienoj komandoj, bet padariau cia 
     private void executeCommand(Word op) {
         String opcode = op.toString().toUpperCase();
         switch (opcode) {
@@ -51,7 +57,23 @@ public class VirtualMachine {
                 break;
             default:
                 System.out.println("isparsintas arg: " + Integer.parseInt(opcode.substring(2, 4), 16));
-                Word arg = new Word(Integer.parseInt(opcode.substring(2, 4), 16));
+                
+                // cia toks tricksas, kad isparsinu kaip value, ir kaip reiksme is adreso, ir ifas pl flaga paduos kazkuri
+                // bet ne visiems tinka value, pvz lr sr, tai kad ifu nenaudot suchimichinsiu 
+                Word argAsValue = new Word(Integer.parseInt(opcode.substring(2, 4), 16));
+                Word argFromMemory = new Word(memory.readWord(argAsValue).toInt());
+                System.out.println("mem" + argFromMemory);
+                
+                Word arg;
+                // tik kai kuriom komandom
+                // kuriom reik reaguot i MemFlag, tos ima <arg>, jei ima tik is atminties, ar tik kaip reiksme, tada <argasval> ir ...
+                // negrazi alternatyva kiekviename case kuriam reik ifa idet, arba kiekvienos komandos metode
+                if (MF == true) {
+                    arg = argFromMemory;
+                } else {
+                    arg = argAsValue;
+                }
+                
                 switch (opcode.substring(0, 2)) {
                     case "AD": 
                         //memory.writeWord(new Word(0x30), arg);
@@ -85,10 +107,10 @@ public class VirtualMachine {
                         putData(memory.readWord(arg));
                         break;
                     case "GD":
-                        getData(arg);
+                        memory.writeWord(arg, getData());
                         break;
                     default:
-                        throw new RuntimeException("Nėra komandos");
+                        parent
                         //break;
                         
                 }
@@ -117,7 +139,7 @@ public class VirtualMachine {
     }
     
     private void compare(Word value) {
-        if (R.toInt() < value.toInt()) { // pagal doca value atmintyje
+        if (R.toInt() < value.toInt()) { // pagal doca value atmintyje, galima pdaryti flaga MemFlag: false tai ne memory, true memory address
             SF = 0;
         } else if (R.toInt() == value.toInt()) {
             SF = 1;
@@ -180,24 +202,31 @@ public class VirtualMachine {
         SS = addr;
     */
 
-    private void halt() { // tas pats kas destruktorius cj isvis gali nieko nedaryt tik informuot realia mashina
-        throw new UnsupportedOperationException("Not yet implemented");
+    private void halt() {
+        // temp
+        halted = true;
+    }
+    
+    public boolean isHalted() {
+        return halted;
     }
 
     private void putData(Word value) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        
     }
 
     private void getData(Word adress) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        
     }
     
     // komandu testui
     public void printRegisters() {
         System.out.println("R: " + R.toInt());
+        System.out.println("SF: " + SF);
         System.out.println("CS: " + CS.toString());
         System.out.println("DS: " + DS.toString());
         System.out.println("SS: " + SS.toString());
+        System.out.println("ES: " + ES.toString());
         System.out.println("IP: " + IP);
         }
 }
