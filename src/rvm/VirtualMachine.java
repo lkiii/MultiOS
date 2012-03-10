@@ -28,7 +28,7 @@ public class VirtualMachine {
         DS = registers[0];
         CS = registers[1];
         SS = registers[2];
-        ES = registers[3];
+        ES = 0x0;
         this.realMachine = realMachine;
         this.memory = memory;
         status = PROCESS_STATUS.READY;

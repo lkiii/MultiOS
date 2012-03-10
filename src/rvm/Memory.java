@@ -61,6 +61,10 @@ public class Memory {
      */
     public Word readWord(int absAddress) {
         // FIXME uzejimas uz ribu
+        if (memory[absAddress] == null){
+            //testinimui
+            return new Word("null");
+        }
         return memory[absAddress];
     }
 

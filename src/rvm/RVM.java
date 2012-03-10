@@ -1,10 +1,16 @@
 package rvm;
+
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- * 
+ *
  * VU MIF PS 1gr. 2012
- * @author Ernestas Prisakaru 
+ *
+ * @author Ernestas Prisakaru
  * @author Lukas Ignatavicius
- * 
+ *
  */
 public class RVM {
 
@@ -14,11 +20,13 @@ public class RVM {
     public static void main(String[] args) {
         RM rm = new RM();
         // keisti parametru padeti, musu AD pl adresa, tai DS kinta nuo parmetru skaiciaus, reiskis niekad tikslaus adreso nenurodysi
-        VirtualMachine vm = rm.startNewVM({ "AD10", "", ""});
-        
-        vm.step();   
-        vm.step();
-        vm.step();
-        vm.step();
+        VirtualMachine vm;
+        try {
+            vm = rm.startNewVM("/home/lukas/NetBeansProjects/RVM/src/program1");
+            vm.step();
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RVM.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
