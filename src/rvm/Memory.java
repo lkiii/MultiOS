@@ -60,7 +60,6 @@ public class Memory {
      * @return nuskaitytas zodis
      */
     public Word readWord(int absAddress) {
-        // FIXME uzejimas uz ribu
         return memory[absAddress];
     }
 

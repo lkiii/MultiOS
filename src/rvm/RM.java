@@ -1,5 +1,6 @@
 package rvm;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import java.util.ArrayList;
 import static rvm.Constants.*;
 
@@ -39,17 +40,19 @@ public class RM {
      * @return sugeneruota VM
      */
     public VirtualMachine startNewVM(String[] komandos, String args) {
-        Byte[] segs = new Byte[3];
-        if (!args.isEmpty() && !args.trim().isEmpty()) {
-            segs[0] = (Byte) (byte) (args.length() / BLOCK_SIZE); // DS
-        }else{
-            segs[0] = 0x0;
-        }
-        segs[1] = 0x02;
-        segs[2] = 0x05;
-        if (segs[0] + segs[1] + segs[2] + STACK_SIZE <= MAX_BLOCKS_IN_VM) {
-            VirtualMemory vm = alloc();
-            VMList.add(new VirtualMachine(this, segs, vm));
+        short DS = 0; 
+        short CS = 0; 
+        short ES = 0; 
+        short SS = STACK_SIZE;
+       
+        DS = 0x00;
+        
+        CS = 0x02;
+        SS = 0x05;
+        int size = DS + CS + ES + STACK_SIZE;
+        if (size <= MAX_BLOCKS_IN_VM) {
+            VirtualMemory vm = alloc(size);
+            VMList.add(new VirtualMachine(this, vm,{DS, CS, ES, SS}));
             // programa testine
             int offs = 0;
             for (String i: komandos) {
@@ -102,21 +105,20 @@ public class RM {
      * Iskiriama atmintis atmintis virtualiai masinai
      * @return virtuali atmintis
      */
-    public VirtualMemory alloc() {
-        mem.writeWord(0x000, new Word(0x150));
-        mem.writeWord(0x001, new Word(0x120));
-        mem.writeWord(0x002, new Word(0xe20));
-        mem.writeWord(0x003, new Word(0x130));
-        mem.writeWord(0x004, new Word(0x140));
-        mem.writeWord(0x005, new Word(0xf50));
-        mem.writeWord(0x006, new Word(0x1f0));
-        mem.writeWord(0x007, new Word(0x1e0));
-        VirtualMemory VMmemory = new VirtualMemory(new Word(0x0), mem);
+    public VirtualMemory alloc(int size) {
+        Word newEntry = null;
+        int newPTR = 0;
+        for (int i=newPTR; i<size; i++) {
+            int randomCell = (int) (Math.random() * 100);
+            mem.writeWord(i, new Word(randomCell));
+            System.out.println(i + " -> " + randomCell);
+        }
+        
+        VirtualMemory VMmemory = new VirtualMemory(new Word(newPTR), mem);
         return VMmemory;
     }
     
     public void free(VirtualMemory memory) { 
-        memory.
     }
 
 }                      

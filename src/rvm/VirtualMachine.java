@@ -8,27 +8,30 @@ import rvm.Constants.PROCESS_STATUS;
  * @author ernestas
  */
 public class VirtualMachine {
- // VM status
-    
     
     private VirtualMemory memory; // virtuali atmintis
     private RM realMachine; // tevine masina
+    
     private Word R = new Word(0x0); // Bendros paskirties registras
-    private final Byte CS; // Code segment register
-    private final Byte DS; // Data segment register
-    private final Byte ES; // Extra segment register (params)
-    private final Byte SS; // Stack segment register
+    
+    // Segments
+    private final short CS; // Code segment register
+    private final short DS; // Data segment register
+    private final short ES; // Extra segment register (params)
+    private final short SS; // Stack segment register
+    
+    
     private short IP = 0; // Instruction pointer
     private short SP = 0; // Stack pointer
     private Byte SF = 0; // Status flag
     private boolean MF = false; //memory flag . jei true tai komandai paduodamas atminties adresas, jei false - gryna reiksme
     private PROCESS_STATUS status;
 
-    public VirtualMachine(RM realMachine, Byte[] registers, VirtualMemory memory) {
-        DS = registers[0];
-        CS = registers[1];
-        SS = registers[2];
-        ES = registers[3];
+    public VirtualMachine(RM realMachine, VirtualMemory memory, short[] segments) {
+        DS = segments[0];
+        CS = segments[1];
+        SS = segments[2];
+        ES = segments[3];
         this.realMachine = realMachine;
         this.memory = memory;
         status = PROCESS_STATUS.READY;
@@ -49,7 +52,7 @@ public class VirtualMachine {
         String opcode = op.toString().toUpperCase();
         switch (opcode) {
             case "HALT":
-                halt();
+                //halt();
                 break;
             case "PUSH":
                 break;
@@ -107,10 +110,11 @@ public class VirtualMachine {
                         putData(memory.readWord(arg));
                         break;
                     case "GD":
+                        Word data = getData();
                         memory.writeWord(arg, getData());
                         break;
                     default:
-                        parent
+                        throw new RuntimeException("halt");
                         //break;
                         
                 }
@@ -202,15 +206,6 @@ public class VirtualMachine {
         SS = addr;
     */
 
-    private void halt() {
-        // temp
-        halted = true;
-    }
-    
-    public boolean isHalted() {
-        return halted;
-    }
-
     private void putData(Word value) {
         
     }
@@ -219,14 +214,18 @@ public class VirtualMachine {
         
     }
     
+    public VirtualMemory getMemory() {
+        return memory;
+    }
+    
     // komandu testui
     public void printRegisters() {
         System.out.println("R: " + R.toInt());
         System.out.println("SF: " + SF);
-        System.out.println("CS: " + CS.toString());
-        System.out.println("DS: " + DS.toString());
-        System.out.println("SS: " + SS.toString());
-        System.out.println("ES: " + ES.toString());
+        System.out.println("CS: " + CS);
+        System.out.println("DS: " + DS);
+        System.out.println("SS: " + SS);
+        System.out.println("ES: " + ES);
         System.out.println("IP: " + IP);
         }
 }
