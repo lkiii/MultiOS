@@ -120,9 +120,9 @@ public class RM {
                 vm.writeWord(writingAddress++, new Word(line));
                 System.out.println("parašė: '" + line + "' adresu" + Integer.toHexString(writingAddress));
             }
-            for (int i = 0; i < (segs[0] + segs[1] + segs[2] + STACK_SIZE) * 16; i++) {
+            /*for (int i = 0; i < (segs[0] + segs[1] + segs[2] + STACK_SIZE) * 16; i++) {
                 System.out.println(Integer.toHexString(i) + " " + vm.readWord(i));
-            }
+            }*/
 
             return VMList.get(0);
         } else {

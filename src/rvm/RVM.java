@@ -24,6 +24,10 @@ public class RVM {
         try {
             vm = rm.startNewVM("/home/lukas/NetBeansProjects/RVM/src/program1");
             vm.step();
+            vm.step();
+            vm.step();
+            vm.step();
+            vm.step();
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(RVM.class.getName()).log(Level.SEVERE, null, ex);

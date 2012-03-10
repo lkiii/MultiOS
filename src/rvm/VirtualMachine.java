@@ -204,7 +204,8 @@ public class VirtualMachine {
 
     private void halt() {
         // temp
-        halted = true;
+        //halted=true;
+        throw new UnsupportedOperationException("Programa sėkmingai baigė darbą");
     }
     
     public boolean isHalted() {
