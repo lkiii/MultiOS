@@ -22,7 +22,7 @@ public class RVM {
         // keisti parametru padeti, musu AD pl adresa, tai DS kinta nuo parmetru skaiciaus, reiskis niekad tikslaus adreso nenurodysi
         VirtualMachine vm;
         try {
-            vm = rm.startNewVM("/home/lukas/NetBeansProjects/RVM/src/program1");
+            vm = rm.startNewVM("src/program1");
             vm.step();
             vm.step();
             vm.step();
