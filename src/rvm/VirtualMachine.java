@@ -27,11 +27,11 @@ public class VirtualMachine {
     private boolean MF = false; //memory flag . jei true tai komandai paduodamas atminties adresas, jei false - gryna reiksme
     private PROCESS_STATUS status;
 
-    public VirtualMachine(RM realMachine, VirtualMemory memory, short[] segments) {
-        DS = segments[0];
-        CS = segments[1];
-        SS = segments[2];
-        ES = segments[3];
+    public VirtualMachine(RM realMachine, Byte[] registers, VirtualMemory memory) {
+        DS = registers[0];
+        CS = registers[1];
+        SS = registers[2];
+        ES = 0x0;
         this.realMachine = realMachine;
         this.memory = memory;
         status = PROCESS_STATUS.READY;
@@ -205,6 +205,16 @@ public class VirtualMachine {
     public void setStackSeg(byte addr) {
         SS = addr;
     */
+
+    private void halt() {
+        // temp
+        //halted=true;
+        throw new UnsupportedOperationException("Programa sėkmingai baigė darbą");
+    }
+    
+    public boolean isHalted() {
+        return halted;
+    }
 
     private void putData(Word value) {
         
