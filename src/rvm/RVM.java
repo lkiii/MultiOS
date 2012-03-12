@@ -19,15 +19,19 @@ public class RVM {
      */
     public static void main(String[] args) {
         RM rm = new RM();
+ 
         // keisti parametru padeti, musu AD pl adresa, tai DS kinta nuo parmetru skaiciaus, reiskis niekad tikslaus adreso nenurodysi
         VirtualMachine vm;
         try {
-            vm = rm.startNewVM("/home/lukas/NetBeansProjects/RVM/src/program1");
-            vm.step();
-            vm.step();
-            vm.step();
-            vm.step();
-            vm.step();
+            // mano C:\\Users\\ernestas\\Documents\\NetBeansProjects\\RVM\\src\\program1
+            // tavo /home/lukas/NetBeansProjects/RVM/src/program1
+            vm = rm.startNewVM("C:\\Users\\ernestas\\Documents\\NetBeansProjects\\RVM\\src\\program1");//
+            System.out.println("pradines registru reiksmes: ");
+            vm.printRegisters();
+            while (!vm.isHalted()) {
+                vm.step();
+            }
+            System.out.println("Programa sekmingai baige darba");
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(RVM.class.getName()).log(Level.SEVERE, null, ex);

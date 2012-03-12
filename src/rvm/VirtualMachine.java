@@ -26,8 +26,9 @@ public class VirtualMachine {
     private Byte SF = 0; // Status flag
     private boolean MF = false; //memory flag . jei true tai komandai paduodamas atminties adresas, jei false - gryna reiksme
     private PROCESS_STATUS status;
+    private boolean haltReached = false;
 
-    public VirtualMachine(RM realMachine, Byte[] registers, VirtualMemory memory) {
+    public VirtualMachine(RM realMachine, short[] registers, VirtualMemory memory) {
         DS = registers[0];
         CS = registers[1];
         SS = registers[2];
@@ -39,9 +40,7 @@ public class VirtualMachine {
     
     public void step() {
         System.out.println("==STEP==");
-        printRegisters();
-        System.out.println("addr " + (CS*0x10+IP));
-        executeCommand(memory.readWord((int) (CS*0x10 + IP)));
+        executeCommand(memory.readWord((int) (CS + IP)));
         IP++;
         boolean interrupt = realMachine.interruptTest();
     }
@@ -50,76 +49,70 @@ public class VirtualMachine {
     // arba kiekienoj komandoj, bet padariau cia 
     private void executeCommand(Word op) {
         String opcode = op.toString().toUpperCase();
+        System.out.println("Atliekamas " + opcode); 
         switch (opcode) {
             case "HALT":
-                //halt();
+                halt();
                 break;
             case "PUSH":
+                push();
                 break;
             case "POP_":
+                pop();
                 break;
             default:
-                System.out.println("isparsintas arg: " + Integer.parseInt(opcode.substring(2, 4), 16));
-                
-                // cia toks tricksas, kad isparsinu kaip value, ir kaip reiksme is adreso, ir ifas pl flaga paduos kazkuri
-                // bet ne visiems tinka value, pvz lr sr, tai kad ifu nenaudot suchimichinsiu 
                 Word argAsValue = new Word(Integer.parseInt(opcode.substring(2, 4), 16));
                 Word argFromMemory = new Word(memory.readWord(argAsValue).toInt());
-                System.out.println("mem" + argFromMemory);
-                
-                Word arg;
-                // tik kai kuriom komandom
-                // kuriom reik reaguot i MemFlag, tos ima <arg>, jei ima tik is atminties, ar tik kaip reiksme, tada <argasval> ir ...
-                // negrazi alternatyva kiekviename case kuriam reik ifa idet, arba kiekvienos komandos metode
-                if (MF == true) {
-                    arg = argFromMemory;
-                } else {
-                    arg = argAsValue;
-                }
-                
+                Word arg = argFromMemory;
+                Word value;
                 switch (opcode.substring(0, 2)) {
                     case "AD": 
-                        //memory.writeWord(new Word(0x30), arg);
-                        add(arg);
+                        value = new Word(memory.readWord(DS + argAsValue.toInt()).toInt());
+                        add(value);
                         break;
                     case "SB":
-                        sub(arg);
+                        value = new Word(memory.readWord(DS + argAsValue.toInt()).toInt());
+                        sub(value);
                         break;
                     case "LR":
-                        loadRegister(arg);
+                        System.out.println(DS + argAsValue.toInt());
+                        System.out.println(memory.readWord(DS + argAsValue.toInt()));
+                        loadRegister(new Word(DS + argAsValue.toInt()));
                         break;
                     case "SR":
-                        saveRegister(arg);
+                        saveRegister(new Word(DS + argAsValue.toInt()));
                         break;
                     case "CM":
-                        compare(arg);
+                        compare(argFromMemory);
                         break;
                     case "JP":
-                        jump(arg);
+                        jump(argAsValue);
                         break;
                     case "JE":
-                        jumpIfEqual(arg);
+                        jumpIfEqual(argAsValue);
                         break;
                     case "JL":
-                        jumpIfLess(arg);
+                        jumpIfLess(argAsValue);
                         break;
                     case "JG":
-                        jumpIfGreater(arg);
+                        jumpIfGreater(argAsValue);
                         break;
                     case "PD":
-                        putData(memory.readWord(arg));
+                        System.out.println("OUTPUT: " + memory.readWord(arg));
+                        //putData(memory.readWord(arg));
                         break;
                     case "GD":
-                        Word data = getData();
-                        memory.writeWord(arg, getData());
+                        /*Word data = getData();
+                        memory.writeWord(arg, getData());*/
+                        
                         break;
                     default:
-                        throw new RuntimeException("halt");
-                        //break;
+                        throw new IllegalArgumentException("Unknown opcode: " + opcode);
                         
                 }
+    
         }
-
+                    printRegisters();
 
 
     }
@@ -134,16 +127,17 @@ public class VirtualMachine {
     }
     
     private void loadRegister(Word addr) {
-        memory.writeWord(DS, addr.toInt(), new Word(R.toInt()));
+       R = memory.readWord(DS, addr.toInt());
+
     }
         
     
     private void saveRegister(Word addr) {
-        R = memory.readWord(DS, addr.toInt());
+        memory.writeWord(DS, addr.toInt(), new Word(R.toInt()));
     }
     
     private void compare(Word value) {
-        if (R.toInt() < value.toInt()) { // pagal doca value atmintyje, galima pdaryti flaga MemFlag: false tai ne memory, true memory address
+        if (R.toInt() < value.toInt()) {
             SF = 0;
         } else if (R.toInt() == value.toInt()) {
             SF = 1;
@@ -175,21 +169,25 @@ public class VirtualMachine {
     }
     
     private void push() {
-        if (SP == SS) {
+        /*if (SP == SS) {
             SP = (short) (SS + 0x1F);
         } else {
             SP--;
-        }
-        memory.writeWord(SS, SP, R);
+        }*/
+        memory.writeWord(SS+SP, R);
+        System.out.println("SS: " + SS + " SP: " + SP + " irasem " + memory.readWord(SS+SP).toInt());
+        SP++;
     }
     
     private void pop() {
-        R = memory.readWord(SS, SP);
-        if (SP == SS + 1F) {
+        SP--;
+        System.out.println("SS: " + SS + " SP: " + SP + " gaunam i R " + memory.readWord(SS+SP).toInt());
+        R = memory.readWord(SS+SP);
+        /*if (SP == SS + 1F) {
             SP = SS;
         } else {
             SP++;
-        }
+        }*/
         
     }
     /*
@@ -207,13 +205,11 @@ public class VirtualMachine {
     */
 
     private void halt() {
-        // temp
-        //halted=true;
-        throw new UnsupportedOperationException("Programa sėkmingai baigė darbą");
+        haltReached = true;
     }
     
     public boolean isHalted() {
-        return halted;
+        return haltReached;
     }
 
     private void putData(Word value) {
@@ -230,14 +226,22 @@ public class VirtualMachine {
     
     // komandu testui
     public void printRegisters() {
-        System.out.println("R: " + R.toInt());
-        System.out.println("SF: " + SF);
-        System.out.println("CS: " + CS);
-        System.out.println("DS: " + DS);
-        System.out.println("SS: " + SS);
-        System.out.println("ES: " + ES);
-        System.out.println("IP: " + IP);
+        System.out.print(" R: " + R.toInt());
+        System.out.print(" SF: " + SF);
+        System.out.print(" CS: " + CS);
+        System.out.print(" DS: " + DS);
+        System.out.print(" SS: " + SS);
+        System.out.print(" SP: " + SP);
+        System.out.print(" ES: " + ES);
+        System.out.print(" IP: " + IP);
+        System.out.println();
+        
+        System.out.print("STACK: ");
+        for (int i=0; i<= SP; i++) {
+           System.out.print(memory.readWord(SS + i).toInt() + "(" + memory.readWord(SS + i) + ")" + ","); 
         }
+        System.out.println();
+    }
 }
 
 

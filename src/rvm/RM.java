@@ -26,6 +26,7 @@ public class RM {
         cpu = new CPU();
         VMList = new ArrayList();
         mem = new Memory(Constants.MEMORY_SIZE);
+        mem.fillZeroes();
     }
 
     /**
@@ -46,98 +47,113 @@ public class RM {
      * @return sugeneruota VM
      */
     public VirtualMachine startNewVM(String fileName, String args) throws FileNotFoundException {
-        Byte[] segs = new Byte[3];//DS, CS, SS
+        /*Byte[] segs = new Byte[3];//DS, CS, SS
         if (!args.isEmpty() && !args.trim().isEmpty()) {
             segs[0] = (Byte) (byte) (args.length() / BLOCK_SIZE); // DS
         } else {
             segs[0] = 0x0;
-        }
+        }*/
+        // 1budas
+        // du ciklai vienu nustatom ar korektiska
+        // kitu  jau zinom kur bus renkam duomenis
+        // 2budas
+        // viename cikle atpazystam ir renkam
+        // cia 1 budas
         Scanner scanner;
-        scanner = new Scanner(new FileInputStream(fileName));//new FileInputStream(fileName) galima bus keist į stringą
-        String line;// = scanner.nextLine();
-        boolean isCSSet = false;
-        boolean isSSSet = false;
-        Boolean writeToDS = null;
+        scanner = new Scanner(new FileInputStream(fileName));
+        String line;
+        boolean dataSegPresents = false;
+        boolean codeSegPresents = false;
+        boolean haltPresents = false;
+        boolean illegalStructure = false;
         int counter = 0;
-        while (!isCSSet || !isSSSet) {
+        int dataSegStart = -1;
+        int codeSegStart = -1;
+        
+        // checkas segmentu korektiskumui
+        while (scanner.hasNext()) {
             line = scanner.nextLine();
-            if (counter++ > 2) {
-                break;
+            // segmentu isdestimo checkas
+            if ((line.equals(".DATA") && dataSegPresents) || (line.equals(".CODE") && codeSegPresents) ||
+                (line.equals("HALT") && !codeSegPresents)) {
+                illegalStructure = true;
+            } 
+            
+            if (line.equals(".DATA")) {
+                dataSegPresents = true;
+                dataSegStart = counter+1; // po .DATA duomenys
             }
-            if ("DS".equals((line.substring(0, 2)).toUpperCase())) {
-                isCSSet = true;
-                segs[1] = (Byte) (byte) (segs[0] + Integer.parseInt(line.substring(2), 16));
-            } else if ("CS".equals((line.substring(0, 2)).toUpperCase())) {
-                isSSSet = true;
-                segs[2] = (Byte) (byte) (segs[1] + Integer.parseInt(line.substring(2), 16));
-            } else if (".DAT".equals(line.toUpperCase())) {
-                writeToDS = true;
-                break;
-            } else if (".COD".equals(line.toUpperCase())) {
-                writeToDS = false;
-                break;
+            if (dataSegPresents && line.equals(".CODE")) { // jau yra data ir radom code
+                codeSegPresents = true;
+                codeSegStart = counter+1; // po .CODE komandos
             }
+            if (codeSegPresents && line.equals("HALT")) { // jau yra code (tai ir data) ir radom halt
+                haltPresents = true;
+            }
+            counter++;
         }
-        if (!isCSSet) {
-            segs[1] = (Byte) (byte) (segs[0] + DEFAULT_DS_SIZE);
-        }
-        if (!isSSSet) {
-            segs[2] = (Byte) (byte) (segs[1] + DEFAULT_CS_SIZE);
-        }
-        if (segs[0] + segs[1] + segs[2] + STACK_SIZE <= MAX_BLOCKS_IN_VM) {
-            VirtualMemory vm = alloc(segs[0] + segs[1] + segs[2] + STACK_SIZE);
+        
+        System.out.println("DATASEG: " + dataSegPresents + dataSegStart);
+        System.out.println("CODESEG: " + codeSegPresents + codeSegStart);
+        System.out.println("HALT: " + haltPresents);
+        
+        // jau surinkimas atminties
+        if (dataSegPresents && codeSegPresents && haltPresents && !illegalStructure) {
+            System.out.println("Perkeliama i atminti");
+            scanner = new Scanner(new FileInputStream(fileName));
+            VirtualMemory vm = alloc(counter - 2 + 32); // dydis toks, koks failas minus .DATA ir minus .CODE zodzius
+            counter = 0;
+            int memCursorPosition = 0;
+            boolean haltReached = false;
+            
+            short DS = 0;
+            short CS = (short) (codeSegStart - dataSegStart - 1);
+            short SS = (short) (DS + CS);
+            
+            while (scanner.hasNext() && !haltReached) {
+                line = scanner.nextLine();
+                System.out.println("parsinamas: " + line);
+                
+                // duomenu irasymas
+                if (counter >= dataSegStart && counter < codeSegStart-1) { // counter yra tarp .data ... .code
+                    if (line.startsWith("STR ")) {
+                        System.out.println(" str [" + memCursorPosition + "] := " + line.substring(4, line.length()-1));
+                        vm.writeWord(memCursorPosition, 
+                                        new Word(line.substring(4, line.length()-1)));
+                        memCursorPosition++;
+                    } else {
+                        System.out.println(" int [" + memCursorPosition + "] := " + Integer.parseInt(line));
+                        vm.writeWord(memCursorPosition, new Word(Integer.parseInt(line)));
+                        memCursorPosition++;
+                    }
+                } 
+                
+                // kodo irasymas
+                if (counter >= codeSegStart) {
+                    System.out.println("[" + memCursorPosition + "] := " + line);
+                    vm.writeWord(memCursorPosition, new Word(line));
+                    memCursorPosition++;
+                }
+                
+                if (line.equals("HALT")) {
+                    haltReached = true;
+                }
+                counter++;
+            }
+            SS = (short) memCursorPosition;
+            
+            
+            System.out.println("left main loop, vmsize: " + vm.getSize() + " memcursor: " + memCursorPosition);
+            for (int i=0; i<vm.getSize(); i++) {
+                System.out.println("[" + i + "]" + vm.readWord(i));
+            }
+
+            short[] segs = {DS, CS, SS};
             VMList.add(new VirtualMachine(this, segs, vm));
-
-            int writingAddress;
-            if (writeToDS == null) {
-                line = scanner.nextLine();
-                if (".DAT".equals(line.toUpperCase())) {
-                    writeToDS = true;
-                } else if (".COD".equals(line.toUpperCase())) {
-                    writeToDS = false;
-                } else {
-                    new RuntimeException("Sūdinas failas");
-                }
-            }
-            if (writeToDS) {
-                writingAddress = segs[0] * 0x10;
-            } else {
-                writingAddress = segs[1] * 0x10;
-            }
-            while (scanner.hasNext()) {
-                line = scanner.nextLine();
-                if (writeToDS) {
-                    try {
-                        line = "" + Integer.parseInt(line);
-                    } catch (NumberFormatException ex) {
-                    }
-                    if (".COD".equals(line.toUpperCase())) {
-                        writeToDS = false;
-                        writingAddress = segs[1] * 0x10;
-                        continue;
-                    }
-                }
-                vm.writeWord(writingAddress++, new Word(line));
-                System.out.println("parašė: '" + line + "' adresu" + Integer.toHexString(writingAddress));
-            }
-            /*for (int i = 0; i < (segs[0] + segs[1] + segs[2] + STACK_SIZE) * 16; i++) {
-                System.out.println(Integer.toHexString(i) + " " + vm.readWord(i));
-            }*/
-
             return VMList.get(0);
         } else {
-            //testavimui reikia kad returnintų vmą. Po to nereiks.
             return null;
         }
-    }
-
-    /**
-     * TODO anlize strukturos source'o
-     *
-     * @return komandu sarasas
-     */
-    public static Word[] Loader() {
-        return null;
     }
 
     public Word[] getAvailableBlocks(int blocks) {
@@ -172,17 +188,19 @@ public class RM {
      *
      * @return virtuali atmintis
      */
-    public VirtualMemory alloc(int requiredBlocksNumber) {
+    public VirtualMemory alloc(int requestedWords) {
         //TODO kad gaut PTR reikia kažkur saugot masyvą freeWords ar pan. Pasitarsim dėl šito. 
         int i = 0x0;
         Word ptr = new Word(i);
-        while (requiredBlocksNumber > 0) {
-            requiredBlocksNumber--;
+        int memSize = requestedWords/BLOCK_SIZE;
+        while (requestedWords > 0) {
+            requestedWords--;
             mem.writeWord(i, new Word(0x100 + i));
-            System.out.println(Integer.toHexString(i) + " " + mem.readWord(i).toInt());
             i++;
         }
+
         VirtualMemory VMmemory = new VirtualMemory(ptr, mem);
+        VMmemory.setSize(memSize);
         return VMmemory;
     }
 

@@ -12,7 +12,7 @@ public class VirtualMemory {
 
     private Word pageTableAddress;
     private Memory realMemory; // nuoroda i realia atminti, nu nebent statini Memory padaryt, tada nereiks
-    private int Size;
+    private int size;
 
     /**
      * @param PTR puslapiavimo lenteles iraso adresas
@@ -49,7 +49,6 @@ public class VirtualMemory {
      * @return nuskaitytas is realios atminties zodis
      */
     public Word readWord(Word arg) {
-        System.out.print(arg);
         return readWord(arg.toInt());
     }
 
@@ -93,6 +92,15 @@ public class VirtualMemory {
         Word absoluteTrack = realMemory.readWord(pageTableAddress.toInt() + track);
         int absoluteAddress = absoluteTrack.toInt() + word;
         return absoluteAddress;
+    }
+    
+    //testui, nebent pergalvot kaip paduot size
+    public void setSize(int size) {
+        this.size = size;
+    }
+    
+    public int getSize() {
+        return size;
     }
     
     public Word getPTR() {
