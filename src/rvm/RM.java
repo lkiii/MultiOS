@@ -190,7 +190,7 @@ public class RM {
      */
     public VirtualMemory alloc(int requestedWords) {
         //TODO kad gaut PTR reikia kažkur saugot masyvą freeWords ar pan. Pasitarsim dėl šito. 
-        int i = 0x0;
+        int i = 0x0; 
         Word ptr = new Word(i);
         int memSize = requestedWords/BLOCK_SIZE;
         while (requestedWords > 0) {
