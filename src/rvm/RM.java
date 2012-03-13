@@ -8,12 +8,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static rvm.Constants.*;
 import sun.org.mozilla.javascript.internal.regexp.SubString;
+import Tests.MemoryTest.*;
 
 /**
  *
  * @author ernestas
  */
 public class RM {
+    
+        public static void print(Memory mem) {
+        for (int i=0x00; i < 0xFF; i++) {
+            System.out.print(Integer.toHexString(i).toUpperCase() + "_: ");
+            for (int j=0x0; j <= 0xF; j++) {
+                System.out.print(mem.readWord(i*0x10 + j).toInt() + " ");
+            }
+            System.out.println();
+        } 
+    }
 
     CPU cpu; // Centrinis procesorius
     Memory mem; // Reali atmintis
@@ -82,10 +93,14 @@ public class RM {
             if (line.equals(".DATA")) {
                 dataSegPresents = true;
                 dataSegStart = counter+1; // po .DATA duomenys
+                counter++;
+                continue;
             }
             if (dataSegPresents && line.equals(".CODE")) { // jau yra data ir radom code
                 codeSegPresents = true;
                 codeSegStart = counter+1; // po .CODE komandos
+                counter++;
+                continue;
             }
             if (codeSegPresents && line.equals("HALT")) { // jau yra code (tai ir data) ir radom halt
                 haltPresents = true;
@@ -101,7 +116,13 @@ public class RM {
         if (dataSegPresents && codeSegPresents && haltPresents && !illegalStructure) {
             System.out.println("Perkeliama i atminti");
             scanner = new Scanner(new FileInputStream(fileName));
-            VirtualMemory vm = alloc(counter - 2 + 32); // dydis toks, koks failas minus .DATA ir minus .CODE zodzius
+            // apskaiciavimas reikiamu bloku
+            int requiredBlocks = (counter % BLOCK_SIZE > 0) ? (counter / BLOCK_SIZE + 1) : (counter / BLOCK_SIZE);
+            requiredBlocks += STACK_SIZE;
+            VirtualMemory vm = alloc(requiredBlocks); // dydis toks, koks failas minus .DATA ir minus .CODE zodzius
+            alloc(3);
+            alloc(6);
+            print(mem);
             counter = 0;
             int memCursorPosition = 0;
             boolean haltReached = false;
@@ -189,7 +210,7 @@ public class RM {
      * @return virtuali atmintis
      */
     public VirtualMemory alloc(int blocksRequired) {
- 
+
         // pirmiausia patikrinam ar yra laisvas blokas page teble entriui, 
         // teigiam kad pilnas, ir jei bent viena randam 0 ilgio reiskias nepilnas
         //boolean  = true;
@@ -199,28 +220,40 @@ public class RM {
         for (int i = 1; i < BLOCK_SIZE; i++) { // pt ilgiai yra block size dydzio
            Word currentWord = mem.readWord(i); 
            if (currentWord == null || currentWord.toInt() == 0) {
-               newPTR = new Word(i*BLOCK_SIZE);
+               if (newPTR == null) {
+                   newPTR = new Word(i*BLOCK_SIZE);
+               }
            } else {
                memUsed += currentWord.toInt();               
            }
+           
         }
         
         // jei nera ptro, reiskias lentele pilna
         //
-        System.out.println("Memory left:" + (MEMORY_SIZE - PT_SIZE - memUsed));
+  
+        //System.out.println("memused" + memUsed);
+        //System.out.println("Memory left:" + (MEMORY_SIZE - PT_SIZE - memUsed));
         if (newPTR == null && (MEMORY_SIZE - PT_SIZE - memUsed < blocksRequired)) {
             return null;
         }    
         
-        int ptCursor = 0;
+        int ptCursor = newPTR.toInt();
+        int blocksAlloced = 0;
         // begam ir tikrinam kiekviena tracka
-        for (int blockAddress = PT_SIZE; blockAddress < MEMORY_SIZE; blockAddress++) {
+        for (int blockAddress = PT_SIZE*BLOCK_SIZE; blockAddress < MEMORY_SIZE; blockAddress++) {
             // begam vel per ilgius ir imam nenulinius
+            //System.out.println("current blockAddress: " + blockAddress);
             boolean notUsed = true;
             for (int sizeTableIndex = 1; sizeTableIndex < BLOCK_SIZE; sizeTableIndex++) {
+                //System.out.println("current SizeTableIndex: " + sizeTableIndex);
                 // ptro wordas
                 //TODO refactorint
-                for (int word = (sizeTableIndex-1)*BLOCK_SIZE; word < (sizeTableIndex-1)*BLOCK_SIZE+mem.readWord(sizeTableIndex).toInt(); word++) {
+                int ptrStart = (sizeTableIndex)*BLOCK_SIZE;
+                int ptrEnd = ptrStart + mem.readWord(sizeTableIndex).toInt();
+                //System.out.println("strt: " + ptrStart + " end: " + ptrEnd + " index" + mem.readWord(sizeTableIndex).toInt());
+                for (int word = ptrStart; word < ptrEnd; word++) {
+                    //System.out.println("foriukas");
                     if (blockAddress == mem.readWord(word).toInt()) {
                         notUsed = false;
                         break;
@@ -230,24 +263,22 @@ public class RM {
                     break;
                 }
             }
+            if (blocksAlloced >= blocksRequired) {
+                break;
+            }
+        
             if (notUsed) {
                 mem.writeWord(ptCursor, new Word(blockAddress));
                 ptCursor++;
-            }
-            if (ptCursor+1 >= blocksRequired) {
-                mem.writeWord(newPTR.toInt() / BLOCK_SIZE, new Word(blocksRequired));
+                blocksAlloced++;
             }
         }
         
-        int i = 0x0; 
-                Word ptr = new Word(i);
-        while (blocksRequired > 0 && blocksRequired <= MAX_BLOCKS_IN_VM) {
-            blocksRequired--;
-            mem.writeWord(i, new Word(0x100 + i));
-            i++;
+        if (blocksAlloced >= blocksRequired) {
+            mem.writeWord(newPTR.toInt() / BLOCK_SIZE, new Word(blocksRequired));
         }
 
-        VirtualMemory VMmemory = new VirtualMemory(ptr, mem);
+        VirtualMemory VMmemory = new VirtualMemory(newPTR, mem);
         VMmemory.setSize(memSize);
         return VMmemory;
         }

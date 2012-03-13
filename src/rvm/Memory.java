@@ -101,7 +101,7 @@ public class Memory {
      * atmintis uzpildoma zodziais 0000
      */
     public void fillZeroes() {
-        Word empty = new Word("0000");
+        Word empty = new Word(0000); // ascii -> null;
         for (int i = 0x0; i < getSize(); i++) {
             writeWord(i, empty);
         }
