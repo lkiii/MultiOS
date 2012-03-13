@@ -9,8 +9,8 @@ package rvm;
 
 public final class Constants {
     public static final int WORD_SIZE = 0x4;
-    public static final int BLOCK_SIZE = 0xF;
-    public static final int PT_SIZE = 0xF;
+    public static final int BLOCK_SIZE = 0x10;
+    public static final int PT_SIZE = 0x10;
     public static final int STACK_SIZE = 0x2;
     public static final int MAX_BLOCKS_IN_VM = 0xF;
     public static final int DEFAULT_DS_SIZE = 0x3;

@@ -188,13 +188,61 @@ public class RM {
      *
      * @return virtuali atmintis
      */
-    public VirtualMemory alloc(int requestedWords) {
-        //TODO kad gaut PTR reikia kažkur saugot masyvą freeWords ar pan. Pasitarsim dėl šito. 
+    public VirtualMemory alloc(int blocksRequired) {
+ 
+        // pirmiausia patikrinam ar yra laisvas blokas page teble entriui, 
+        // teigiam kad pilnas, ir jei bent viena randam 0 ilgio reiskias nepilnas
+        //boolean  = true;
+        Word newPTR = null;
+        int memSize = blocksRequired;
+        int memUsed = 0;
+        for (int i = 1; i < BLOCK_SIZE; i++) { // pt ilgiai yra block size dydzio
+           Word currentWord = mem.readWord(i); 
+           if (currentWord == null || currentWord.toInt() == 0) {
+               newPTR = new Word(i*BLOCK_SIZE);
+           } else {
+               memUsed += currentWord.toInt();               
+           }
+        }
+        
+        // jei nera ptro, reiskias lentele pilna
+        //
+        System.out.println("Memory left:" + (MEMORY_SIZE - PT_SIZE - memUsed));
+        if (newPTR == null && (MEMORY_SIZE - PT_SIZE - memUsed < blocksRequired)) {
+            return null;
+        }    
+        
+        int ptCursor = 0;
+        // begam ir tikrinam kiekviena tracka
+        for (int blockAddress = PT_SIZE; blockAddress < MEMORY_SIZE; blockAddress++) {
+            // begam vel per ilgius ir imam nenulinius
+            boolean notUsed = true;
+            for (int sizeTableIndex = 1; sizeTableIndex < BLOCK_SIZE; sizeTableIndex++) {
+                // ptro wordas
+                //TODO refactorint
+                for (int word = (sizeTableIndex-1)*BLOCK_SIZE; word < (sizeTableIndex-1)*BLOCK_SIZE+mem.readWord(sizeTableIndex).toInt(); word++) {
+                    if (blockAddress == mem.readWord(word).toInt()) {
+                        notUsed = false;
+                        break;
+                    }
+                }
+                if (!notUsed) {
+                    break;
+                }
+            }
+            if (notUsed) {
+                mem.writeWord(ptCursor, new Word(blockAddress));
+                ptCursor++;
+            }
+            if (ptCursor+1 >= blocksRequired) {
+                mem.writeWord(newPTR.toInt() / BLOCK_SIZE, new Word(blocksRequired));
+            }
+        }
+        
         int i = 0x0; 
-        Word ptr = new Word(i);
-        int memSize = requestedWords/BLOCK_SIZE;
-        while (requestedWords > 0) {
-            requestedWords--;
+                Word ptr = new Word(i);
+        while (blocksRequired > 0 && blocksRequired <= MAX_BLOCKS_IN_VM) {
+            blocksRequired--;
             mem.writeWord(i, new Word(0x100 + i));
             i++;
         }
@@ -202,9 +250,6 @@ public class RM {
         VirtualMemory VMmemory = new VirtualMemory(ptr, mem);
         VMmemory.setSize(memSize);
         return VMmemory;
-    }
-
-    public void free(VirtualMemory memory) {
-        //TODO padaryt PTR žodžius free kaip alloc atvirkštinis
-    }
+        }
+        
 }
