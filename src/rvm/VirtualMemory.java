@@ -90,7 +90,7 @@ public class VirtualMemory {
      */
     public int getAbsoluteAddress(int track, int word) { // hex params
         Word absoluteTrack = realMemory.readWord(pageTableAddress.toInt() + track);
-        int absoluteAddress = absoluteTrack.toInt() + word;
+        int absoluteAddress = absoluteTrack.toInt()*0x10 + word;
         return absoluteAddress;
     }
     

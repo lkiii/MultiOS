@@ -25,7 +25,7 @@ public class RVM {
         try {
             // mano C:\\Users\\ernestas\\Documents\\NetBeansProjects\\RVM\\src\\program1
             // tavo /home/lukas/NetBeansProjects/RVM/src/program1
-            vm = rm.startNewVM("C:\\Users\\ernestas\\Documents\\NetBeansProjects\\RVM\\src\\program1");//
+            vm = rm.startNewVM("src/program1");//
             System.out.println("pradines registru reiksmes: ");
             vm.printRegisters();
             while (!vm.isHalted()) {

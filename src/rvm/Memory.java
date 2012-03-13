@@ -63,7 +63,7 @@ public class Memory {
         // FIXME uzejimas uz ribu
         if (memory[absAddress] == null){
             //testinimui
-            return new Word("null");
+            return new Word(0);
         }
         return memory[absAddress];
     }
