@@ -62,9 +62,7 @@ public class VirtualMachine {
                 break;
             default:
                 Word argAsValue = new Word(Integer.parseInt(opcode.substring(2, 4), 16));
-                Word argFromMemory = new Word(memory.readWord(argAsValue).toInt());
-                Word arg = argFromMemory;
-                Word value;
+                Word value = argAsValue;
                 switch (opcode.substring(0, 2)) {
                     case "AD": 
                         value = new Word(memory.readWord(DS + argAsValue.toInt()).toInt());
@@ -75,15 +73,13 @@ public class VirtualMachine {
                         sub(value);
                         break;
                     case "LR":
-                        System.out.println(DS + argAsValue.toInt());
-                        System.out.println(memory.readWord(DS + argAsValue.toInt()));
                         loadRegister(new Word(DS + argAsValue.toInt()));
                         break;
                     case "SR":
                         saveRegister(new Word(DS + argAsValue.toInt()));
                         break;
                     case "CM":
-                        compare(argFromMemory);
+                        compare(new Word(DS + argAsValue.toInt()));
                         break;
                     case "JP":
                         jump(argAsValue);
@@ -98,13 +94,13 @@ public class VirtualMachine {
                         jumpIfGreater(argAsValue);
                         break;
                     case "PD":
-                        System.out.println("OUTPUT: " + memory.readWord(arg));
+                        System.out.println("OUTPUT: " + memory.readWord(argAsValue));
                         //putData(memory.readWord(arg));
                         break;
                     case "GD":
                         /*Word data = getData();
                         memory.writeWord(arg, getData());*/
-                        
+                        //etData();
                         break;
                     default:
                         throw new IllegalArgumentException("Unknown opcode: " + opcode);
@@ -174,15 +170,18 @@ public class VirtualMachine {
         } else {
             SP--;
         }*/
-        memory.writeWord(SS+SP, R);
-        System.out.println("SS: " + SS + " SP: " + SP + " irasem " + memory.readWord(SS+SP).toInt());
+        
+        memory.writeWord(SS + SP, R);
         SP++;
     }
     
     private void pop() {
+        if (SS == SP) {
+            return;
+        }
+        
         SP--;
-        System.out.println("SS: " + SS + " SP: " + SP + " gaunam i R " + memory.readWord(SS+SP).toInt());
-        R = memory.readWord(SS+SP);
+        R = memory.readWord(SS + SP);
         /*if (SP == SS + 1F) {
             SP = SS;
         } else {
@@ -213,11 +212,15 @@ public class VirtualMachine {
     }
 
     private void putData(Word value) {
-        
+        System.out.println("OUTPUT: " + value.toString());        
     }
 
-    private void getData(Word adress) {
-        
+    private String getData(Word address) {
+        String ret;
+        try (Scanner scanIn = new Scanner(System.in)) {
+            ret = scanIn.nextLine();
+        }
+        return ret;
     }
     
     public VirtualMemory getMemory() {
@@ -237,11 +240,12 @@ public class VirtualMachine {
         System.out.println();
         
         System.out.print("STACK: ");
-        for (int i=0; i<= SP; i++) {
+        for (int i=0; i< SP; i++) {
            System.out.print(memory.readWord(SS + i).toInt() + "(" + memory.readWord(SS + i) + ")" + ","); 
         }
         System.out.println();
     }
+    
 }
 
 

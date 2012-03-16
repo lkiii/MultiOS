@@ -110,25 +110,25 @@ public class RM {
             counter++;
         }
 
-        System.out.println("DATASEG: " + dataSegPresents + dataSegStart);
-        System.out.println("CODESEG: " + codeSegPresents + codeSegStart);
-        System.out.println("HALT: " + haltPresents);
+        //System.out.println("DATASEG: " + dataSegPresents + dataSegStart);
+        //System.out.println("CODESEG: " + codeSegPresents + codeSegStart);
+        //System.out.println("HALT: " + haltPresents);
 
         // jau surinkimas atminties
         if (dataSegPresents && codeSegPresents && haltPresents && !illegalStructure) {
-            System.out.println("Perkeliama i atminti");
+            //System.out.println("Perkeliama i atminti");
             scanner = new Scanner(new FileInputStream(fileName));
             // apskaiciavimas reikiamu bloku
             int requiredBlocks = (counter % BLOCK_SIZE > 0) ? (counter / BLOCK_SIZE + 1) : (counter / BLOCK_SIZE);
             requiredBlocks += STACK_SIZE;
             VirtualMemory vm = alloc(requiredBlocks); // dydis toks, koks failas minus .DATA ir minus .CODE zodzius
-            /*alloc(5);
+            alloc(5);
             alloc(6);
             VirtualMemory laikina = alloc(7);
             alloc(8);
             free(laikina);
             alloc(0xf);
-            print(mem);*/
+            print(mem);
             counter = 0;
             int memCursorPosition = 0;
             boolean haltReached = false;
@@ -139,16 +139,16 @@ public class RM {
 
             while (scanner.hasNext() && !haltReached) {
                 line = scanner.nextLine();
-                System.out.println("parsinamas: " + line);
+                //System.out.println("parsinamas: " + line);
 
                 // duomenu irasymas
                 if (counter >= dataSegStart && counter < codeSegStart - 1) { // counter yra tarp .data ... .code
                     if (line.startsWith("STR ")) {
-                        System.out.println(" str [" + memCursorPosition + "] := " + line.substring(4));
+                    //    System.out.println(" str [" + memCursorPosition + "] := " + line.substring(4));
                         vm.writeWord(memCursorPosition, new Word(line.substring(4)));
                         memCursorPosition++;
                     } else {
-                        System.out.println(" int [" + memCursorPosition + "] := " + Integer.parseInt(line));
+                    //    System.out.println(" int [" + memCursorPosition + "] := " + Integer.parseInt(line));
                         vm.writeWord(memCursorPosition, new Word(Integer.parseInt(line)));
                         memCursorPosition++;
                     }
@@ -156,7 +156,7 @@ public class RM {
 
                 // kodo irasymas
                 if (counter >= codeSegStart) {
-                    System.out.println("[" + memCursorPosition + "] := " + line);
+                    //System.out.println("[" + memCursorPosition + "] := " + line);
                     vm.writeWord(memCursorPosition, new Word(line));
                     memCursorPosition++;
                 }
@@ -165,14 +165,14 @@ public class RM {
                     haltReached = true;
                 }
                 counter++;
-                print(mem,false);
+                //print(mem,false);
             }
             SS = (short) memCursorPosition;
 
             
-            System.out.println("left main loop, vmsize: " + vm.getSize() + " memcursor: " + memCursorPosition);
+            //System.out.println("left main loop, vmsize: " + vm.getSize() + " memcursor: " + memCursorPosition);
             for (int i = 0; i < vm.getSize(); i++) {
-                System.out.println("[" + i + "]" + vm.readWord(i));
+            //    System.out.println("[" + i + "]" + vm.readWord(i));
             }
 
             short[] segs = {DS, CS, SS};
@@ -188,6 +188,7 @@ public class RM {
         return track;
     }
 
+    //todo 
     /**
      * Neuzbaigtas
      *
@@ -291,5 +292,9 @@ public class RM {
 
     private void free(VirtualMemory vm) {
         mem.writeWord((vm.getPTR().toInt())/BLOCK_SIZE, new Word(0));
+    }
+    
+    public Word[] getMemoryGui() {
+        return mem.getWords();
     }
 }

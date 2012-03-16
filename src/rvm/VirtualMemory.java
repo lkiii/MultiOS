@@ -106,4 +106,13 @@ public class VirtualMemory {
     public Word getPTR() {
         return pageTableAddress;
     }
+    
+    // gui
+    public Word[] getVirtualMemoryGui() {
+        Word[] vm = new Word[getSize()];
+        for (int i=0x0; i < getSize(); i++) {
+            vm[i] = readWord(i);
+        }
+        return vm;
+    }
 }

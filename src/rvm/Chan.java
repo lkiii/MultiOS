@@ -54,7 +54,7 @@ public class Chan {
      */
     public void useChan2(String output){
         cpu.setChanOccupied(2);
-        System.out.print(output);
+        System.out.print("OUTPUT:" + output);
         cpu.setChanAvailable(2);
     }
 }

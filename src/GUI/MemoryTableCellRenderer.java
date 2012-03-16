@@ -12,14 +12,19 @@ import java.awt.Component;
  *
  * @author ernestas
  */
-public class VirtualMemoryTableCellRenderer extends DefaultTableCellRenderer {
+public class MemoryTableCellRenderer extends DefaultTableCellRenderer {
     private int nextInstructionAddress = -1;
     
     @Override
     public Component getTableCellRendererComponent
             (JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
         Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-        if ((value instanceof String) && (col != 0)) {
+        cell.setBackground(Color.WHITE);
+        if (col == 0) {
+            cell.setBackground(new Color(0xF6, 0xF7, 0xF9));
+        }
+
+        /*if ((value instanceof String) && (col != 0)) {
             int address = Integer.valueOf((String) table.getModel().getValueAt(row, 0));
             address += Integer.valueOf((String) table.getModel().getColumnName(col), 16);
             if (isNextInstruction(address)) {
@@ -27,7 +32,7 @@ public class VirtualMemoryTableCellRenderer extends DefaultTableCellRenderer {
             } else {
                 cell.setBackground(Color.WHITE);
             }
-        }
+        }*/
         return cell;
     }
     

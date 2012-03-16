@@ -73,7 +73,7 @@ public class CPU {
      * @return kanalo laisvumas. True - laisvas | False - uzimtas
      */
     public boolean isChanAvailable(int index) {
-        if (index <= 3 && index >= 0) {
+        if (index < 3 && index >= 0) {
             return CHN[index];
         }
         return false;
@@ -84,7 +84,7 @@ public class CPU {
      * @param index kanalas numeris
      */
     public void setChanAvailable(int index) {
-        if (index <= 3 && index >= 0) {
+        if (index < 3 && index >= 0) {
             CHN[index] = true;
         }
     }
@@ -94,8 +94,12 @@ public class CPU {
      * @param index kanalo numeris
      */
     public void setChanOccupied(int index) {
-        if (index <= 3 && index >= 0) {
+        if (index < 3 && index >= 0) {
             CHN[index] = false;
         }
     }
+    
+   /* useChannel1() {
+        
+    }*/
 }

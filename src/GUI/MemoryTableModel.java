@@ -12,25 +12,29 @@ import rvm.*;
  * @author ernestas
  */
 public class MemoryTableModel extends AbstractTableModel {
-    private int numOfRows = Constants.MEMORY_SIZE;
-    private int numOfCols = 0x4;
+    private int numOfRows;
+    private int numOfCols;
     
-    private final String[] colNames= {"LA", "PHA", "VALUE", "INSTR"};
+    private final String[] colNames= {"*", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
     
-    private Object[][] data = new Object[numOfRows][numOfCols];
+    private Object[][] data;
     
-    public MemoryTableModel() {
+    public MemoryTableModel(int cols, int rows) {
+        numOfRows = rows;
+        numOfCols = cols;
+        data = new Object[numOfRows][numOfCols];
         this.initModel();
     }
     
     private void initModel() {
         for (int index = 0x0; index < numOfRows; index++) {
-            data[index][0] = Integer.toHexString(index);
+            data[index][0] = Integer.toHexString(index).toUpperCase();
         }
     }
     
     @Override
     public Class getColumnClass(int column) {
+        System.out.println(column);
         return getValueAt(0, column).getClass();
     }
     
@@ -57,5 +61,10 @@ public class MemoryTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object aValue, int row, int col) {
         data[row][col] = ((String) aValue).toUpperCase();
+    }
+    
+    @Override
+    public boolean isCellEditable(int rowIndex, int mColIndex) {
+        return false;
     }
 }
