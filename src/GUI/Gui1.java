@@ -521,7 +521,7 @@ public JPanel createMainPage() {
     
     private void prepareStackModel () {
         stackModel = new DefaultListModel();
-        stackList = new JList();
+        stackList = new JList(stackModel);
         stackList.setVisible(true);
     }
   
