@@ -245,7 +245,28 @@ public class VirtualMachine {
         }
         System.out.println();
     }
+    // gui
+    public int getR() {
+        return R.toInt();
+    }
+    public int getIP() {
+        return IP;
+    }
+    public int getSF() {
+        return SF;
+    }
+    public int getSP() {
+        return SP;
+    }
+    public int getDS() {
+        return DS;
+    }
+    public int getCS() {
+        return CS;
+    }
+    public int getSS() {
+        return SS;
+    }
     
+
 }
-
-

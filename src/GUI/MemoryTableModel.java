@@ -34,7 +34,6 @@ public class MemoryTableModel extends AbstractTableModel {
     
     @Override
     public Class getColumnClass(int column) {
-        System.out.println(column);
         return getValueAt(0, column).getClass();
     }
     

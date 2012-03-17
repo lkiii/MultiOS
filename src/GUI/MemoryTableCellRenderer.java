@@ -22,7 +22,13 @@ public class MemoryTableCellRenderer extends DefaultTableCellRenderer {
         cell.setBackground(Color.WHITE);
         if (col == 0) {
             cell.setBackground(new Color(0xF6, 0xF7, 0xF9));
+        } else {
+           int address = row*0x10 + col - 1;
+           if (isNextInstruction(address)) {
+               cell.setBackground(Color.cyan);
+           }
         }
+        
 
         /*if ((value instanceof String) && (col != 0)) {
             int address = Integer.valueOf((String) table.getModel().getValueAt(row, 0));
@@ -37,6 +43,7 @@ public class MemoryTableCellRenderer extends DefaultTableCellRenderer {
     }
     
     private boolean isNextInstruction(int address) {
+        System.out.println("comparinson: arg: " + address + " nextINstr: " + this.nextInstructionAddress);
         if (address == this.nextInstructionAddress) {
             return true;
         } else {

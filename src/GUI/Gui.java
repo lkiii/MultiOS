@@ -35,6 +35,9 @@ public class Gui {
     private MemoryTableModel realMemoryModel; // real memory words
     private MemoryTableModel virtualMemoryModel; // virtual memory words
     
+    private MemoryTableCellRenderer realMemoryCell; 
+    private MemoryTableCellRenderer virtualMemoryCell;
+    
     private JScrollPane spStackList; 
     private JScrollPane spRealMemoryTable;
     private JScrollPane spVirtualMemoryTable;
@@ -69,6 +72,7 @@ public class Gui {
     JTextField tfInput;
     
     JFileChooser fc;
+    boolean isLoaded = false;
     
     private void initProject() throws FileNotFoundException {
         rm = new RM();
@@ -115,6 +119,20 @@ public class Gui {
             }
         });
     }
+    
+private void refreshAll() {
+    virtualMemoryCell.setNextInstructionAddress(vm.getCS() + vm.getIP());
+    updateRealMemoryModel();
+    updateVirtualMemoryModel();
+    updateStackModel();
+    tfRegR.setText(String.valueOf(vm.getR()));
+    tfRegSF.setText(String.valueOf(vm.getSF()));
+    tfRegIP.setText(String.valueOf(vm.getIP()));
+    tfRegSP.setText(String.valueOf(vm.getSP()));
+    tfRegDS.setText(String.valueOf(vm.getDS()));
+    tfRegCS.setText(String.valueOf(vm.getCS()));
+    tfRegSS.setText(String.valueOf(vm.getSS()));
+}
  
 // main page panel
 public JPanel createMainPage() {
@@ -149,7 +167,8 @@ public JPanel createMainPage() {
         step.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // stepint
+                vm.step();
+                refreshAll();
             }
         });
         
@@ -158,7 +177,7 @@ public JPanel createMainPage() {
         run.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // stepint
+                // runint
             }
         });
 
@@ -302,6 +321,11 @@ public JPanel createMainPage() {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 10);
         panel.add(panelMemoryRepresentation, gridBagConstraints);
+        
+        rbGroup = new ButtonGroup();
+        rbGroup.add(rbChar);
+        rbGroup.add(rbNum);
+//        rbChar.add
 
         lbRegR = new JLabel();
         lbRegR.setText("R");
@@ -343,6 +367,7 @@ public JPanel createMainPage() {
         panel.add(lbRegSP, gridBagConstraints);
         
         tfRegR = new JTextField();
+        tfRegR.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 1;
@@ -353,6 +378,7 @@ public JPanel createMainPage() {
         panel.add(tfRegR, gridBagConstraints);
         
         tfRegSF = new JTextField();
+        tfRegSF.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 3;
@@ -363,6 +389,7 @@ public JPanel createMainPage() {
         panel.add(tfRegSF, gridBagConstraints);
         
         tfRegIP = new JTextField();
+        tfRegIP.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 5;
@@ -373,6 +400,7 @@ public JPanel createMainPage() {
         panel.add(tfRegIP, gridBagConstraints);
         
         tfRegSP = new JTextField();
+        tfRegSP.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 7;
@@ -421,6 +449,7 @@ public JPanel createMainPage() {
         panel.add(lbRegES, gridBagConstraints);
         
         tfRegDS = new JTextField();
+        tfRegDS.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 9;
         gridBagConstraints.gridy = 1;
@@ -432,6 +461,7 @@ public JPanel createMainPage() {
         panel.add(tfRegDS, gridBagConstraints);
         
         tfRegCS = new JTextField();
+        tfRegCS.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 9;
         gridBagConstraints.gridy = 3;
@@ -443,6 +473,7 @@ public JPanel createMainPage() {
         panel.add(tfRegCS, gridBagConstraints);
         
         tfRegSS = new JTextField();
+        tfRegSS.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 9;
         gridBagConstraints.gridy = 5;
@@ -454,6 +485,7 @@ public JPanel createMainPage() {
         panel.add(tfRegSS, gridBagConstraints);
         
         tfRegES = new JTextField();
+        tfRegES.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 9;
         gridBagConstraints.gridy = 7;
@@ -476,9 +508,9 @@ public JPanel createMainPage() {
         realMemoryTable.getTableHeader().setResizingAllowed(false);
         realMemoryTable.setDragEnabled(false);
         realMemoryTable.setSelectionForeground(Color.black);
-        MemoryTableCellRenderer renderer= new MemoryTableCellRenderer();
+        realMemoryCell = new MemoryTableCellRenderer();
         try {
-            realMemoryTable.setDefaultRenderer(Class.forName("java.lang.String"), renderer);
+            realMemoryTable.setDefaultRenderer(Class.forName("java.lang.String"), realMemoryCell);
         } catch (ClassNotFoundException ex) {
             System.out.println("blet");
         }
@@ -506,9 +538,9 @@ public JPanel createMainPage() {
         virtualMemoryTable.getTableHeader().setResizingAllowed(false);
         virtualMemoryTable.setDragEnabled(false);
         virtualMemoryTable.setSelectionForeground(Color.black);
-        MemoryTableCellRenderer renderer= new MemoryTableCellRenderer();
+        virtualMemoryCell = new MemoryTableCellRenderer();
         try {
-            virtualMemoryTable.setDefaultRenderer(Class.forName("java.lang.String"), renderer);
+            virtualMemoryTable.setDefaultRenderer(Class.forName("java.lang.String"), virtualMemoryCell);
         } catch (ClassNotFoundException ex) {
             System.out.println("blet");
         }
@@ -532,15 +564,24 @@ public JPanel createMainPage() {
     
     private void prepareStackModel () {
         stackModel = new DefaultListModel();
-        stackList = new JList();
+        stackList = new JList(stackModel);
         stackList.setVisible(true);
 
         updateStackModel();
-        stackList.setModel(stackModel);
     }
   
     private void updateStackModel() {
-        
+        if (vm != null) {
+            stackModel.clear();
+            int index = 0;
+            System.out.println(vm.getSS() + " " + vm.getSP());
+            for (int i=0; i< vm.getSP(); i++) {
+               
+                stackModel.add(index, vm.getMemory().getVirtualMemoryGui()[vm.getSS()+i].toInt());
+                index++;
+            }
+            stackList.repaint();
+        }
     }
 
 }
