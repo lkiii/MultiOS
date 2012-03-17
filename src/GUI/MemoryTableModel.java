@@ -35,6 +35,9 @@ public class MemoryTableModel extends AbstractTableModel {
     
     @Override
     public Class getColumnClass(int column) {
+        if (getValueAt(0, column) == null) {
+            return String.class;
+        }
         return getValueAt(0, column).getClass();
     }
     
@@ -73,10 +76,6 @@ public class MemoryTableModel extends AbstractTableModel {
     }
     
     public void setCharReperesentation(boolean charRep) {
-        if (charRep) {
-            charRepresentation = true;
-        } else {
-            charRepresentation = false;
-        }
+        charRepresentation = charRep;
     }
 }

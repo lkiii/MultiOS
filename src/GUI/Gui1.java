@@ -20,6 +20,8 @@ public class Gui1 {
     RM rm = null;
     VirtualMachine vm = null;
     
+    JPanel currentPage = null; // nx tokius sudus del file loado daryt
+    
     //- Main page
     private JButton loadFile; // load source code
     private JButton run; // run a program
@@ -76,7 +78,6 @@ public class Gui1 {
     
     private void initProject() throws FileNotFoundException {
         rm = new RM();
-        vm = rm.startNewVM("src/program1");
     }
 
     public Gui1() throws FileNotFoundException {
@@ -91,7 +92,8 @@ public class Gui1 {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
-        frame.add(createMainPage());
+        currentPage = createMainPage();
+        frame.add(currentPage);
         frame.setVisible(true);
     }
 
@@ -121,58 +123,77 @@ public class Gui1 {
     }
     
 private void makeStep() {
-    virtualMemoryCell.setNextInstructionAddress(vm.getCS() + vm.getIP());
-    updateRealMemoryModel();
-    updateVirtualMemoryModel();
-    updateStackModel();
-    tfRegR.setText(String.valueOf(vm.getR()));
-    tfRegSF.setText(String.valueOf(vm.getSF()));
-    tfRegIP.setText(String.valueOf(vm.getIP()));
-    tfRegSP.setText(String.valueOf(vm.getSP()));
-    tfRegDS.setText(String.valueOf(vm.getDS()));
-    tfRegCS.setText(String.valueOf(vm.getCS()));
-    tfRegSS.setText(String.valueOf(vm.getSS()));
+    if (vm != null) {
+        virtualMemoryCell.setNextInstructionAddress(vm.getCS() + vm.getIP());
+        refreshAllModels();
+        tfRegR.setText(String.valueOf(vm.getR()));
+        tfRegSF.setText(String.valueOf(vm.getSF()));
+        tfRegIP.setText(String.valueOf(vm.getIP()));
+        tfRegSP.setText(String.valueOf(vm.getSP()));
+        tfRegDS.setText(String.valueOf(vm.getDS()));
+        tfRegCS.setText(String.valueOf(vm.getCS()));
+        tfRegSS.setText(String.valueOf(vm.getSS()));
+    }
 }
  
 // main page panel
 public JPanel createMainPage() {
         JPanel panel = new JPanel();
         GridBagConstraints c1 = new GridBagConstraints();
-
+        
         prepareRealMemoryModel();
         prepareVirtualMemoryModel();
         prepareStackModel();
-
-
-        //panel.add(stackList);
-        stackList.setSelectedIndex(-1);
-
+        
         loadFile = new JButton("Load...");
         //loadFile.setPreferredSize(new Dimension(20, 70));
         fc = new JFileChooser();
         fc.setFileFilter(new SourceFileFilter());
+        fc.setAcceptAllFileFilterUsed(false);
         fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
         loadFile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
               int returnVal = fc.showOpenDialog(frame);
               if (returnVal == JFileChooser.APPROVE_OPTION) {
-                  File file = fc.getSelectedFile();
+                    try {
+                        vm = rm.startNewVM(fc.getSelectedFile().getAbsolutePath());
+                        isLoaded = true;              
+                        
+
+                        // kreivai, bet reik vel kviesti naujai perkurti
+                        // nes jei paduot kaip yra ir tik cia kviesti prepare models, tai objektai su refais visai
+                        // nesirisa
+                        refreshAllModels();
+                        stackList.setSelectedIndex(-1);                              
+                        
+                        step.setEnabled(true);
+                        run.setEnabled(true);
+                        loadFile.setEnabled(false);
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Gui1.class.getName()).log(Level.SEVERE, null, ex);
+                    } 
               } 
            }
         });
 
         step = new JButton("Step>");
+        step.setEnabled(false);
         //.setPreferredSize(new Dimension(20, 70));
         step.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 vm.step();
                 makeStep();
+                if (vm.isHalted()) {
+                    step.setEnabled(false);
+                    run.setEnabled(false);
+                }
             }
         });
         
         run = new JButton("Run>>");
+        run.setEnabled(false);
         //run.setPreferredSize(new Dimension(20, 70));
         run.addActionListener(new ActionListener() {
             @Override
@@ -182,11 +203,8 @@ public JPanel createMainPage() {
         });
         
         spRealMemoryTable = new JScrollPane();
-        //realMemoryTable = new JTable();
-        
         spVirtualMemoryTable = new JScrollPane();
-        //virtualMemoryTable = new JTable();
-        
+
         spOutput = new JScrollPane();
         taOutput = new JTextArea();
         
@@ -203,9 +221,7 @@ public JPanel createMainPage() {
             public void actionPerformed(ActionEvent e) {
                 if (rbChar.isSelected()) {
                     setCharRepresentation(true);
-                    updateRealMemoryModel();
-                    updateVirtualMemoryModel();
-                    updateStackModel();
+                    refreshAllModels();
                 }
             }
         });
@@ -215,9 +231,7 @@ public JPanel createMainPage() {
             public void actionPerformed(ActionEvent e) {
                 if (rbNum.isSelected()) {
                     setCharRepresentation(false);
-                    updateRealMemoryModel();
-                    updateVirtualMemoryModel();
-                    updateStackModel();
+                    refreshAllModels();
                 }
             }
         });
@@ -233,6 +247,10 @@ public JPanel createMainPage() {
         tfRegIP = new JTextField(7);
         tfRegSP = new JTextField(7);
         
+        tfRegR.setEnabled(false);
+        tfRegSF.setEnabled(false);
+        tfRegIP.setEnabled(false);
+        tfRegSP.setEnabled(false);
         
         lbRegDS = new JLabel();
         lbRegCS = new JLabel();
@@ -243,7 +261,12 @@ public JPanel createMainPage() {
         tfRegCS = new JTextField(7);
         tfRegSS = new JTextField(7);
         tfRegES = new JTextField(7);
-
+        
+        tfRegDS.setEnabled(false);
+        tfRegCS.setEnabled(false);
+        tfRegSS.setEnabled(false);      
+        tfRegES.setEnabled(false);
+        
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         spRealMemoryTable.setViewportView(realMemoryTable);
@@ -266,7 +289,9 @@ public JPanel createMainPage() {
         rbNum.setText("Num");
         rbGroup.add(rbChar);
         rbGroup.add(rbNum);
+        rbChar.setSelected(true);
 
+        // char arba numeric
         GroupLayout panelLayout = new GroupLayout(panelMemoryRepresentation);
         panelMemoryRepresentation.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
@@ -297,6 +322,8 @@ public JPanel createMainPage() {
         lbRegSS.setText("SS");
         lbRegES.setText("ES");
 
+        
+        // atrodo negliucina
         GroupLayout layout = new GroupLayout(frame.getContentPane());
         frame.getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -414,7 +441,9 @@ public JPanel createMainPage() {
 }
  
     private void prepareRealMemoryModel () {
+
         int rows = Constants.MEMORY_SIZE / Constants.BLOCK_SIZE;
+        
         realMemoryModel = new MemoryTableModel(0x11, rows); // eiluciu nulis poto iterpsim
         realMemoryTable = new JTable(realMemoryModel); 
         realMemoryTable.getTableHeader().setReorderingAllowed(false);
@@ -427,13 +456,11 @@ public JPanel createMainPage() {
         } catch (ClassNotFoundException ex) {
             System.out.println("blet");
         }
-        updateRealMemoryModel();
         realMemoryTable.setVisible(true);
     }
   
     private void updateRealMemoryModel() {
-        realMemoryTable.removeAll();
-        realMemoryTable.repaint();
+        //realMemoryTable.removeAll();
         Word[] mem = rm.getMemoryGui();
         for (int i=0; i < rvm.Constants.MEMORY_SIZE; i++) {
             int col = i % 0x10;
@@ -447,11 +474,13 @@ public JPanel createMainPage() {
                 realMemoryModel.setValueAt(mem[i].toInt(), row, col+1);
             }
         }
+        realMemoryTable.repaint();
     }
     
     private void prepareVirtualMemoryModel () {
-        int rows = vm.getMemory().getSize() / Constants.BLOCK_SIZE + 1 + 1;
-        virtualMemoryModel = new MemoryTableModel(0x11, rows);
+
+        
+        virtualMemoryModel = new MemoryTableModel(0x11, 0); // stulpeliai updaite pridedami, nes dar nera cia vmo
         virtualMemoryTable = new JTable(virtualMemoryModel);
         virtualMemoryTable.getTableHeader().setReorderingAllowed(false);
         virtualMemoryTable.getTableHeader().setResizingAllowed(false);
@@ -463,11 +492,16 @@ public JPanel createMainPage() {
         } catch (ClassNotFoundException ex) {
             System.out.println("blet");
         }
-        updateVirtualMemoryModel();
         virtualMemoryTable.setVisible(true);
+        
     }      
     
     private void updateVirtualMemoryModel() {
+        if (vm!=null) {
+            int rows = vm.getMemory().getSize() / Constants.BLOCK_SIZE + 1;
+            virtualMemoryModel = new MemoryTableModel(0x11, rows);
+            virtualMemoryTable.setModel(virtualMemoryModel);
+        }
         virtualMemoryTable.removeAll();
         virtualMemoryTable.repaint();
         Word[] vmem = vm.getMemory().getVirtualMemoryGui();
@@ -487,17 +521,16 @@ public JPanel createMainPage() {
     
     private void prepareStackModel () {
         stackModel = new DefaultListModel();
-        stackList = new JList(stackModel);
+        stackList = new JList();
         stackList.setVisible(true);
-
-        updateStackModel();
     }
   
     private void updateStackModel() {
+        stackList.removeAll();
+        stackList.repaint();
         if (vm != null) {
             stackModel.clear();
             int index = 0;
-            System.out.println(vm.getSS() + " " + vm.getSP());
             for (int i=0; i< vm.getSP(); i++) {
                 if (charRepresentation) {
                     stackModel.add(index, vm.getMemory().getVirtualMemoryGui()[vm.getSS()+i].toString());
@@ -514,6 +547,11 @@ public JPanel createMainPage() {
         charRepresentation = charRep;
     }
 
+    private void refreshAllModels() {
+        updateRealMemoryModel();
+        updateVirtualMemoryModel();
+        updateStackModel();
+    }
 }
 
 

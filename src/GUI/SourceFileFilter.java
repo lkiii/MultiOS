@@ -19,10 +19,10 @@ public class SourceFileFilter extends FileFilter {
             return true;
         }
 
-        String extension = f.getName().substring(f.getName().length()-3);
-        System.out.println(extension);
+        String extension = f.getName().substring(f.getName().length()-4);
+
         if (extension != null) {
-            if (extension.equalsIgnoreCase("src")) {
+            if (extension.equalsIgnoreCase(".src")) {
                     return true;
             } else {
                 return false;

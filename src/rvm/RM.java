@@ -52,7 +52,7 @@ public class RM {
     public VirtualMachine startNewVM(String fileName) throws FileNotFoundException {
         return startNewVM(fileName, "");
     }
-
+    
     /**
      * Virtualios masinos paleidimas
      *
@@ -128,7 +128,7 @@ public class RM {
             alloc(8);
             free(laikina);
             alloc(0xf);
-            print(mem);
+            //print(mem);
             counter = 0;
             int memCursorPosition = 0;
             boolean haltReached = false;
