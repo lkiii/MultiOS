@@ -38,10 +38,20 @@ public class VirtualMachine {
         status = PROCESS_STATUS.READY;
     }
     
+    public void run() {
+        while (!haltReached) {
+            step();
+        }
+    }
+    
     public void step() {
         System.out.println("==STEP==");
-        executeCommand(memory.readWord((int) (CS + IP)));
-        IP++;
+        if (!haltReached) {
+            executeCommand(memory.readWord((int) (CS + IP)));
+        }
+        if (!haltReached) {
+            IP++;
+        }
         boolean interrupt = realMachine.interruptTest();
     }
     

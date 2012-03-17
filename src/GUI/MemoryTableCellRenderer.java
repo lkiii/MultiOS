@@ -28,22 +28,11 @@ public class MemoryTableCellRenderer extends DefaultTableCellRenderer {
                cell.setBackground(Color.cyan);
            }
         }
-        
-
-        /*if ((value instanceof String) && (col != 0)) {
-            int address = Integer.valueOf((String) table.getModel().getValueAt(row, 0));
-            address += Integer.valueOf((String) table.getModel().getColumnName(col), 16);
-            if (isNextInstruction(address)) {
-                cell.setBackground(Color.lightGray);
-            } else {
-                cell.setBackground(Color.WHITE);
-            }
-        }*/
+     
         return cell;
     }
     
     private boolean isNextInstruction(int address) {
-        System.out.println("comparinson: arg: " + address + " nextINstr: " + this.nextInstructionAddress);
         if (address == this.nextInstructionAddress) {
             return true;
         } else {

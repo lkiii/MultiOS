@@ -14,6 +14,7 @@ import rvm.*;
 public class MemoryTableModel extends AbstractTableModel {
     private int numOfRows;
     private int numOfCols;
+    private boolean charRepresentation = false;
     
     private final String[] colNames= {"*", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
     
@@ -59,11 +60,23 @@ public class MemoryTableModel extends AbstractTableModel {
     
     @Override
     public void setValueAt(Object aValue, int row, int col) {
-        data[row][col] = ((String) aValue).toUpperCase();
+        if (aValue instanceof Integer) {
+            data[row][col] = (int) aValue;
+        } else {
+            data[row][col] = ((String) aValue).toUpperCase();
+        }
     }
     
     @Override
     public boolean isCellEditable(int rowIndex, int mColIndex) {
         return false;
+    }
+    
+    public void setCharReperesentation(boolean charRep) {
+        if (charRep) {
+            charRepresentation = true;
+        } else {
+            charRepresentation = false;
+        }
     }
 }

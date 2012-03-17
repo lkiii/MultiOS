@@ -87,7 +87,7 @@ public class Gui {
     
     public final void initUI() {
         frame.setTitle("OS");
-        //frame.setSize(700, 400);
+        frame.setSize(700, 400);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
@@ -148,7 +148,7 @@ public JPanel createMainPage() {
         stackList.setSelectedIndex(-1);
 
         loadFile = new JButton("Load...");
-        loadFile.setPreferredSize(new Dimension(20, 70));
+        //loadFile.setPreferredSize(new Dimension(20, 70));
         fc = new JFileChooser();
         fc.setFileFilter(new SourceFileFilter());
         fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
@@ -163,7 +163,7 @@ public JPanel createMainPage() {
         });
 
         step = new JButton("Step>");
-        step.setPreferredSize(new Dimension(20, 70));
+        //.setPreferredSize(new Dimension(20, 70));
         step.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -173,7 +173,7 @@ public JPanel createMainPage() {
         });
         
         run = new JButton("Run>>");
-        run.setPreferredSize(new Dimension(20, 70));
+        //run.setPreferredSize(new Dimension(20, 70));
         run.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -186,85 +186,83 @@ public JPanel createMainPage() {
         spRealMemoryTable = new JScrollPane();
         spRealMemoryTable.setViewportView(realMemoryTable);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 22;
-        gridBagConstraints.gridwidth = 14;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 769;
-        gridBagConstraints.ipady = 234;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.gridy = 28;
+        gridBagConstraints.gridwidth = 8;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        //gridBagConstraints.ipadx = 1058;
+        gridBagConstraints.ipady = 193;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.6;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(18, 9, 11, 10);
+        gridBagConstraints.insets = new Insets(18, 9, 11, 10);
         panel.add(spRealMemoryTable, gridBagConstraints);
 
         spStackList = new JScrollPane();
         spStackList.setViewportView(stackList);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 13;
+        gridBagConstraints.gridheight = 16;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 90;
-        gridBagConstraints.ipady = 275;
+        gridBagConstraints.ipadx = 357;
+        gridBagConstraints.ipady = 261;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 10, 0, 10);
         panel.add(spStackList, gridBagConstraints);
 
         
         step.setText("Step>");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.ipadx = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 2, 0, 10);
         panel.add(step, gridBagConstraints);
 
         loadFile.setText("Load ...");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 21;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 27;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 10, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 2, 0, 10);
         panel.add(loadFile, gridBagConstraints);
 
         spVirtualMemoryTable = new JScrollPane();
         spVirtualMemoryTable.setViewportView(virtualMemoryTable);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 12;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 15;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 553;
-        gridBagConstraints.ipady = 256;
+        gridBagConstraints.ipadx = 824;
+        gridBagConstraints.ipady = 267;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 9, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(11, 10, 0, 0);
         panel.add(spVirtualMemoryTable, gridBagConstraints);
         
+        run.setText("Run>>");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 11;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.ipadx = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 2, 0, 10);
         panel.add(run, gridBagConstraints);
 
         tfInput = new JTextField();
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 21;
+        gridBagConstraints.gridy = 27;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 553;
+        gridBagConstraints.ipadx = 825;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -273,20 +271,20 @@ public JPanel createMainPage() {
 
         taOutput = new JTextArea();
         spOutput = new JScrollPane();
-        taOutput.setColumns(20);
-        taOutput.setRows(5);
+        //taOutput.setColumns(20);
+        //taOutput.setRows(5);
         spOutput.setViewportView(taOutput);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 26;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 553;
-        gridBagConstraints.ipady = 73;
+        gridBagConstraints.ipadx = 825;
+        gridBagConstraints.ipady = 112;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(6, 9, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(11, 9, 0, 0);
         panel.add(spOutput, gridBagConstraints);
 
         panelMemoryRepresentation = new JPanel();
@@ -312,14 +310,13 @@ public JPanel createMainPage() {
         gridBagConstraints.insets = new java.awt.Insets(0, 12, 14, 0);
         panelMemoryRepresentation.add(rbNum, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 8;
-        gridBagConstraints.ipadx = -12;
-        gridBagConstraints.ipady = -4;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.ipadx = 124;
+        gridBagConstraints.ipady = -27;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 10);
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 10);
         panel.add(panelMemoryRepresentation, gridBagConstraints);
         
         rbGroup = new ButtonGroup();
@@ -331,9 +328,10 @@ public JPanel createMainPage() {
         lbRegR.setText("R");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(13, 6, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(14, 10, 0, 0);
         panel.add(lbRegR, gridBagConstraints);
 
         lbRegSF = new JLabel();
@@ -341,40 +339,40 @@ public JPanel createMainPage() {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(9, 6, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(4, 10, 0, 0);
         panel.add(lbRegSF, gridBagConstraints);
 
         lbRegIP = new JLabel();
         lbRegIP.setText("IP");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(9, 6, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(4, 10, 0, 0);
         panel.add(lbRegIP, gridBagConstraints);
 
         lbRegSP = new JLabel();
         lbRegSP.setText("SP");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(9, 6, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(4, 10, 0, 0);
         panel.add(lbRegSP, gridBagConstraints);
         
         tfRegR = new JTextField();
         tfRegR.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 3;
         gridBagConstraints.ipadx = 57;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 9, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(14, 10, 0, 0);
         panel.add(tfRegR, gridBagConstraints);
         
         tfRegSF = new JTextField();
@@ -385,115 +383,109 @@ public JPanel createMainPage() {
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 57;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 9, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
         panel.add(tfRegSF, gridBagConstraints);
         
         tfRegIP = new JTextField();
         tfRegIP.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 57;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 9, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
         panel.add(tfRegIP, gridBagConstraints);
         
         tfRegSP = new JTextField();
         tfRegSP.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 57;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 9, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
         panel.add(tfRegSP, gridBagConstraints);
 
         lbRegDS = new JLabel();
         lbRegDS.setText("DS");
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(13, 6, 0, 0);
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(14, 3, 0, 0);
         panel.add(lbRegDS, gridBagConstraints);
 
         lbRegCS = new JLabel();
         lbRegCS.setText("CS");
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(9, 6, 0, 0);
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(4, 3, 0, 0);
         panel.add(lbRegCS, gridBagConstraints);
 
         lbRegSS = new JLabel();
         lbRegSS.setText("SS");
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(9, 6, 0, 0);
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(4, 3, 0, 0);
         panel.add(lbRegSS, gridBagConstraints);
 
         lbRegES = new JLabel();
         lbRegES.setText("ES");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(9, 6, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 0);
         panel.add(lbRegES, gridBagConstraints);
         
         tfRegDS = new JTextField();
         tfRegDS.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 9;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 51;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 32;
+        gridBagConstraints.ipadx = 57;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 21, 0, 10);
+        gridBagConstraints.insets = new java.awt.Insets(14, 10, 0, 10);
         panel.add(tfRegDS, gridBagConstraints);
         
         tfRegCS = new JTextField();
         tfRegCS.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 51;
+        gridBagConstraints.gridheight = 32;
+        gridBagConstraints.ipadx = 57;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 21, 0, 10);
+        gridBagConstraints.insets = new java.awt.Insets(9, 10, 0, 10);
         panel.add(tfRegCS, gridBagConstraints);
         
         tfRegSS = new JTextField();
         tfRegSS.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 9;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 51;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridheight = 32;
+        gridBagConstraints.ipadx = 57;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 21, 0, 10);
+        gridBagConstraints.insets = new java.awt.Insets(9, 10, 0, 10);
         panel.add(tfRegSS, gridBagConstraints);
         
         tfRegES = new JTextField();
         tfRegES.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 9;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 51;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridheight = 32;
+        gridBagConstraints.ipadx = 57;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 21, 0, 10);
+        gridBagConstraints.insets = new java.awt.Insets(9, 10, 0, 10);
         panel.add(tfRegES, gridBagConstraints);
 
         //frame.pack();
@@ -558,7 +550,7 @@ public JPanel createMainPage() {
             if (vmem[i] == null) {
                 vmem[i] = new Word(0x0);
             }
-            virtualMemoryModel.setValueAt(vmem[i].toString(), row, col+1);
+            virtualMemoryModel.setValueAt(vmem[i].toInt(), row, col+1);
         }
     }
     
