@@ -198,7 +198,15 @@ public JPanel createMainPage() {
         run.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // runint
+                while (!vm.isHalted()) {
+                    vm.step();
+                    makeStep();
+                    if (vm.isHalted()) {
+                        step.setEnabled(false);
+                        run.setEnabled(false);
+                }
+                    
+                }
             }
         });
         
@@ -487,6 +495,7 @@ public JPanel createMainPage() {
         virtualMemoryTable.setDragEnabled(false);
         virtualMemoryTable.setSelectionForeground(Color.black);
         virtualMemoryCell = new MemoryTableCellRenderer();
+
         try {
             virtualMemoryTable.setDefaultRenderer(Class.forName("java.lang.String"), virtualMemoryCell);
         } catch (ClassNotFoundException ex) {
@@ -501,9 +510,12 @@ public JPanel createMainPage() {
             int rows = vm.getMemory().getSize() / Constants.BLOCK_SIZE + 1;
             virtualMemoryModel = new MemoryTableModel(0x11, rows);
             virtualMemoryTable.setModel(virtualMemoryModel);
+            virtualMemoryCell.setNextInstructionAddress(vm.getCS() + vm.getIP());
+            
         }
         virtualMemoryTable.removeAll();
         virtualMemoryTable.repaint();
+
         Word[] vmem = vm.getMemory().getVirtualMemoryGui();
         for (int i=0; i < vm.getMemory().getSize(); i++) {
             int col = i % 0x10;

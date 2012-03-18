@@ -104,7 +104,7 @@ public class VirtualMachine {
                         jumpIfGreater(argAsValue);
                         break;
                     case "PD":
-                        System.out.println("OUTPUT: " + memory.readWord(argAsValue));
+                        memory.writeWord(argAsValue, realMachine);
                         //putData(memory.readWord(arg));
                         break;
                     case "GD":

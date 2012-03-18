@@ -297,4 +297,6 @@ public class RM {
     public Word[] getMemoryGui() {
         return mem.getWords();
     }
+    
+    public void input();
 }
