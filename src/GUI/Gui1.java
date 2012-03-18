@@ -561,7 +561,9 @@ public JPanel createMainPage() {
 
     private void refreshAllModels() {
         updateRealMemoryModel();
-        updateVirtualMemoryModel();
+        if (vm != null) {
+            updateVirtualMemoryModel();
+        }
         updateStackModel();
     }
 }

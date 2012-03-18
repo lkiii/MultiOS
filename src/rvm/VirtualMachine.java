@@ -89,7 +89,7 @@ public class VirtualMachine {
                         saveRegister(new Word(DS + argAsValue.toInt()));
                         break;
                     case "CM":
-                        compare(new Word(DS + argAsValue.toInt()));
+                        compare(memory.readWord(DS + argAsValue.toInt()));
                         break;
                     case "JP":
                         jump(argAsValue);
@@ -98,13 +98,14 @@ public class VirtualMachine {
                         jumpIfEqual(argAsValue);
                         break;
                     case "JL":
+                        System.out.println(argAsValue);
                         jumpIfLess(argAsValue);
                         break;
                     case "JG":
                         jumpIfGreater(argAsValue);
                         break;
                     case "PD":
-                        memory.writeWord(argAsValue, realMachine);
+                        //memory.writeWord(argAsValue, realMachine);
                         //putData(memory.readWord(arg));
                         break;
                     case "GD":
@@ -152,25 +153,30 @@ public class VirtualMachine {
         }
     }
     
+    //visur-- nes poto cikle ++ yra tai jumpus supisa reik sugalvot kitaip
     private void jump(Word nextInstr) {
         IP = (short) nextInstr.toInt();
+        IP--;
     }
     
     private void jumpIfEqual(Word addr) {
         if (SF == 1) {
             IP = (short) addr.toInt();
+            IP--;
         }
     }
     
     private void jumpIfLess(Word addr) {
         if (SF == 0) {
             IP = (short) addr.toInt();
+            IP--;
         }  
     }
     
     private void jumpIfGreater(Word addr) {
         if (SF == 2) {
             IP = (short) addr.toInt();
+            IP--;
         } 
     }
     
