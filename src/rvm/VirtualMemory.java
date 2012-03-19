@@ -1,5 +1,4 @@
 package rvm;
-
 /**
  * Virtuali atmintis nuslepia kreipimosi i atminti sudetinguma,
  * suteikia sistemai realizuoti puslapiavimo mechanizma, siekiant
@@ -10,9 +9,9 @@ package rvm;
 
 public class VirtualMemory {
 
-    private Word pageTableAddress;
-    private Memory realMemory; // nuoroda i realia atminti, nu nebent statini Memory padaryt, tada nereiks
-    private int size;
+    protected Word pageTableAddress;
+    protected Memory realMemory; // nuoroda i realia atminti, nu nebent statini Memory padaryt, tada nereiks
+    protected int size;
 
     /**
      * @param PTR puslapiavimo lenteles iraso adresas
