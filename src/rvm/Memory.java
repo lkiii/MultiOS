@@ -62,7 +62,6 @@ public class Memory {
     public Word readWord(int absAddress) {
         // FIXME uzejimas uz ribu
         if (memory[absAddress] == null) {
-            //testinimui
             return new Word(0);
         }
         return memory[absAddress];
@@ -95,7 +94,7 @@ public class Memory {
      * @param data irasomas zodis
      */
     public void writeWord(Word absAddress, Word data) {
-        memory[absAddress.toInt()] = data;
+        writeWord(absAddress.toInt(), data);
     }
 
     /**
