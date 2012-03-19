@@ -98,15 +98,15 @@ public class VirtualMachine {
                         jumpIfEqual(argAsValue);
                         break;
                     case "JL":
-                        System.out.println(argAsValue);
+                        //System.out.println(argAsValue);
                         jumpIfLess(argAsValue);
                         break;
                     case "JG":
                         jumpIfGreater(argAsValue);
                         break;
                     case "PD":
-                        //memory.writeWord(argAsValue, realMachine);
-                        //putData(memory.readWord(arg));
+                        System.out.println(memory.readWord(argAsValue));
+                        putData(memory.readWord(argAsValue));
                         break;
                     case "GD":
                         /*Word data = getData();
@@ -151,6 +151,7 @@ public class VirtualMachine {
         } else {
             SF = 2;
         }
+        System.out.println("comparing " + R.toInt() + " with " + value.toInt() + " sf now " + SF);
     }
     
     //visur-- nes poto cikle ++ yra tai jumpus supisa reik sugalvot kitaip
@@ -187,7 +188,7 @@ public class VirtualMachine {
             SP--;
         }*/
         
-        memory.writeWord(SS + SP, R);
+        memory.writeWord(SS + SP, new Word(R.toInt()));
         SP++;
     }
     
@@ -228,15 +229,12 @@ public class VirtualMachine {
     }
 
     private void putData(Word value) {
-        System.out.println("OUTPUT: " + value.toString());        
+        realMachine.ch.useChan2(value);
     }
 
-    private String getData(Word address) {
-        String ret;
-        try (Scanner scanIn = new Scanner(System.in)) {
-            ret = scanIn.nextLine();
-        }
-        return ret;
+    private void getData(Word addressToPut) {
+        Word val = realMachine.ch.useChan2();
+        memory.writeWord(addressToPut, val);
     }
     
     public VirtualMemory getMemory() {

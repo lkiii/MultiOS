@@ -32,6 +32,7 @@ public class RM {
     CPU cpu; // Centrinis procesorius
     Memory mem; // Reali atmintis
     ArrayList<VirtualMachine> VMList; // Virtualiu masinu sarasas
+    Chan ch;
 
     /**
      * Sukuriama reali masina, inicijuojant procesoriu, atminti, ir VM sarasas
@@ -40,6 +41,7 @@ public class RM {
         cpu = new CPU();
         VMList = new ArrayList();
         mem = new Memory(Constants.MEMORY_SIZE);
+        ch = new Chan(cpu);
         //mem.fillZeroes();
     }
 
@@ -298,5 +300,7 @@ public class RM {
         return mem.getWords();
     }
     
-    public void input();
+    public Chan getChans(){
+        return ch;
+    };
 }

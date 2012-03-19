@@ -11,6 +11,7 @@ public class Chan {
     private CPU cpu;
     private Word[] buffer;
     private int bufferSize = 0;
+    private Screen scr = new Screen();
 
     /**
      * Kanalų įrenginio kūrimas. Visu kanalu pradines busenos "available"
@@ -41,9 +42,10 @@ public class Chan {
      * Kai bus interfeisas imsim iš imputo, kai os gal dar kažką
      * @return nuskaitytas ivedimas
      */
+    //
     public void useChan1(String input) {
         cpu.setChanOccupied(1);
-        StringBuilder str = new StringBuilder(input);
+        /*StringBuilder str = new StringBuilder(input);
         while (str.length() > 0 && bufferSize < 5) {
             Word piece;
             if (str.length() >= 4) { 
@@ -55,7 +57,8 @@ public class Chan {
             }
             buffer[bufferSize] = piece;
             bufferSize++;
-        }
+        }*/
+        
         
         cpu.setChanAvailable(1);
     }
@@ -63,15 +66,13 @@ public class Chan {
      * Isvedimas i antraji kanala
      * @param output duomenys isvedami i kanala
      */
-    public Word useChan2() {
+    public void useChan2(Word toPut) {
         cpu.setChanOccupied(2);
-        Word ret = null;
-        if (bufferSize > 0) {
-            ret = buffer[bufferSize-1];
-            bufferSize--;
-        }             
-
+        scr.put(toPut);
         cpu.setChanAvailable(2);        
-        return ret;
+    }
+    
+    public Screen getScreen() {
+        return scr;
     }
 }
