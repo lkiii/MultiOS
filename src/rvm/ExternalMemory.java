@@ -20,7 +20,6 @@ public class ExternalMemory extends Memory {
 
     public ExternalMemory(int size) {
         super(size);
-        System.out.println(memory);
         writeExternalMemory();
     }
 
@@ -37,11 +36,11 @@ public class ExternalMemory extends Memory {
     }
 
     private void setInputStream() throws IOException {
-        inputStream = new ObjectInputStream(new FileInputStream("src/momory.mem"));
+        inputStream = new ObjectInputStream(new FileInputStream("src/memory.mem"));
     }
 
     private void setOutputStream() throws FileNotFoundException, IOException {
-        outputStream = new ObjectOutputStream(new FileOutputStream("src/momory.mem"));
+        outputStream = new ObjectOutputStream(new FileOutputStream("src/memory.mem"));
     }
 
     private void closeInputStream() throws IOException {
@@ -66,7 +65,7 @@ public class ExternalMemory extends Memory {
         try {
             setOutputStream();
             outputStream.writeObject(memory);
-            closeOutputStream();
+            outputStream.flush();
         } catch (IOException ex) {
             Logger.getLogger(ExternalMemory.class.getName()).log(Level.SEVERE, null, ex);
         }

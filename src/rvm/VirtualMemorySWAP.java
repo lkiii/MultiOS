@@ -16,7 +16,7 @@ public class VirtualMemorySWAP extends VirtualMemory{
     @Override
     public Word readWord(int track, int word) {
         if (pageTableAddress.toInt() > PT_SIZE){
-            return new Word(0);
+            return new Word(externalMemory.readWord(getExternalAbsoluteAddress(track, word)).toString());
         }else{
             return super.readWord(track, word);
         }
@@ -30,9 +30,17 @@ public class VirtualMemorySWAP extends VirtualMemory{
     @Override
     public void writeWord(int track, int word, Word data) {
         if (pageTableAddress.toInt() > PT_SIZE){
-            //įrašo į išorinę atmintį
+            externalMemory.writeWord(getExternalAbsoluteAddress(track, word), data);
         }else{
             super.writeWord(track, word, data);
         }
     }
+
+    private int getExternalAbsoluteAddress(int track, int word) {
+        Word externalPageTableAddress = realMemory.readWord(pageTableAddress);
+        Word absoluteTrack = externalMemory.readWord(externalPageTableAddress.toInt() + track);
+        int absoluteAddress = absoluteTrack.toInt()*0x10 + word;
+        return absoluteAddress;
+    }
+
 }
