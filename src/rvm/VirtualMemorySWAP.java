@@ -21,10 +21,16 @@ public class VirtualMemorySWAP extends VirtualMemory{
             return super.readWord(track, word);
         }
     }
+    /**
+     * 
+     * @param track
+     * @param word
+     * @param data 
+     */
     @Override
     public void writeWord(int track, int word, Word data) {
         if (pageTableAddress.toInt() > PT_SIZE){
-            
+            //įrašo į išorinę atmintį
         }else{
             super.writeWord(track, word, data);
         }

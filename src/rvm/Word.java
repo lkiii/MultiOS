@@ -1,5 +1,6 @@
 package rvm;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import static rvm.Constants.*;
@@ -16,7 +17,7 @@ import static rvm.Constants.*;
  * Word objektas saugo 4 baitu ilgio  ByteBuffer'i (tarkim masyva)
  * Klase suteikia konversijos i ivairius tipus galimybes.
  */
-public class Word {
+public class Word implements Serializable{
 
     private ByteBuffer word;
 

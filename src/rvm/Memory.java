@@ -13,22 +13,22 @@ import static rvm.Constants.*;
 public class Memory {
 
     /*
-     *   [  PAGE TABLE    ] RESERVED
-     *   [  SHARED MEMORY ] RESERVED
-     *   [  USER MEMORY   ]
-     *   [  USER MEMORY   ]
-     * 
-     * 
+     * [ PAGE TABLE ] RESERVED [ SHARED MEMORY ] RESERVED [ USER MEMORY ] [ USER
+     * MEMORY ]
+     *
+     *
      */
-    
-    
-    
-    private Word[] memory;
+    protected Word[] memory;
     //private boolean[] PageEntryAvailable;
-    private int size;
+    protected int size;
+
+    protected Memory() {
+        
+    }
 
     /**
      * Sukuriama reali atmintis
+     *
      * @param size kuriamos atminties dydis
      * @see Constants
      */
@@ -36,13 +36,13 @@ public class Memory {
         this.size = size;
         memory = new Word[size];
         /*
-         * for (int i=0; i < PT_SIZE; i++) { PageEntryAvailable[i] = true;      
-        }
+         * for (int i=0; i < PT_SIZE; i++) { PageEntryAvailable[i] = true; }
          */
     }
 
     /**
      * Gaunamas atminties dydis
+     *
      * @return atminties dydi
      */
     public int getSize() {
@@ -53,15 +53,15 @@ public class Memory {
      * public boolean isPageEntryAvailable(int index) { return
      * PageEntryAvailable[index]; // outofbounds }
      */
-    
     /**
      * Nuskaitomas zodis nurodytu fiziniu adresu
+     *
      * @param absAddress fizinis adresas
      * @return nuskaitytas zodis
      */
     public Word readWord(int absAddress) {
         // FIXME uzejimas uz ribu
-        if (memory[absAddress] == null){
+        if (memory[absAddress] == null) {
             //testinimui
             return new Word(0);
         }
@@ -70,6 +70,7 @@ public class Memory {
 
     /**
      * Nuskaitomas zodis nurodytu fiziniu adresu (pateiktu Word tipu)
+     *
      * @param absAddress fizinis adresas
      * @return nuskaitytas zodis
      */
@@ -79,6 +80,7 @@ public class Memory {
 
     /**
      * Irasomas zodis nurodytu fiziniu adresu
+     *
      * @param absAddress fizinis adresas
      * @param data irasomas zodis
      */
@@ -88,6 +90,7 @@ public class Memory {
 
     /**
      * Irasomas zodis nurodytu fiziniu adresu (pateiktu Word tipu)
+     *
      * @param absAddress fizinis adresas
      * @param data irasomas zodis
      */
@@ -97,7 +100,7 @@ public class Memory {
 
     /**
      * Temporary
-     * 
+     *
      * atmintis uzpildoma zodziais 0000
      */
     public void fillZeroes() {
@@ -109,6 +112,7 @@ public class Memory {
 
     /**
      * Atmintis grazinama kaip zodziu masyvas
+     *
      * @return zodziu masyvas
      */
     public Word[] getWords() {
