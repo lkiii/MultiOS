@@ -48,6 +48,7 @@ public class Word implements Serializable {
             data = data.substring(data.length() - WORD_SIZE, data.length());
         }
         this.word.put(data.getBytes());
+
     }
 
     /**

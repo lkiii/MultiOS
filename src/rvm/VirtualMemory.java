@@ -30,8 +30,8 @@ public class VirtualMemory {
      * @return nuskaitytas is realios atminties zodis
      */
     public Word readWord(int track, int word) {
-        return new Word(realMemory.readWord(getAbsoluteAddress(track, word)).toString()); // kopija ar refas ?
-    }
+        return new Word(realMemory.readWord(getAbsoluteAddress(track, word)).toInt()); // kopija ar refas ?
+    }// pakeistato int is string nes gui1 buggino
 
     /**
      *

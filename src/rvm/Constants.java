@@ -15,8 +15,7 @@ public final class Constants {
     public static final int MAX_BLOCKS_IN_VM = 0xF;
     public static final int DEFAULT_DS_SIZE = 0x3;
     public static final int DEFAULT_CS_SIZE = 0x3;
-    public static final int SCREEN_SIZE_X = 80; 
-    public static final int SCREEN_SIZE_Y = 25;
+    public static final int SCREEN_SIZE = 20;
     public static final int MEMORY_SIZE = 0x1000; // 0..FFF
     
     public static enum INTERRUPT_TYPE {ILLEGAL_ADDRESS, UNKNOWN_OPCODE};

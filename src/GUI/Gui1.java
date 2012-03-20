@@ -133,6 +133,11 @@ private void makeStep() {
         tfRegDS.setText(String.valueOf(vm.getDS()));
         tfRegCS.setText(String.valueOf(vm.getCS()));
         tfRegSS.setText(String.valueOf(vm.getSS()));
+        Screen txt = rm.getChans().getScreen();
+        taOutput.setText("");
+        for (int i=0; i < txt.getSize(); i++) {
+            taOutput.append(txt.get(i).toString());
+        }
     }
 }
  
