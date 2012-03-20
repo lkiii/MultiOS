@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/home/lukas/NetBeansProjects/RVM/src/rvm/RM.java</file>
-        <file>file:/home/lukas/NetBeansProjects/RVM/src/rvm/VirtualMemorySWAP.java</file>
-        <file>file:/home/lukas/NetBeansProjects/RVM/src/rvm/VirtualMemory.java</file>
-        <file>file:/home/lukas/NetBeansProjects/RVM/src/rvm/Constants.java</file>
-        <file>file:/home/lukas/NetBeansProjects/RVM/src/rvm/Memory.java</file>
-        <file>file:/home/lukas/NetBeansProjects/RVM/src/rvm/ExternalMemory.java</file>
-        <file>file:/home/lukas/NetBeansProjects/RVM/src/memory.mem</file>
-    </open-files>
 </project-private>

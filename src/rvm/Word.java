@@ -120,7 +120,11 @@ public class Word implements Serializable {
     }
 
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
-        byte[] bytes = (byte[])ois.readObject();
-        this.word.put(bytes);
+        Object ob = ois.readObject();
+        if (ob != null) {
+            byte[] bytes = (byte[]) ob;
+            word = ByteBuffer.allocateDirect(WORD_SIZE);
+            this.word.put(bytes);
+        }
     }
 }
