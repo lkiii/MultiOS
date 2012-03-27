@@ -10,6 +10,6 @@ package Parser;
  */
 public class Parseris {
     
-    public static Word[]
+    //public static Word[]
     
 }

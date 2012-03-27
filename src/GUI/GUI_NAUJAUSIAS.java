@@ -15,7 +15,7 @@ import javax.swing.*;
  * @version 1.0
  */ 
 
-public class Gui1 {
+public class GUI_NAUJAUSIAS {
     private JFrame frame;
     RM rm = null;
     VirtualMachine vm = null;
@@ -80,7 +80,7 @@ public class Gui1 {
         rm = new RM();
     }
 
-    public Gui1() throws FileNotFoundException {
+    public GUI_NAUJAUSIAS() throws FileNotFoundException {
         frame = new JFrame();   
         initProject();
         initUI();
@@ -111,11 +111,11 @@ public class Gui1 {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Gui1 graphical = null;
+                GUI_NAUJAUSIAS graphical = null;
                 try {
-                    graphical = new Gui1();
+                    graphical = new GUI_NAUJAUSIAS();
                 } catch (FileNotFoundException ex) {
-                    Logger.getLogger(Gui1.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(GUI_NAUJAUSIAS.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 graphical.frame.setVisible(true);
             }
@@ -176,7 +176,7 @@ public JPanel createMainPage() {
                         run.setEnabled(true);
                         loadFile.setEnabled(false);
                     } catch (FileNotFoundException ex) {
-                        Logger.getLogger(Gui1.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(GUI_NAUJAUSIAS.class.getName()).log(Level.SEVERE, null, ex);
                     } 
               } 
            }

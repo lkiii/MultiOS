@@ -72,7 +72,7 @@ public class VirtualMachine {
                 break;
             default:
                 Word argAsValue = new Word(Integer.parseInt(opcode.substring(2, 4), 16));
-                Word value = argAsValue;
+                Word value;// = argAsValue;
                 switch (opcode.substring(0, 2)) {
                     case "AD": 
                         value = new Word(memory.readWord(DS + argAsValue.toInt()).toInt());
@@ -232,9 +232,9 @@ public class VirtualMachine {
         realMachine.ch.useChan2(value);
     }
 
-    private void getData(Word addressToPut) {
-        Word val = realMachine.ch.useChan2();
-        memory.writeWord(addressToPut, val);
+    private void getData(Word address) {
+        //Word val = realMachine.ch.useChan1();
+        //memory.writeWord(addressToPut, val);
     }
     
     public VirtualMemory getMemory() {
@@ -259,7 +259,7 @@ public class VirtualMachine {
         }
         System.out.println();
     }
-    // gui
+    // getteriai GUIui
     public int getR() {
         return R.toInt();
     }
