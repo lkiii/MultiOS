@@ -1,6 +1,6 @@
 package rvm;
 
-import java.io.Serializable;
+import java.io.*;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import static rvm.Constants.*;
@@ -12,12 +12,11 @@ import static rvm.Constants.*;
  * @author Ernestas Prisakaru
  * @author Lukas Ignatavicius
  *
- * 
- * Word.java 
- * Word objektas saugo 4 baitu ilgio  ByteBuffer'i (tarkim masyva)
+ *
+ * Word.java Word objektas saugo 4 baitu ilgio ByteBuffer'i (tarkim masyva)
  * Klase suteikia konversijos i ivairius tipus galimybes.
  */
-public class Word implements Serializable{
+public class Word implements Serializable {
 
     private ByteBuffer word;
 
@@ -115,5 +114,18 @@ public class Word implements Serializable{
     @Override
     public String toString() {
         return new String(this.toByteArray());
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.writeObject(this.toByteArray());
+    }
+
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+        Object ob = ois.readObject();
+        if (ob != null) {
+            byte[] bytes = (byte[]) ob;
+            word = ByteBuffer.allocateDirect(WORD_SIZE);
+            this.word.put(bytes);
+        }
     }
 }
