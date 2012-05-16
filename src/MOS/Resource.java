@@ -23,7 +23,8 @@ Resurso kūrimo metu perduodami kaip parametrai: nuoroda į proceso kūrėją, r
     public String name;
     
     public Resource(Process creator, String name) {
-        proc
+        this.name = name;
+        this.creator = creator;
     }
     
     
