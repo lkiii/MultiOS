@@ -20,7 +20,7 @@ public class Process {
     
     protected Process parent; // proceso tevas
     public ArrayList<Process> childs = new ArrayList<>(); // vaikiniai procesai
-    public ArrayList<Resource> recources = new ArrayList<>(); // turimi resursai
+    public ArrayList<Resource> resources = new ArrayList<>(); // turimi resursai
     public ArrayList<Resource> neededResources = new ArrayList<>(); // laukiami resursai
     
     private static int _ID = 0;
@@ -40,7 +40,37 @@ public class Process {
         this.name = name;
         this.status = status;
         this.id = _ID++;
+        
     }
     
-    protected boolean addChild()
+    protected boolean addChild(Process child) {
+        if (child.parent != null)
+            return false;
+        
+        childs.add(child);
+        child.parent = this;
+        return true;
+    }
+    
+    protected boolean removeChild(Process child) {
+        if (childs.indexOf(child) == -1)
+            return false;
+        
+        childs.remove(child);
+        return true;
+    }
+    
+    protected void addResource(Resource r) {
+        resources.add(r);
+        if (neededResources.isEmpty()) {
+            
+            if (ProcessStatus.BLOCK == status) 
+                status = ProcessStatus.READY;
+            
+            if (ProcessStatus.BLOCKS == status) 
+                status = ProcessStatus.READYS;
+        }
+        
+        // runas
+    }
 }
