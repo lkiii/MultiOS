@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package MOS;
 
 import rvm.RM;
@@ -13,7 +9,7 @@ import rvm.RM;
  *   foreach'as ieskantis geriausio
  * @author ernestas
  */
-public class Planner {
+public class Planner { 
     private RM machine;
     
     /**
