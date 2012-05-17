@@ -5,17 +5,18 @@
 package MOS;
 
 import java.util.ArrayList;
+import rvm.RM;
 
 /**
  *
  * @author ernestas
  */
 public class Process {
-    public enum ProcessStatus {RUN, READY, READYS, BLOCK, BLOCKS};
+    public enum ProcessState {RUN, READY, READYS, BLOCK, BLOCKS};
     
     public int id;
     public String name; // siaip vardas
-    public ProcessStatus status; // busena
+    public ProcessState status; // busena
     public byte priority; // prioritetas
     
     protected Process parent; // proceso tevas
@@ -25,7 +26,7 @@ public class Process {
     
     private static int _ID = 0;
     
-    protected Machine machine;
+    protected RM machine;
     
     /*
      * 
@@ -35,7 +36,7 @@ public class Process {
      * skaičiuojamas vidinis identifikacijos numeris, sukuriamas jo vaikų procesų sąrašas (tuščias), 
      * sukurtų resursų sąrašas. 
      */
-    public Process(Machine machine, String name, ProcessStatus status) {
+    public Process(RM machine, String name, ProcessState status) {
         this.machine = machine;
         this.name = name;
         this.status = status;
@@ -64,11 +65,11 @@ public class Process {
         resources.add(r);
         if (neededResources.isEmpty()) {
             
-            if (ProcessStatus.BLOCK == status) 
-                status = ProcessStatus.READY;
+            if (ProcessState.BLOCK == status) 
+                status = ProcessState.READY;
             
-            if (ProcessStatus.BLOCKS == status) 
-                status = ProcessStatus.READYS;
+            if (ProcessState.BLOCKS == status) 
+                status = ProcessState.READYS;
         }
         
         // runas

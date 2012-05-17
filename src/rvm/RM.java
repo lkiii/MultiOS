@@ -1,5 +1,6 @@
 package rvm;
 
+import MOS.ProcessPriorityComparator;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.logging.Logger;
 import static rvm.Constants.*;
 import sun.org.mozilla.javascript.internal.regexp.SubString;
 import Tests.MemoryTest.*;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 /**
  *
@@ -32,6 +35,7 @@ public class RM {
     CPU cpu; // Centrinis procesorius
     Memory mem; // Reali atmintis
     ArrayList<VirtualMachine> VMList; // Virtualiu masinu sarasas
+    public PriorityQueue<MOS.Process> processes; 
     Chan ch;
 
     /**
@@ -43,6 +47,10 @@ public class RM {
         mem = new Memory(Constants.MEMORY_SIZE);
         ch = new Chan(cpu);
         //mem.fillZeroes();
+        
+        // gali bugint, jei taip tai i arraylist perdarom
+        Comparator comparator = new ProcessPriorityComparator();
+        processes = new PriorityQueue<>(20, comparator);
     }
 
     /**
@@ -84,7 +92,8 @@ public class RM {
         int counter = 0;
         int dataSegStart = -1;
         int codeSegStart = -1;
-
+       
+  
         // checkas segmentu korektiskumui
         while (scanner.hasNext()) {
             line = scanner.nextLine();
