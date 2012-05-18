@@ -44,6 +44,11 @@ public class Process {
         
     }
     
+    /**
+     * 
+     * @param child
+     * @return 
+     */
     protected boolean addChild(Process child) {
         if (child.parent != null)
             return false;
@@ -74,4 +79,6 @@ public class Process {
         
         // runas
     }
+    
+    
 }
