@@ -1,5 +1,6 @@
 package MOS;
 
+import MOS.Process.ProcessState;
 import rvm.RM;
 
 /**
@@ -22,14 +23,17 @@ public class Planner {
     
     /**
      * Returns Process to be executed next.
-     * @return highest priority process
+     * @return process having highest priority and is ready to work. Null if there are no processes or all are blocked
      */
     public Process getNextProcess() {
         // TODO : Grazins is listo tinkamiausia net jei jis negali dirbti del resursu trukumo.
         // SPRENDIMAS: Arba du listai stabdyti ir galintys dirbti, arba begti per pqueue ir paimti galinti veikti (comparatoriui cia)
         for (Process p : machine.processes) { 
-            return machine.processes.poll();
+            if (p.status == ProcessState.READY || p.status == ProcessState.READYS) {
+                return p;
+            }
         }
+        return null;
     }
     
 }
