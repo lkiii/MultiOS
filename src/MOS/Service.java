@@ -10,7 +10,7 @@ import rvm.RM;
  *
  * @author ernestas
  */
-public class Service extends Process {
+public abstract class Service extends Process {
     
     public Service(RM machine, String name, ProcessState state) {
         super(machine, name, state);

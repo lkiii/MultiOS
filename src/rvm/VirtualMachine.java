@@ -25,7 +25,6 @@ public class VirtualMachine {
     private short SP = 0; // Stack pointer
     private Byte SF = 0; // Status flag
     private boolean MF = false; //memory flag . jei true tai komandai paduodamas atminties adresas, jei false - gryna reiksme
-    private PROCESS_STATUS status;
     private boolean haltReached = false;
 
     public VirtualMachine(RM realMachine, short[] registers, VirtualMemory memory) {
@@ -45,7 +44,7 @@ public class VirtualMachine {
     }
     
     public void step() {
-        System.out.println("==STEP==");
+        System.out.println("kas stepina ir kaip");
         if (!haltReached) {
             executeCommand(memory.readWord((int) (CS + IP)));
         }
