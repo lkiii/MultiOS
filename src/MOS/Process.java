@@ -27,7 +27,8 @@ public class Process {
     
     private static int _ID = 0;
     
-    protected VirtualMachine machine;
+    protected RM machine;
+    protected VirtualMachine program;
     
     /*
      * 
@@ -37,7 +38,7 @@ public class Process {
      * skaičiuojamas vidinis identifikacijos numeris, sukuriamas jo vaikų procesų sąrašas (tuščias), 
      * sukurtų resursų sąrašas. 
      */
-    public Process(VirtualMachine machine, String name, ProcessState status) {
+    public Process(RM machine, String name, ProcessState status) {
         this.machine = machine;
         this.name = name;
         this.status = status;

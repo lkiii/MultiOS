@@ -34,7 +34,6 @@ public class VirtualMachine {
         ES = 0x0;
         this.realMachine = realMachine;
         this.memory = memory;
-        status = PROCESS_STATUS.READY;
     }
     
     public void run() {
