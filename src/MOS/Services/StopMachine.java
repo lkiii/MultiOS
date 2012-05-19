@@ -4,6 +4,7 @@
  */
 package MOS.Services;
 
+import MOS.Interrupt;
 import MOS.Service;
 
 /**
@@ -11,6 +12,16 @@ import MOS.Service;
  * @author ernestas
  */
 public class StopMachine extends Service {
+
+    @Override
+    public void interrupt(Interrupt i) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void doService() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 
 }

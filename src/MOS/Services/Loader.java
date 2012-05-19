@@ -9,8 +9,6 @@ import MOS.Service;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import rvm.*;
 
 /**
@@ -19,7 +17,7 @@ import rvm.*;
  */
 class Loader extends Service {
     
-    public Loader(RM machine, String name, ProcessState state) {
+    public Loader(VirtualMachine machine, String name, ProcessState state) {
         super(machine, name, state);
     }
     
@@ -42,7 +40,7 @@ class Loader extends Service {
        
   
         // checkas segmentu korektiskumui
-        while (scannerscanner.hasNext()) {
+        while (scanner.hasNext()) {
             line = scanner.nextLine();
             // segmentu isdestimo checkas
             if ((line.equals(".DATA") && dataSegPresents) || (line.equals(".CODE") && codeSegPresents)

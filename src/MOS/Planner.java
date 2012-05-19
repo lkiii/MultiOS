@@ -29,7 +29,7 @@ public class Planner {
         // TODO : Grazins is listo tinkamiausia net jei jis negali dirbti del resursu trukumo.
         // SPRENDIMAS: Arba du listai stabdyti ir galintys dirbti, arba begti per pqueue ir paimti galinti veikti (comparatoriui cia)
         for (Process p : machine.processes) { 
-            if (p.status == ProcessState.READY || p.status == ProcessState.READYS) {
+            if (p.state == ProcessState.READY || p.state == ProcessState.READYS) {
                 return p;
             }
         }

@@ -19,6 +19,7 @@ import java.util.PriorityQueue;
  */
 public class RM {
 
+    /*
     public static void print(Memory mem) {
         print(mem, true);
     }
@@ -32,10 +33,17 @@ public class RM {
             System.out.println();
         }
     }
+    * 
+    */
+    
     CPU cpu; // Centrinis procesorius
     Memory mem; // Reali atmintis
-    ArrayList<VirtualMachine> VMList; // Virtualiu masinu sarasas
     public PriorityQueue<MOS.Process> processes; 
+    //public ArrayList<MOS.Process> blockedProcesses; gal ir nereikalingas ir virsutini i processes tiesiog pavadint
+    // nes begs per priority iki geriausio su ready ar readys stateu
+    
+    
+    
     Chan ch;
 
     /**
@@ -43,8 +51,8 @@ public class RM {
      */
     public RM() {
         cpu = new CPU();
-        VMList = new ArrayList();
         mem = new Memory(Constants.MEMORY_SIZE);
+        
         ch = new Chan(cpu);
         //mem.fillZeroes();
         
@@ -71,7 +79,7 @@ public class RM {
      * @return sugeneruota VM
      */
     public VirtualMachine startNewVM(String fileName, String args) throws FileNotFoundException {
-
+        // pervardint turbut nes kuriamas bus aprasas kuriame vmas
     }
 
     public Word[] getAvailableBlocks(int blocks) {

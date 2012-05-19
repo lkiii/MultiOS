@@ -17,8 +17,9 @@ public class Process {
     
     public int id;
     public String name; // siaip vardas
-    public ProcessState status; // busena
+    public ProcessState state; // busena
     public byte priority; // prioritetas
+    private VirtualMachine vm;
     
     protected Process parent; // proceso tevas
     public ArrayList<Process> childs = new ArrayList<>(); // vaikiniai procesai
@@ -27,8 +28,7 @@ public class Process {
     
     private static int _ID = 0;
     
-    protected RM machine;
-    protected VirtualMachine program;
+    protected VirtualMachine machine;
     
     /*
      * 
@@ -38,12 +38,17 @@ public class Process {
      * skaičiuojamas vidinis identifikacijos numeris, sukuriamas jo vaikų procesų sąrašas (tuščias), 
      * sukurtų resursų sąrašas. 
      */
-    public Process(RM machine, String name, ProcessState status) {
+    public Process(VirtualMachine machine, String name, ProcessState status) {
         this.machine = machine;
         this.name = name;
-        this.status = status;
+        this.state = status;
         this.id = _ID++;
         
+    }
+    
+    public void step() {
+        vm.step();
+        // timeris --
     }
     
     /**
@@ -51,7 +56,7 @@ public class Process {
      * @param child
      * @return 
      */
-    protected boolean addChild(Process child) {
+    private boolean addChild(Process child) {
         if (child.parent != null)
             return false;
         
@@ -60,7 +65,7 @@ public class Process {
         return true;
     }
     
-    protected boolean removeChild(Process child) {
+    private boolean removeChild(Process child) {
         if (childs.indexOf(child) == -1)
             return false;
         
@@ -72,14 +77,54 @@ public class Process {
         resources.add(r);
         if (neededResources.isEmpty()) {
             
-            if (ProcessState.BLOCK == status) 
-                status = ProcessState.READY;
+            if (ProcessState.BLOCK == state) 
+                state = ProcessState.READY;
             
-            if (ProcessState.BLOCKS == status) 
-                status = ProcessState.READYS;
+            if (ProcessState.BLOCKS == state) 
+                state = ProcessState.READYS;
         }
         
         // runas
+    }
+    
+    // kaip ir primityvai
+    
+    protected void killProcess() {
+        // gal reik atsargiai kad referencu neliktu pas kitus,
+        // kaip variantas resursams duoti kazkoki booleana ar gyvas ar ne
+
+        for (Process i : childs) {
+            i.killProcess();
+        }
+        
+        resources.removeAll(resources); // pats save salina
+        parent.childs.remove(this);
+        // todo ismesti is masinos procesu saraso
+        // naikinti resursus
+        // naikinti pati deskriptoriu hz
+    }
+    
+    protected void stopProcess() {
+        // todo jei current tai tiesiog stabdytu pasiruosusiu neatsizvelgiant i nieka
+        
+        if (this.state == ProcessState.READY) {
+            this.state = ProcessState.READYS;
+        }
+        
+        if (this.state == ProcessState.BLOCK) {
+            this.state = ProcessState.BLOCKS;
+        }    
+    }
+    
+    // Aktyvuoti procesa
+    protected void resumeProcess() {
+        if (this.state == ProcessState.READYS) {
+            this.state = ProcessState.READY;
+        }
+        
+        if (this.state == ProcessState.BLOCKS) {
+            this.state = ProcessState.BLOCK;
+        } 
     }
     
     

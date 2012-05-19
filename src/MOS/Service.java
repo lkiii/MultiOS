@@ -5,6 +5,7 @@
 package MOS;
 
 import rvm.RM;
+import rvm.VirtualMachine;
 
 /**
  *
@@ -12,16 +13,15 @@ import rvm.RM;
  */
 public abstract class Service extends Process {
     
-    public Service(RM machine, String name, ProcessState state) {
+    public Service(VirtualMachine machine, String name, ProcessState state) {
         super(machine, name, state);
     }
     
     public abstract void interrupt(Interrupt i);
     
-    @Override
     public boolean run() {
         doService();
-        if (ProcessState.READY == status) {
+        if (ProcessState.READY == state) {
             return true;
         } else {
             return false;
