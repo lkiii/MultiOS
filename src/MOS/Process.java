@@ -12,7 +12,8 @@ import rvm.VirtualMachine;
  *
  * @author ernestas
  */
-public class Process {
+public class Process implements Comparable<Process> {
+
     public enum ProcessState {RUN, READY, READYS, BLOCK, BLOCKS};
     
     public int id;
@@ -125,7 +126,30 @@ public class Process {
         if (this.state == ProcessState.BLOCKS) {
             this.state = ProcessState.BLOCK;
         } 
+    }    
+
+    @Override
+    public int compareTo(Process p2) {
+        Process p1 = this;
+        if (p1 instanceof Service && p2 instanceof Process) {
+            return 1;
+        }
+        
+        if (p1 instanceof Process && p2 instanceof Service) {
+            return -1;
+        }
+        
+        // If processes are both -> Services or Processes
+        
+        if (p1.priority > p2.priority) {
+            return 1;
+        } else {
+            
+            if (p1.priority < p2.priority) 
+                return -1;
+              else 
+                // Given processes have equal priorities;
+                return 0;
+        }
     }
-    
-    
 }
