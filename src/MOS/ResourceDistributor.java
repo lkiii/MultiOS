@@ -36,3 +36,7 @@ public class ResourceDistributor extends Service{
     }
     
 }
+//TODO: planeris (Paleisti bent tris VM)
+//TODO: start stop
+//TODO: naujų vm pridėjimas
+//TODO: Emė turi užsikurti trys vm ir veikimo metu dar vieną pridėt
