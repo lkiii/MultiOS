@@ -1,4 +1,4 @@
-package rvm;
+package Hardware;
 
 import MOS.Process;
 import MOS.ProcessPriorityComparator;
@@ -13,14 +13,13 @@ import java.util.PriorityQueue;
  * @author ernestas
  */
 public class RealMachine {
-    
     CPU cpu; // Centrinis procesorius
     Memory mem; // Reali atmintis
     public PriorityQueue<MOS.Process> processes; 
     Process currentProcess;
     
     
-    Chan ch;
+    Channels ch;
 
     /**
      * Sukuriama reali masina, inicijuojant procesoriu, atminti, ir VM sarasas
@@ -29,7 +28,7 @@ public class RealMachine {
         cpu = new CPU();
         mem = new Memory(Constants.MEMORY_SIZE);
         
-        ch = new Chan(cpu);
+        ch = new Channels(cpu);
         //mem.fillZeroes();
         
         processes = new PriorityQueue<>(20, new ProcessPriorityComparator<>());
@@ -42,7 +41,7 @@ public class RealMachine {
      * @return virtualią mašiną
      */
     public VirtualMachine startNewVM(String fileName) throws FileNotFoundException {
-        return startNewVM(fileName, "");
+
     }
 
     public Word[] getAvailableBlocks(int blocks) {
@@ -142,11 +141,5 @@ public class RealMachine {
         mem.writeWord((vm.getPTR().toInt())/BLOCK_SIZE, new Word(0));
     }
     
-    public Word[] getMemoryGui() {
-        return mem.getWords();
-    }
     
-    public Chan getChans(){
-        return ch;
-    };
 }

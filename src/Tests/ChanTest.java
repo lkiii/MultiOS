@@ -14,7 +14,7 @@ public class ChanTest {
 
     public static void main(String[] args) {
         CPU cpu = new CPU();
-        Chan ch = new Chan(cpu);
+        Channels ch = new Channels(cpu);
        // ch.useChan2(ch.useChan1());
     }
 }

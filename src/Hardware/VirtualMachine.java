@@ -1,37 +1,31 @@
-package rvm;
+package Hardware;
 
-import java.util.Scanner;
-import rvm.Constants.PROCESS_STATUS;
+import rvm.*;
 
 /**
  *
  * @author ernestas
  */
 public class VirtualMachine {
-    
     private VirtualMemory memory; // virtuali atmintis
-    private RealMachine realMachine; // tevine masina
     
     private Word R = new Word(0x0); // Bendros paskirties registras
-    
     // Segments
     private final short CS; // Code segment register
     private final short DS; // Data segment register
     private final short ES; // Extra segment register (params)
     private final short SS; // Stack segment register
     
-    
     private short IP = 0; // Instruction pointer
     private short SP = 0; // Stack pointer
     private Byte SF = 0; // Status flag
     private boolean haltReached = false;
 
-    public VirtualMachine(RealMachine realMachine, short[] registers, VirtualMemory memory) {
+    public VirtualMachine(short[] registers, VirtualMemory memory) {
         DS = registers[0];
         CS = registers[1];
         SS = registers[2];
         ES = 0x0;
-        this.realMachine = realMachine;
         this.memory = memory;
     }
     
@@ -49,7 +43,6 @@ public class VirtualMachine {
         if (!haltReached) {
             IP++;
         }
-        boolean interrupt = realMachine.interruptTest();
     }
     
     // MF flago realizacija, galejau parsinant ifint, cia pat
@@ -112,14 +105,10 @@ public class VirtualMachine {
                         throw new IllegalArgumentException("Unknown opcode: " + opcode);
                         
                 }
-    
         }
-                //    printRegisters();
-
-
     }
 
-    // operations
+    // ops
     private void add(Word value) { 
         R = new Word(R.toInt() + value.toInt());
     }
@@ -133,7 +122,6 @@ public class VirtualMachine {
 
     }
         
-    
     private void saveRegister(Word addr) {
         memory.writeWord(DS, addr.toInt(), new Word(R.toInt()));
     }
@@ -201,19 +189,6 @@ public class VirtualMachine {
         }*/
         
     }
-    /*
-    public void setCodeSeg(byte addr) {
-        CS = addr;
-        IP = CS;
-    }
-
-    public void setDataSeg(byte addr) {
-        DS = addr;
-    }
-
-    public void setStackSeg(byte addr) {
-        SS = addr;
-    */
 
     private void halt() {
         haltReached = true;
@@ -221,15 +196,6 @@ public class VirtualMachine {
     
     public boolean isHalted() {
         return haltReached;
-    }
-
-    private void putData(Word value) {
-        realMachine.ch.useChan2(value);
-    }
-
-    private void getData(Word address) {
-        //Word val = realMachine.ch.useChan1();
-        //memory.writeWord(addressToPut, val);
     }
     
     public VirtualMemory getMemory() {
@@ -254,28 +220,4 @@ public class VirtualMachine {
         }
         System.out.println();
     }
-    // getteriai GUIui
-    public int getR() {
-        return R.toInt();
-    }
-    public int getIP() {
-        return IP;
-    }
-    public int getSF() {
-        return SF;
-    }
-    public int getSP() {
-        return SP;
-    }
-    public int getDS() {
-        return DS;
-    }
-    public int getCS() {
-        return CS;
-    }
-    public int getSS() {
-        return SS;
-    }
-    
-
 }
