@@ -7,7 +7,7 @@ package MOS.Services;
 import MOS.Interrupt;
 import MOS.Service;
 import java.util.ArrayList;
-import rvm.RM;
+import rvm.RealMachine;
 import rvm.VirtualMachine;
 import rvm.Word;
 

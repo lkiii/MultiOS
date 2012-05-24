@@ -1,3 +1,23 @@
+
+
+
+    /*
+    public static void print(Memory mem) {
+        print(mem, true);
+    }
+
+    public static void print(Memory mem, boolean iSinteger) {
+        for (int i = 0x00; i < 0x20; i++) {
+            System.out.print(Integer.toHexString(i).toUpperCase() + "_: ");
+            for (int j = 0x0; j <= 0xF; j++) {
+                System.out.print("'" + ((iSinteger) ? mem.readWord(i * 0x10 + j).toInt() + " " : mem.readWord(i * 0x10 + j)) + "' ");
+            }
+            System.out.println();
+        }
+    }
+    * 
+    */
+
     public VirtualMachine startNewVM(String fileName, String args) throws FileNotFoundException {
         Byte[] segs = new Byte[3];//DS, CS, SS
         if (!args.isEmpty() && !args.trim().isEmpty()) {

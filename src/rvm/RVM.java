@@ -18,7 +18,7 @@ public class RVM {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        RM rm = new RM();
+        RealMachine rm = new RealMachine();
  
         // keisti parametru padeti, musu AD pl adresa, tai DS kinta nuo parmetru skaiciaus, reiskis niekad tikslaus adreso nenurodysi
         VirtualMachine vm;

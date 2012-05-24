@@ -7,18 +7,18 @@ package MOS;
 import MOS.Interrupt.InterruptType;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import rvm.RM;
+import rvm.RealMachine;
 
 /**
  *
  * @author ernestas
  */
 public class InterruptController {
-    private RM machine;
+    private RealMachine machine;
     private ArrayList<Interrupt> interrupts = new ArrayList<>();
     private Hashtable<InterruptType, Service> map = new Hashtable<>();
     
-    public InterruptController(RM machine) {
+    public InterruptController(RealMachine machine) {
         this.machine = machine;
     }
     

@@ -4,15 +4,16 @@
  */
 package MOS;
 
+import MOS.Resources.Resource;
 import java.util.ArrayList;
-import rvm.RM;
+import rvm.RealMachine;
 import rvm.VirtualMachine;
 
 /**
  *
  * @author ernestas
  */
-public class Process implements Comparable<Process> {
+public class Process{
 
     public enum ProcessState {RUN, READY, READYS, BLOCK, BLOCKS};
     
@@ -128,28 +129,4 @@ public class Process implements Comparable<Process> {
         } 
     }    
 
-    @Override
-    public int compareTo(Process p2) {
-        Process p1 = this;
-        if (p1 instanceof Service && p2 instanceof Process) {
-            return 1;
-        }
-        
-        if (p1 instanceof Process && p2 instanceof Service) {
-            return -1;
-        }
-        
-        // If processes are both -> Services or Processes
-        
-        if (p1.priority > p2.priority) {
-            return 1;
-        } else {
-            
-            if (p1.priority < p2.priority) 
-                return -1;
-              else 
-                // Given processes have equal priorities;
-                return 0;
-        }
-    }
 }

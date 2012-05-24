@@ -1,7 +1,7 @@
 package MOS;
 
 import MOS.Process.ProcessState;
-import rvm.RM;
+import rvm.RealMachine;
 
 /**
  * Realizuotas per PriorityQueue (nesynchronized) ir Comparatoriu (Realiai jame ir yra palyginimo logika)
@@ -11,13 +11,13 @@ import rvm.RM;
  * @author ernestas
  */
 public class Planner { 
-    private RM machine;
+    private RealMachine machine;
     
     /**
      * Constructs the Planner for RM.
      * @param machine used to reach processes of RM.
      */
-    protected Planner(RM machine) {
+    protected Planner(RealMachine machine) {
         this.machine = machine;
     }
     

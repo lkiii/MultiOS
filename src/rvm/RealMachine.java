@@ -1,14 +1,9 @@
 package rvm;
 
+import MOS.Process;
 import MOS.ProcessPriorityComparator;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static rvm.Constants.*;
-import sun.org.mozilla.javascript.internal.regexp.SubString;
 import Tests.MemoryTest.*;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -17,31 +12,12 @@ import java.util.PriorityQueue;
  *
  * @author ernestas
  */
-public class RM {
-
-    /*
-    public static void print(Memory mem) {
-        print(mem, true);
-    }
-
-    public static void print(Memory mem, boolean iSinteger) {
-        for (int i = 0x00; i < 0x20; i++) {
-            System.out.print(Integer.toHexString(i).toUpperCase() + "_: ");
-            for (int j = 0x0; j <= 0xF; j++) {
-                System.out.print("'" + ((iSinteger) ? mem.readWord(i * 0x10 + j).toInt() + " " : mem.readWord(i * 0x10 + j)) + "' ");
-            }
-            System.out.println();
-        }
-    }
-    * 
-    */
+public class RealMachine {
     
     CPU cpu; // Centrinis procesorius
     Memory mem; // Reali atmintis
     public PriorityQueue<MOS.Process> processes; 
-    //public ArrayList<MOS.Process> blockedProcesses; gal ir nereikalingas ir virsutini i processes tiesiog pavadint
-    // nes begs per priority iki geriausio su ready ar readys stateu
-    
+    Process currentProcess;
     
     
     Chan ch;
@@ -49,16 +25,17 @@ public class RM {
     /**
      * Sukuriama reali masina, inicijuojant procesoriu, atminti, ir VM sarasas
      */
-    public RM() {
+    public RealMachine() {
         cpu = new CPU();
         mem = new Memory(Constants.MEMORY_SIZE);
         
         ch = new Chan(cpu);
         //mem.fillZeroes();
         
-        // gali bugint, jei taip tai i arraylist perdarom
         Comparator comparator = new ProcessPriorityComparator();
         processes = new PriorityQueue<>(20, comparator);
+        
+        processes.add(new StartStop());
     }
 
     /**
@@ -70,35 +47,10 @@ public class RM {
     public VirtualMachine startNewVM(String fileName) throws FileNotFoundException {
         return startNewVM(fileName, "");
     }
-    
-    /**
-     * Virtualios masinos paleidimas
-     *
-     * @param komandos komandu sarasas
-     * @param args parametrai paleidziami programai
-     * @return sugeneruota VM
-     */
-    public VirtualMachine startNewVM(String fileName, String args) throws FileNotFoundException {
-        // pervardint turbut nes kuriamas bus aprasas kuriame vmas
-    }
 
     public Word[] getAvailableBlocks(int blocks) {
         Word[] track = new Word[blocks * 0xf];
         return track;
-    }
-
-    //todo 
-    /**
-     * Neuzbaigtas
-     *
-     * @param Track
-     * @return
-     */
-    public boolean isAvailable(int Track) {
-        for (int i = 0x010; i <= 0x0F0; i++) {
-            //for ()
-        }
-        return true;
     }
 
     /**

@@ -17,7 +17,7 @@ import javax.swing.*;
 
 public class GUI_NAUJAUSIAS {
     private JFrame frame;
-    RM rm = null;
+    RealMachine rm = null;
     VirtualMachine vm = null;
     
     JPanel currentPage = null; // nx tokius sudus del file loado daryt
@@ -77,7 +77,7 @@ public class GUI_NAUJAUSIAS {
     boolean isLoaded = false;
     
     private void initProject() throws FileNotFoundException {
-        rm = new RM();
+        rm = new RealMachine();
     }
 
     public GUI_NAUJAUSIAS() throws FileNotFoundException {

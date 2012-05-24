@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.TableColumnModel;
-import rvm.RM;
+import rvm.RealMachine;
 import rvm.VirtualMachine;
 import rvm.Word;
 
@@ -419,7 +419,7 @@ public class Testas extends javax.swing.JFrame {
         });
 }
         private void myFunc() throws FileNotFoundException {
-            RM rm = new RM();
+            RealMachine rm = new RealMachine();
             VirtualMachine vm = rm.startNewVM("src/program1");
             int[] dn = {0, 1, 2, 3};
             realMemoryTable = new javax.swing.JTable();

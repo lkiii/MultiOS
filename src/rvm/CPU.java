@@ -98,9 +98,4 @@ public class CPU {
             CHN[index] = false;
         }
     }
-
-    
-   /* useChannel1() {
-        
-    }*/
 }

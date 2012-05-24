@@ -1,5 +1,6 @@
-package MOS;
+package MOS.Resources;
 
+import MOS.Process;
 import java.util.ArrayList;
 
 /**
@@ -7,14 +8,13 @@ import java.util.ArrayList;
  * @author ernestas
  */
 public class Resource {
-    //public static Hashtable<String, Process> registered = new Hashtable
-    public static ArrayList<Resource> resources = new ArrayList<>();
-    
+
     public int id;
-    private int idCounter = 0;
     public boolean reusable;
     public boolean free;
     public Process creator;
+    Object element;
+    public String name;
     
     /*
 1.	Kurti resursą. Resursus kuria tik procesas. 
@@ -22,34 +22,23 @@ Resurso kūrimo metu perduodami kaip parametrai: nuoroda į proceso kūrėją, r
         išorinis vardas. Resursas kūrimo metu yra: pridedamas prie bendro resursų 
                 sąrašo, pridedamas prie tėvo suskurtų resursų sąrašo, jam priskiriamas unikalus 
                         vidinis vardas, sukuriamas resurso elementų sąrašas ir sukuriamas laukiančių procesų sąrašas.*/
-    public String name;
     /**
      * Kuria resursč
      * @param creator
      * @param name 
      */
-    public Resource(Process creator, String name) {
+    public Resource(Process creator,int id,String name) {
         this.name = name;
         this.creator = creator;
-        this.id = this.idCounter++;
-        resources.add(this);
+        this.id = id;
     }
-    /**
-     * atlaisvina resursą. Jį gali naudoti kitas.
-     */
-    public void freeResource(){
-        this.free = true;
+
+    public Object getElement() {
+        return element;
     }
-    /**
-     * tina resursą jeigu jis nėra reusable.
-     */
-    public void deleteResource(){
-        if (!this.reusable){
-            resources.remove(this);
-        }
+
+    public void setElement(Object element) {
+        this.element = element;
     }
-    
-    
-    
-    
+        
 }

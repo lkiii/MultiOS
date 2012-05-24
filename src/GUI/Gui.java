@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 public class Gui {
     private JFrame frame;
-    RM rm = null;
+    RealMachine rm = null;
     VirtualMachine vm = null;
     
     //- Main page
@@ -75,7 +75,7 @@ public class Gui {
     boolean isLoaded = false;
     
     private void initProject() throws FileNotFoundException {
-        rm = new RM();
+        rm = new RealMachine();
         vm = rm.startNewVM("src/program1");
     }
 

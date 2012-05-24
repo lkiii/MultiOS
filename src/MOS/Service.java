@@ -4,7 +4,7 @@
  */
 package MOS;
 
-import rvm.RM;
+import rvm.RealMachine;
 import rvm.VirtualMachine;
 
 /**

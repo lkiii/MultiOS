@@ -10,7 +10,7 @@ import rvm.Constants.PROCESS_STATUS;
 public class VirtualMachine {
     
     private VirtualMemory memory; // virtuali atmintis
-    private RM realMachine; // tevine masina
+    private RealMachine realMachine; // tevine masina
     
     private Word R = new Word(0x0); // Bendros paskirties registras
     
@@ -27,7 +27,7 @@ public class VirtualMachine {
     private boolean MF = false; //memory flag . jei true tai komandai paduodamas atminties adresas, jei false - gryna reiksme
     private boolean haltReached = false;
 
-    public VirtualMachine(RM realMachine, short[] registers, VirtualMemory memory) {
+    public VirtualMachine(RealMachine realMachine, short[] registers, VirtualMemory memory) {
         DS = registers[0];
         CS = registers[1];
         SS = registers[2];
