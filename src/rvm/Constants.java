@@ -17,6 +17,7 @@ public final class Constants {
     public static final int DEFAULT_CS_SIZE = 0x3;
     public static final int SCREEN_SIZE = 20;
     public static final int MEMORY_SIZE = 0x1000; // 0..FFF
+    public static final int 
     
     public static enum INTERRUPT_TYPE {ILLEGAL_ADDRESS, UNKNOWN_OPCODE};
     public static enum PROCESS_STATUS {READY, RUNNING, BLOCKED, FINISHED};

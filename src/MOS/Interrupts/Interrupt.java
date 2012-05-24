@@ -2,14 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Parser;
+package MOS.Interrupts;
 
 /**
  *
  * @author ernestas
  */
-public class Parseris {
+public interface Interrupt {
     
-    //public static Word[]
-    
+    public void doService();
 }

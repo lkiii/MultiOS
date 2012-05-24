@@ -115,17 +115,4 @@ public class Word implements Serializable {
     public String toString() {
         return new String(this.toByteArray());
     }
-
-    private void writeObject(ObjectOutputStream oos) throws IOException {
-        oos.writeObject(this.toByteArray());
-    }
-
-    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
-        Object ob = ois.readObject();
-        if (ob != null) {
-            byte[] bytes = (byte[]) ob;
-            word = ByteBuffer.allocateDirect(WORD_SIZE);
-            this.word.put(bytes);
-        }
-    }
 }

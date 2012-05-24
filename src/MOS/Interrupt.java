@@ -1,7 +1,7 @@
 package MOS;
 
 /**
- *
+ * ala supervizorines vector teiblas ir metodai jame
  * @author ernestas
  */
 public class Interrupt {
@@ -12,8 +12,7 @@ public class Interrupt {
         GETDATA,
         HALT;
     }
-    
-    public int ID; // ar reik?
+
     public Process process = null;
     public InterruptType type;
    

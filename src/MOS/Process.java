@@ -15,7 +15,7 @@ import rvm.VirtualMachine;
  */
 public class Process{
 
-    public enum ProcessState {RUN, READY, READYS, BLOCK, BLOCKS};
+    public enum ProcessState {RUNNING, READY, READYS, BLOCKED, BLOCKEDS};
     
     public int id;
     public String name; // siaip vardas
@@ -79,10 +79,10 @@ public class Process{
         resources.add(r);
         if (neededResources.isEmpty()) {
             
-            if (ProcessState.BLOCK == state) 
+            if (ProcessState.BLOCKED == state) 
                 state = ProcessState.READY;
             
-            if (ProcessState.BLOCKS == state) 
+            if (ProcessState.BLOCKEDS == state) 
                 state = ProcessState.READYS;
         }
         
@@ -113,8 +113,8 @@ public class Process{
             this.state = ProcessState.READYS;
         }
         
-        if (this.state == ProcessState.BLOCK) {
-            this.state = ProcessState.BLOCKS;
+        if (this.state == ProcessState.BLOCKED) {
+            this.state = ProcessState.BLOCKEDS;
         }    
     }
     
@@ -124,8 +124,8 @@ public class Process{
             this.state = ProcessState.READY;
         }
         
-        if (this.state == ProcessState.BLOCKS) {
-            this.state = ProcessState.BLOCK;
+        if (this.state == ProcessState.BLOCKEDS) {
+            this.state = ProcessState.BLOCKED;
         } 
     }    
 

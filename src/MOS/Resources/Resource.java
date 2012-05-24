@@ -2,43 +2,56 @@ package MOS.Resources;
 
 import MOS.Process;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 /**
- *
+ *  NELIESTI BLET VISKAS KOLKAS GERAI
  * @author ernestas
  */
 public class Resource {
-
-    public int id;
-    public boolean reusable;
-    public boolean free;
-    public Process creator;
-    Object element;
-    public String name;
+    private static int newID = 0; // globalus naujas id
     
-    /*
-1.	Kurti resursą. Resursus kuria tik procesas. 
-Resurso kūrimo metu perduodami kaip parametrai: nuoroda į proceso kūrėją, resurso 
-        išorinis vardas. Resursas kūrimo metu yra: pridedamas prie bendro resursų 
-                sąrašo, pridedamas prie tėvo suskurtų resursų sąrašo, jam priskiriamas unikalus 
-                        vidinis vardas, sukuriamas resurso elementų sąrašas ir sukuriamas laukiančių procesų sąrašas.*/
-    /**
-     * Kuria resursč
-     * @param creator
-     * @param name 
-     */
-    public Resource(Process creator,int id,String name) {
-        this.name = name;
+    private int id; // vidinis id
+    private String name; // isorinis vardas
+    
+    private boolean reusable; // ar pakartotinio naudojimo
+    private boolean free; // ar mires resursas
+    
+    private Process creator; // kurejas
+    public PriorityQueue<Process> processQueue; // laukiantys procesai
+    public ArrayList<Element> elements; // data 
+    
+    
+    public Resource(Process creator, String name) {
         this.creator = creator;
-        this.id = id;
+        this.name = name;
+        this.id = newID++;
+        elements = new ArrayList<>();
+        processQueue = new PriorityQueue<>();
     }
-
-    public Object getElement() {
-        return element;
+    
+    public int getId() {
+        return id;
     }
-
-    public void setElement(Object element) {
-        this.element = element;
+    
+    public boolean isReusable() {
+        return reusable;
+    }
+    
+    public boolean isFree() {
+        return free;
+    }
+    
+    public void setFree() {
+        free = true;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public Process getCreator() {
+        return creator;
     }
         
 }

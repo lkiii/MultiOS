@@ -32,10 +32,7 @@ public class RealMachine {
         ch = new Chan(cpu);
         //mem.fillZeroes();
         
-        Comparator comparator = new ProcessPriorityComparator();
-        processes = new PriorityQueue<>(20, comparator);
-        
-        processes.add(new StartStop());
+        processes = new PriorityQueue<>(20, new ProcessPriorityComparator<>());
     }
 
     /**

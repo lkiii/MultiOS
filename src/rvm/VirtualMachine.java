@@ -24,7 +24,6 @@ public class VirtualMachine {
     private short IP = 0; // Instruction pointer
     private short SP = 0; // Stack pointer
     private Byte SF = 0; // Status flag
-    private boolean MF = false; //memory flag . jei true tai komandai paduodamas atminties adresas, jei false - gryna reiksme
     private boolean haltReached = false;
 
     public VirtualMachine(RealMachine realMachine, short[] registers, VirtualMemory memory) {
@@ -107,9 +106,7 @@ public class VirtualMachine {
                         putData(memory.readWord(argAsValue));
                         break;
                     case "GD":
-                        /*Word data = getData();
-                        memory.writeWord(arg, getData());*/
-                        //etData();
+                        
                         break;
                     default:
                         throw new IllegalArgumentException("Unknown opcode: " + opcode);

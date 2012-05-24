@@ -15,7 +15,7 @@ public class CPU {
     private short IP;    // Sekancios komandos adreso registras (Instruction Pointer)
     private boolean C;   // Loginis registras
     private byte MODE;   // Rezimas 0 - supervisor | 1 - user
-    private Timer TIMER; // Taimeris
+    private int TIMER; // Taimeris
     private byte TI;     // Taimerio pertraukimo registras
     private byte IOI;    // Ivedimo/Isvedimo pertraukimo registras
     private byte SI;     // Supervizoriaus pertraukimo registras
