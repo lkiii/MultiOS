@@ -9,11 +9,7 @@ import java.util.ArrayList;
  * @author ernestas
  */
 public class ResourceDistributor {
-    public static ArrayList<Resource> resources;
-
-    public ResourceDistributor() {
-        resources = new ArrayList<>();
-    }
+    public static ArrayList<Resource> resources = new ArrayList<>();
 
     /*
      * <<Kurti resursą>>
@@ -23,17 +19,16 @@ public class ResourceDistributor {
      * unikalus vidinis vardas, sukuriamas resurso elementų sąrašas ir sukuriamas 
      * laukiančių procesų sąrašas.
      */
-    public void createResource(Process creator, String resourceName) {
+    public static void createResource(Process creator, String resourceName) {
         Resource resource = new Resource(creator, resourceName);
         resources.add(resource);
         creator.resources.add(resource);
-        
     }
     
     // <<Prašyti resurso>>
     // Procesas iškvietęs šį primityvą yra blokuojamas 
     //ir įtraukiamas į to resurso laukiančių procesų sąrašą.
-    public void requestResource(Process caller, Resource res) {
+    public static void requestResource(Process caller, Resource res) {
         caller.state = ProcessState.BLOCKED;
         res.processQueue.add(caller);
     }
@@ -44,9 +39,9 @@ public class ResourceDistributor {
      * resursų sąrašų, naikinamas jo elementų sąrašas, atblokuojami procesai 
      * laukiantys šio resurso, vėliau naikinamas pats deskriptorius.
      */
-    public void removeResource(Resource res) {
+    public static void removeResource(Resource res) {
         res.getCreator().resources.remove(res); 
-       
+        
         for (Process i : res.processQueue) {
             if (i.state == ProcessState.BLOCKED) {
                 i.state = ProcessState.READY;
@@ -56,13 +51,12 @@ public class ResourceDistributor {
         resources.remove(res);
     }
 
-    
     /*
      * <<Atlaisvinti resursą>>
      * Resurso elementas yra perduodamas šiam primityvui kaip parametras 
      * ir yra pridedamas prie resurso elementų sąrašo.
      */
-    public void freeResource(Resource res) {
+    public static void freeResource(Resource res) {
         if (!res.isReusable()) {
             resources.remove(res);
         }

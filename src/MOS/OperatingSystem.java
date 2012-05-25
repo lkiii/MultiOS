@@ -12,10 +12,13 @@ import MOS.Resources.ResourceDistributor;
  * @author ernestas
  */
 public class OperatingSystem {
-    RealMachine machine = new RealMachine();
-    Planner planner = new Planner(machine);
+    RealMachine rm;
+    Planner planner = new Planner();
     ResourceDistributor resourceDistributor = new ResourceDistributor();
     
+    public OperatingSystem(RealMachine rm) {
+        this.rm = rm;
+    }
     // Lengvesniam darbui surasom statinius i arrayju
     // Procesai
     

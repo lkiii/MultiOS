@@ -26,7 +26,7 @@ public abstract class Process{
     protected Process parent; // proceso tevas
     public ArrayList<Process> childs = new ArrayList<>(); // vaikiniai procesai
     public ArrayList<Resource> resources = new ArrayList<>(); // turimi resursai
-    public ArrayList<Resource> neededResources = new ArrayList<>(); // laukiami resursai
+    public ArrayList<String> neededResources = new ArrayList<>(); // laukiami resursai
        
     public Process(String name, ProcessState status) {
         this.name = name;
@@ -38,7 +38,7 @@ public abstract class Process{
      * @param child
      * @return 
      */
-    private boolean addChild(Process child) {
+    public boolean addChild(Process child) {
         if (child.parent != null)
             return false;
         

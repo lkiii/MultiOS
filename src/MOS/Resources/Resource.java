@@ -3,6 +3,7 @@ package MOS.Resources;
 import MOS.Process;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  *  NELIESTI BLET VISKAS KOLKAS GERAI
@@ -18,15 +19,14 @@ public class Resource {
     private boolean free; // ar mires resursas
     
     private Process creator; // kurejas
-    public PriorityQueue<Process> processQueue; // laukiantys procesai
-    public ArrayList<Element> elements; // data 
+    public Queue<Process> processQueue; // laukiantys procesai
+    public Object element; // data 
     
     
     public Resource(Process creator, String name) {
         this.creator = creator;
         this.name = name;
         this.id = newID++;
-        elements = new ArrayList<>();
         processQueue = new PriorityQueue<>();
     }
     

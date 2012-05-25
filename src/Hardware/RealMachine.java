@@ -14,7 +14,6 @@ import java.util.PriorityQueue;
 public class RealMachine {
     CPU cpu; // Centrinis procesorius
     Memory mem; // Reali atmintis
-    public PriorityQueue<MOS.Process> processes; 
     Process currentProcess;
     
     

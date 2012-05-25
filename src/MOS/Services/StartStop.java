@@ -19,7 +19,7 @@ public class StartStop extends Service {
     }
 
     @Override
-    public void doService() {
+    public void run() {
         
     }
     
