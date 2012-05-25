@@ -23,7 +23,7 @@ public abstract class Process{
     public ProcessState state; // busena
     public byte priority; // prioritetas
     
-    protected Process parent; // proceso tevas
+    protected Process parent; //  proceso tevas
     public ArrayList<Process> childs = new ArrayList<>(); // vaikiniai procesai
     public ArrayList<Resource> resources = new ArrayList<>(); // turimi resursai
     public ArrayList<String> neededResources = new ArrayList<>(); // laukiami resursai
