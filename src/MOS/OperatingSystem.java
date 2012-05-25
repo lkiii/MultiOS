@@ -4,6 +4,7 @@
  */
 package MOS;
 
+import MOS.Scheduling.Planner;
 import Hardware.RealMachine;
 import MOS.Resources.ResourceDistributor;
 
@@ -16,6 +17,8 @@ public class OperatingSystem {
     Planner planner = new Planner();
     ResourceDistributor resourceDistributor = new ResourceDistributor();
     
+    
+    
     public OperatingSystem(RealMachine rm) {
         this.rm = rm;
     }
@@ -27,6 +30,6 @@ public class OperatingSystem {
     // entry pointas OSo, paleidus masina
     public void startStop() {
         // 1. inicijuojami statiniai dalykai (virsuj jau inicijuota dalis)
-        planner
+        planner.
     }
 }

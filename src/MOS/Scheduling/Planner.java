@@ -1,7 +1,8 @@
-package MOS;
+package MOS.Scheduling;
 
 import MOS.Process.ProcessState;
 import Hardware.RealMachine;
+import MOS.Process;
 import MOS.Resources.Resource;
 import MOS.Resources.ResourceDistributor;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * @author ernestas
  */
 public class Planner { 
-    private static ArrayList<Process> processes = new ArrayList<>(); // vaikiniai procesai
+    public static ArrayList<Process> processes = new ArrayList<>(); // vaikiniai procesai
     
     /**
      * Returns Process to be executed next.

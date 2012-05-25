@@ -28,18 +28,6 @@ public class RealMachine {
         
         ch = new Channels(cpu);
         //mem.fillZeroes();
-        
-        processes = new PriorityQueue<>(20, new ProcessPriorityComparator<>());
-    }
-
-    /**
-     * Virtuali mašina be parametrų
-     *
-     * @param file programos failas (musu FSe)
-     * @return virtualią mašiną
-     */
-    public VirtualMachine startNewVM(String fileName) throws FileNotFoundException {
-
     }
 
     public Word[] getAvailableBlocks(int blocks) {
