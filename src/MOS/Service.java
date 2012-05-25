@@ -1,11 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package MOS;
 
-import rvm.RealMachine;
-import rvm.VirtualMachine;
+import Hardware.VirtualMachine;
+
 
 /**
  *

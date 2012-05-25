@@ -1,4 +1,7 @@
-package rvm;
+package Hardware.Memory;
+
+import Utils.Word;
+
 /**
  * Virtuali atmintis nuslepia kreipimosi i atminti sudetinguma,
  * suteikia sistemai realizuoti puslapiavimo mechanizma, siekiant

@@ -1,6 +1,6 @@
-package rvm;
+package Hardware.Memory;
 
-import static rvm.Constants.*;
+import Utils.Word;
 
 /**
  *

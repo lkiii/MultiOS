@@ -6,8 +6,8 @@ package MOS;
 
 import MOS.Interrupt.InterruptType;
 import java.util.ArrayList;
+import Hardware.RealMachine;
 import java.util.Hashtable;
-import rvm.RealMachine;
 
 /**
  *

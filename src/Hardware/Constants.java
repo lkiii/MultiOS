@@ -1,4 +1,4 @@
-package rvm;
+package Hardware;
 /**
  * 
  * VU MIF PS 1gr. 2012

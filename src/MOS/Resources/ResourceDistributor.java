@@ -1,14 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package MOS.Resources;
 
 import MOS.Process;
 import MOS.Process.ProcessState;
-import MOS.ProcessPriorityComparator;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
 /**
  * NELIEST BLET UZMUSIU SU ATVIORTKE

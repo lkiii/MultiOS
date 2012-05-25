@@ -4,10 +4,10 @@
  */
 package MOS;
 
+import Hardware.VirtualMachine;
 import MOS.Resources.Resource;
 import java.util.ArrayList;
-import rvm.RealMachine;
-import rvm.VirtualMachine;
+
 
 /**
  *

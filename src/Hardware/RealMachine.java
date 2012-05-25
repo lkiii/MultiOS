@@ -2,11 +2,11 @@ package Hardware;
 
 import MOS.Process;
 import MOS.ProcessPriorityComparator;
+import Utils.Word;
 import java.io.FileNotFoundException;
-import static rvm.Constants.*;
-import Tests.MemoryTest.*;
-import java.util.Comparator;
 import java.util.PriorityQueue;
+import rvm.Memory;
+import rvm.VirtualMemory;
 
 /**
  *

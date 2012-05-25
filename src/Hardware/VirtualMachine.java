@@ -1,6 +1,6 @@
 package Hardware;
 
-import rvm.*;
+import rvm.VirtualMemory;
 
 /**
  *

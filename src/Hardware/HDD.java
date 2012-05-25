@@ -2,7 +2,7 @@ package Hardware;
 
 import java.io.*;
 import java.util.ArrayList;
-import rvm.Word;
+import Utils.Word;
 
 /**
  * Kietasis diskas - vienas failas, is kurio imamas programos tekstas

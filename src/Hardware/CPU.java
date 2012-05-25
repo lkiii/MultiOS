@@ -1,5 +1,7 @@
 package Hardware;
 
+import Utils.*;
+
 /**
  *
  * VU MIF PS 1gr. 2012

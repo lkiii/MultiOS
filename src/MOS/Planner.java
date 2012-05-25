@@ -1,7 +1,7 @@
 package MOS;
 
 import MOS.Process.ProcessState;
-import rvm.RealMachine;
+import Hardware.RealMachine;
 
 /**
  * Realizuotas per PriorityQueue (nesynchronized) ir Comparatoriu (Realiai jame ir yra palyginimo logika)

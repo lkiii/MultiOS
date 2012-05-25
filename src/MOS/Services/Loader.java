@@ -4,12 +4,15 @@
  */
 package MOS.Services;
 
+import Hardware.Constants;
+import Hardware.Memory.VirtualMemory;
+import Hardware.VirtualMachine;
 import MOS.Interrupt;
 import MOS.Service;
+import Utils.Word;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import rvm.*;
 
 /**
  *
@@ -21,9 +24,9 @@ class Loader extends Service {
         super(machine, name, state);
     }
     
-    private boolean load(String fileName) {
+    private boolean load(String fileName) throws FileNotFoundException {
 
-        Scanner scanner;
+        Scanner scanner = null;
         try {
             scanner = new Scanner(new FileInputStream(fileName));
         } catch (FileNotFoundException ex) {
