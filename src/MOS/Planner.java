@@ -25,7 +25,7 @@ public class Planner {
      * Returns Process to be executed next.
      * @return process having highest priority and is ready to work. Null if there are no processes or all are blocked
      */
-    public Process getNextProcess() {
+    private Process getNextProcess() {
         // TODO : Grazins is listo tinkamiausia net jei jis negali dirbti del resursu trukumo.
         // SPRENDIMAS: Arba du listai stabdyti ir galintys dirbti, arba begti per pqueue ir paimti galinti veikti (comparatoriui cia)
         for (Process p : machine.processes) { 
@@ -34,6 +34,9 @@ public class Planner {
             }
         }
         return null;
+    }
+    public void run(){
+        getNextProcess().run();
     }
     
 }
