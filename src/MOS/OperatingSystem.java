@@ -6,7 +6,9 @@ package MOS;
 
 import MOS.Scheduling.Planner;
 import Hardware.RealMachine;
+import MOS.Process.ProcessState;
 import MOS.Resources.ResourceDistributor;
+import MOS.Services.StartStop;
 
 /**
  *
@@ -28,8 +30,9 @@ public class OperatingSystem {
     // Resursai
     
     // entry pointas OSo, paleidus masina
-    public void startStop() {
+    public void start() {
         // 1. inicijuojami statiniai dalykai (virsuj jau inicijuota dalis)
-        planner.
+        Planner.createProcess(null, new StartStop());
+        Planner.run();
     }
 }

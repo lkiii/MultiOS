@@ -1,5 +1,6 @@
 package Hardware;
 
+import MOS.OperatingSystem;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,22 +20,7 @@ public class RVM {
      */
     public static void main(String[] args) {
         RealMachine rm = new RealMachine();
- 
-        // keisti parametru padeti, musu AD pl adresa, tai DS kinta nuo parmetru skaiciaus, reiskis niekad tikslaus adreso nenurodysi
-        VirtualMachine vm;
-        try {
-            // mano C:\\Users\\ernestas\\Documents\\NetBeansProjects\\RVM\\src\\program1
-            // tavo /home/lukas/NetBeansProjects/RVM/src/program1
-            vm = rm.startNewVM("src/program1");//
-            System.out.println("pradines registru reiksmes: ");
-            vm.printRegisters();
-            while (!vm.isHalted()) {
-                vm.step();
-            }
-            System.out.println("Programa sekmingai baige darba");
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(RVM.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        OperatingSystem os = new OperatingSystem(rm);
+        os.start();
     }
 }

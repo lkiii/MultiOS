@@ -1,11 +1,9 @@
 package Hardware;
 
 import Hardware.Memory.Memory;
+import Hardware.Memory.VirtualMemory;
 import MOS.Process;
-import MOS.ProcessPriorityComparator;
 import Utils.Word;
-import java.io.FileNotFoundException;
-import java.util.PriorityQueue;
 
 /**
  *
@@ -57,11 +55,11 @@ public class RealMachine {
         Word newPTR = null;
         int memSize = blocksRequired;
         int memUsed = 0;
-        for (int i = 1; i < BLOCK_SIZE; i++) { // pt ilgiai yra block size dydzio
+        for (int i = 1; i < Constants.BLOCK_SIZE; i++) { // pt ilgiai yra block size dydzio
             Word currentWord = mem.readWord(i);
             if (currentWord == null || currentWord.toInt() == 0) {
                 if (newPTR == null) {
-                    newPTR = new Word(i * BLOCK_SIZE);
+                    newPTR = new Word(i * Constants.BLOCK_SIZE);
                 }
             } else {
                 memUsed += currentWord.toInt();
@@ -74,26 +72,20 @@ public class RealMachine {
 
         //System.out.println("memused" + memUsed);
         //System.out.println("Memory left:" + (MEMORY_SIZE - PT_SIZE - memUsed));
-        if (newPTR == null && (MEMORY_SIZE - PT_SIZE - memUsed < blocksRequired)) {
+        if (newPTR == null && (Constants.MEMORY_SIZE - Constants.PT_SIZE - memUsed < blocksRequired)) {
             return null;
         }
 
         int ptCursor = newPTR.toInt();
         int blocksAlloced = 0;
         // begam ir tikrinam kiekviena tracka
-        for (int blockAddress = PT_SIZE; blockAddress < MEMORY_SIZE/BLOCK_SIZE; blockAddress++) {
+        for (int blockAddress = Constants.PT_SIZE; blockAddress < Constants.MEMORY_SIZE/Constants.BLOCK_SIZE; blockAddress++) {
             // begam vel per ilgius ir imam nenulinius
-            //System.out.println("current blockAddress: " + blockAddress);
             boolean notUsed = true;
-            for (int sizeTableIndex = 1; sizeTableIndex < BLOCK_SIZE; sizeTableIndex++) {
-                //System.out.println("current SizeTableIndex: " + sizeTableIndex);
-                // ptro wordas
-                //TODO refactorint
-                int ptrStart = (sizeTableIndex) * BLOCK_SIZE;
+            for (int sizeTableIndex = 1; sizeTableIndex < Constants.BLOCK_SIZE; sizeTableIndex++) {
+                int ptrStart = (sizeTableIndex) * Constants.BLOCK_SIZE;
                 int ptrEnd = ptrStart + mem.readWord(sizeTableIndex).toInt();
-                //System.out.println("strt: " + ptrStart + " end: " + ptrEnd + " index" + mem.readWord(sizeTableIndex).toInt());
                 for (int word = ptrStart; word < ptrEnd; word++) {
-                    //System.out.println("foriukas");
                     if (blockAddress == mem.readWord(word).toInt()) {
                         notUsed = false;
                         break;
@@ -115,16 +107,16 @@ public class RealMachine {
         }
 
         if (blocksAlloced >= blocksRequired) {
-            mem.writeWord(newPTR.toInt() / BLOCK_SIZE, new Word(blocksRequired));
+            mem.writeWord(newPTR.toInt() / Constants.BLOCK_SIZE, new Word(blocksRequired));
         }
 
         VirtualMemory VMmemory = new VirtualMemory(newPTR, mem);
-        VMmemory.setSize(memSize * BLOCK_SIZE);
+        VMmemory.setSize(memSize * Constants.BLOCK_SIZE);
         return VMmemory;
     }
 
     private void free(VirtualMemory vm) {
-        mem.writeWord((vm.getPTR().toInt())/BLOCK_SIZE, new Word(0));
+        mem.writeWord((vm.getPTR().toInt())/Constants.BLOCK_SIZE, new Word(0));
     }
     
     

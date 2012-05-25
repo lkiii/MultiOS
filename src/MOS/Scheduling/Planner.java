@@ -32,7 +32,9 @@ public class Planner {
         return null;
     }
     
-    public void run(){
+    public static void run(){
+        Process process = getNextProcess();
+        process.state = ProcessState.RUNNING;
         getNextProcess().run();
     }
     

@@ -29,7 +29,7 @@ public class CPU {
      */
     public CPU() {
         IP = 0;
-        TIMER = new Timer(1);
+        //TIMER = new Timer(1);
         TI = 0;
         IOI = 0;
         SI = 0;

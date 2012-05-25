@@ -1,6 +1,7 @@
 package Hardware;
 
-import rvm.VirtualMemory;
+import Hardware.Memory.VirtualMemory;
+import Utils.Word;
 
 /**
  *
@@ -96,7 +97,7 @@ public class VirtualMachine {
                         break;
                     case "PD":
                         System.out.println(memory.readWord(argAsValue));
-                        putData(memory.readWord(argAsValue));
+                        //putData(memory.readWord(argAsValue));
                         break;
                     case "GD":
                         
